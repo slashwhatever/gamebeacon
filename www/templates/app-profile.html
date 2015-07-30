@@ -1,0 +1,58 @@
+<ion-view name="user-profile" title="User Profile">
+
+  <ion-nav-bar align-title="right" class="bar-positive nav-title-slide-ios7">
+    <ion-nav-back-button class="button-clear"><i class="icon ion-chevron-left"></i> Back</ion-nav-back-button>
+  </ion-nav-bar>
+
+  <ion-content scroll="true">
+
+    <div class="row">
+
+      <div class="col col-33 col-offset-33 text-center">
+        <h2 class="username">{{ profile.username }}</h2>
+        <p class="meta-detail small lower">Joined: {{ profile.buddySince.iso | amCalendar }}</p>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col">
+
+        <div class="item item-icon-top">
+          <i class="icon ion-ios-game-controller-a"></i>
+          <h3>{{ profile.gamertag }}</h3>
+        </div>
+
+      </div>
+      <div class="col">
+
+        <div class="item item-icon-top">
+          <i class="icon {{profile.platform.icon}}"></i>
+          <h3>{{ profile.platform.name }}</h3>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+
+        <div class="item item-icon-top">
+          <i class="icon ion-ios-world"></i>
+          <h3>{{ profile.region.name }}</h3>
+        </div>
+
+      </div>
+
+      <div class="col">
+
+        <div ng-show="profile.mic" class="item item-icon-top">
+          <i class="icon {{profile.mic.icon}}"></i>
+          <h3>{{ profile.mic.description }}</h3>
+        </div>
+
+      </div>
+    </div>
+
+  </ion-content>
+</ion-view>

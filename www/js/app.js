@@ -14,8 +14,7 @@ var DestinyBuddy = angular.module('destinybuddy', [
   'destinybuddy.services',
   'destinybuddy.directives',
   'angularMoment',
-  'ng-mfb',
-  'ngCordova'
+  'ng-mfb'
 ])
 
 .run(function ($ionicPlatform) {

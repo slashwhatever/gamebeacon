@@ -1,0 +1,15 @@
+<div class="beacon-chat">
+    <div ng-repeat="message in messages | orderBy: '-createdAt'">
+      <div class="row">
+
+        <div class="col-80" ng-class="{'col-offset-20' : message.from.objectId == currentUser.objectId }">
+          <div class="message" padding ng-class="{'your-msg': message.from.objectId == currentUser.objectId, 'their-msg': message.from.objectId != currentUser.objectId, 'owner-msg': message.from.objectId == beacon.creator.objectId}" >
+            <div class="message-left message-icon" ng-hide="message.from.objectId == currentUser.objectId" ng-class="{'ion-ios-chatbubble' : message.from.objectId == beacon.creator.objectId, 'ion-ios-chatbubble-outline' : message.from.objectId != beacon.creator.objectId}"></div>
+            <div class="message-body"><span class="message-username">{{message.from.gamertag}}:</span> {{message.message}}</div>
+            <div class="message-right message-icon" ng-hide="message.from.objectId != currentUser.objectId" ng-class="{'ion-ios-chatbubble' : message.from.objectId == beacon.creator.objectId, 'ion-ios-chatbubble-outline' : message.from.objectId != beacon.creator.objectId}"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+</div>

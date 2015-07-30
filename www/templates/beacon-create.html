@@ -1,0 +1,116 @@
+
+<ion-view name="beacon-create" title="Create Beacon">
+
+  <ion-nav-bar align-title="right" class="bar-positive nav-title-slide-ios7">
+    <ion-nav-back-button class="button-clear"><i class="icon ion-chevron-left"></i> Back</ion-nav-back-button>
+  </ion-nav-bar>
+
+<ion-content scroll="true">
+
+<ion-slide-box delegate-handle="mission-selector" show-pager="false" on-slide-changed="updateMission($index)" ng-if="missions" does-continue="true">
+<ion-slide class="create-beacon-slide missions-slide" ng-repeat="mission in missions">
+
+<div class="slide-wrapper">
+  <div class="slide-inner">
+    <img class="icon icon-s mission-icon" ng-src="//destinybuddy.parseapp.com/img/{{ mission.type }}_icon_small.png">
+    <h2 class="title mission-title">{{ mission.title }}</h2>
+    <p class="byline mission-byline">{{ mission.byline }}</p>
+  </div>
+</div>
+
+</ion-slide>
+</ion-slide-box>
+
+<ion-slide-box delegate-handle="checkpoint-selector" show-pager="false" on-slide-changed="updateCheckpoint($index)" ng-if="checkpoints" does-continue="true">
+<ion-slide class="create-beacon-slide checkpoints-slide" ng-repeat="checkpoint in checkpoints | orderBy :'order'" >
+
+<div class="slide-wrapper">
+  <div class="slide-inner">
+    <p class="byline checkpoint-byline">checkpoint</p>
+    <h2 class="title checkpoint-title">{{ checkpoint.description }}</h2>
+  </div>
+</div>
+
+</ion-slide>
+</ion-slide-box>
+
+<ion-slide-box delegate-handle="level-selector" show-pager="false" on-slide-changed="updateLevel($index)" ng-if="levels" does-continue="true">
+<ion-slide class="create-beacon-slide levels-slide" ng-repeat="level in levels | orderBy:'name'">
+
+<div class="slide-wrapper">
+  <div class="slide-inner">
+    <p class="byline level-byline">level</p>
+    <h2 class="title level-title">{{ level.name }}</h2>
+  </div>
+</div>
+
+</ion-slide>
+</ion-slide-box>
+
+<ion-slide-box delegate-handle="fireteam-selector" show-pager="false" does-continue="false" on-slide-changed="updateFireteam($index)" ng-if="maxFireteam" does-continue="true">
+
+<ion-slide class="create-beacon-slide fireteam-slide" ng-repeat="n in maxFireteam">
+<div class="slide-wrapper">
+  <div class="slide-inner">
+    <p class="byline fireteam-byline">fireteam</p>
+    <h2 class="title fireteam-title">
+      <ng-pluralize count="n"
+      when="{'1': 'I need {} more guardian',
+      'other': 'I need {} more guardians'}">
+    </ng-pluralize></h2>
+  </div>
+</div>
+</ion-slide>
+
+</ion-slide-box>
+
+<ion-slide-box delegate-handle="platform-selector" show-pager="false" ng-if="platforms" does-continue="true" on-slide-changed="updatePlatform($index)" active-slide="defaultPlatform">
+
+<ion-slide class="create-beacon-slide platforms-slide" ng-repeat="platform in platforms">
+<div class="slide-wrapper">
+  <div class="slide-inner">
+    <p class="byline platform-byline">platform</p>
+    <h2 class="title platform-title">{{ platform.name }}</h2>
+  </div>
+</div>
+</ion-slide>
+
+</ion-slide-box>
+
+<ion-slide-box delegate-handle="region-selector" show-pager="false" ng-if="regions" does-continue="true" on-slide-changed="updateRegion($index)" active-slide="defaultRegion">
+
+<ion-slide class="create-beacon-slide regions-slide" ng-repeat="region in regions">
+<div class="slide-wrapper">
+  <div class="slide-inner">
+    <p class="byline checkpoint-byline">region</p>
+    <h2 class="title region-title">{{ region.name }}</h2>
+  </div>
+</div>
+</ion-slide>
+
+</ion-slide-box>
+
+<ion-slide-box delegate-handle="mic-selector" show-pager="false" ng-if="mics" does-continue="true" on-slide-changed="updateMic($index)" active-slide="defaultMic">
+
+<ion-slide class="create-beacon-slide mic-slide" ng-repeat="mic in mics">
+<div class="slide-wrapper">
+  <div class="slide-inner">
+    <p class="byline mic-byline">mic options</p>
+    <h2 class="title mic-title">{{ mic.description }}</h2>
+  </div>
+</div>
+</ion-slide>
+
+</ion-slide-box>
+
+<div class="row">
+  <div class="col col-80 col-offset-10">
+    <form ng-submit="createBeacon()">
+      <button type="submit" class="button button-block button-energized">GO!!!</button>
+    </div>
+  </div>
+</div>
+
+
+</ion-content>
+</ion-view>

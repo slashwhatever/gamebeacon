@@ -1,0 +1,35 @@
+<ion-view name="feedback" title="Feedback">
+
+  <ion-nav-bar align-title="right" class="bar-positive nav-title-slide-ios7">
+    <ion-nav-back-button class="button-clear"><i class="icon ion-chevron-left"></i> Back</ion-nav-back-button>
+  </ion-nav-bar>
+
+<ion-content scroll="true">
+
+<h1>Let us know what you think</h1>
+<form name="feedbackForm" ng-submit="giveFeedback(feedbackForm)">
+  <div class="list list-inset">
+    <label class="item item-input">
+      <input type="textarea" placeholder="What do you think of the app?" name="feedback" ng-model="feedback">
+    </label>
+  </div>
+
+</form>
+
+<div class="padding">
+  <button class="button button-block button-positive" ng-click="giveFeedback(feedback)">Submit</button>
+</div>
+
+
+</ion-content>
+
+<ion-footer-bar style="display:inline; text-align: center;padding: 8px 0;">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+  <input type="hidden" name="cmd" value="_s-xclick">
+  <input type="hidden" name="hosted_button_id" value="SR76CVTU6BF7U">
+  <input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online.">
+  <img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
+</form>
+</ion-footer-bar>
+
+</ion-view>
