@@ -1,0 +1,527 @@
+body {
+    font-family: $core-font-family;
+    color: #fff;
+    background-image: -webkit-linear-gradient(137deg, #8FDCDC 0%, #2961C3 50%, #15132A 91%);
+    background-image: -o-linear-gradient(137deg, #8FDCDC 0%, #2961C3 50%, #15132A 91%);
+    background-image: linear-gradient(137deg, #8FDCDC 0%, #2961C3 50%, #15132A 91%);
+}
+h1, h2, h3 {
+    text-transform: none;
+}
+h1, .item h1 {
+    color: $grey;
+}
+h2, .item h2 {
+    color: $grey;
+}
+h3 {
+    color: $grey;
+}
+h2, h3 {
+    font-family: $core-font-family;
+}
+
+
+.app-title {
+  font-family: 'SixCaps';
+  font-size: 50px;
+  text-align: center;
+  padding-bottom: 50px;
+}
+
+.text-center {
+    text-align: center;
+}
+.popup-container .popup {
+    background-color: rgba(104, 104, 104, 0.9);
+}
+
+.item-input {
+	background-color: $mid-grey;
+}
+input[type=color], input[type=date], input[type=datetime-local], input[type=datetime], input[type=email], input[type=month], input[type=number], input[type=password], input[type=search], input[type=tel], input[type=text], input[type=time], input[type=url], input[type=week], textarea {
+    color: $grey;
+}
+.label {
+    font-weight: 700;
+}
+.bar-footer {
+    background: $mid-grey;
+}
+.tabs-positive>.tabs, .tabs.tabs-positive, .bar.bar-positive {
+    border-color: #1A1D21;
+    background-color: #4C87AE;
+    color: $light-grey;
+}
+.tab-item {
+    color: #fff;
+}
+.bar.bar-positive .title {
+    color: $grey;
+}
+.list-inset {
+    background-color: transparent;
+}
+
+
+/* Empty. Add your own CSS if you like */
+
+#logo {
+    margin: 30px 0px;
+}
+#list {
+    width: 170px;
+    margin: 30px auto;
+    font-size: 20px;
+}
+#list ol {
+    margin-top: 30px;
+}
+#list ol li {
+    text-align: left;
+    list-style: decimal;
+    margin: 10px 0px;
+}
+label.new-message {
+    background: transparent;
+    border-bottom: 1px solid $grey;
+    @include border-radius(0);
+}
+label.new-message input {
+    background: transparent;
+    width: 100%;
+}
+/* This parent can be any width and height */
+
+.slide-wrapper {
+    text-align: center;
+}
+/* The ghost, nudged to maintain perfect centering */
+
+.slide-wrapper:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -0.25em;
+    /* Adjusts for spacing */
+}
+
+.slider-slide {
+    padding-top: 80px;
+    color: #fff;
+    text-align: center;
+    font-family: $core-font-family;
+    font-weight: 300;
+    background-color: #2A3035;
+    box-shadow: inset 0 10px 20px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 20px 0;
+}
+
+.create-beacon-slide {
+    font-size: 40px;
+    height: 150px;
+}
+.missions-slide {
+    border-bottom-width: 0;
+    height: 200px;
+}
+.create-beacon-slide .slide-wrapper {
+    height: 100%;
+}
+
+.missions-slide, .create-beacon-slide {
+    @include blue-grad();
+}
+
+li.mission-level {
+    display: inline;
+    border: 1px solid #ddd;
+    @include border-radius(5px);
+    padding: 10px;
+    margin: 0 10px;
+    vertical-align: middle;
+}
+/* The element to be centered, can
+also be of any width and height */
+
+.slide-inner {
+    display: inline-block;
+    vertical-align: middle;
+}
+.slide-inner h2 {
+    margin-bottom: 0;
+}
+.mission-time {
+    color: $green;
+}
+/*************** icons *******************/
+
+.icon {}
+.icon-s {
+    height: 50px;
+    width: 50px;
+}
+.icon-m {
+    height: 150px;
+    width: 150px;
+}
+.icon-l {
+    height: 250px;
+    width: 250px;
+}
+.icon.mission-icon {}
+/**************** BOF - taken from bootstrap ****************/
+
+.message {
+    margin-top: 15px
+}
+.message:first-child {
+    margin-top: 0
+}
+.message, .message-body {
+    zoom: 1;
+}
+.message-object {
+    display: block
+}
+.message-body, .message-left, .message-right {
+    display: table-cell;
+    vertical-align: top
+}
+.message-body {
+    width: 10000px;
+    vertical-align: middle;
+    padding: 10px 10px;
+    border-radius: 5px 0 0 5px;
+    background: $mid-grey;
+}
+.message-middle {
+    vertical-align: middle
+}
+.message-bottom {
+    vertical-align: bottom
+}
+.message-heading {
+    margin-top: 0;
+    margin-bottom: 5px
+}
+.message-list {
+    padding-left: 0;
+    list-style: none
+}
+/**************** EOF - taken from bootstrap ****************/
+/***************** beacon cards ****************/
+
+.beacon-card {
+    background-color: $mid-grey;
+}
+
+.beacon-list-empty {
+    text-align: center;
+}
+.item h2.mission-name {
+    font-family: "SixCaps", "Helvetica Neue", Roboto, sans-serif;
+    font-size : 40px;
+}
+
+.beacon-timer {
+  position: relative;
+  white-space: nowrap;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.timer-icon {
+    font-size: 40px;
+    opacity: .2;
+}
+
+.beacon-countdown {
+    position: absolute;
+    left : 0;
+    right : 0;
+    bottom: 0;
+    top : 0;
+    padding-top: 11px;
+    font-size: 24px;
+}
+
+.mission-time {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  max-width: 40px;
+  max-height: 40px;
+  width: 100%;
+  height: 100%;
+  @include border-radius(50px);
+}
+
+button.fireteam-button {
+    @include border-radius(50px);
+    padding: 0;
+    font-size: 14px;
+    z-index: 9999;
+    border-width: 0;
+    vertical-align: middle;
+    color: $mid-grey;
+    text-transform: lowercase;
+    margin-right: 10px;
+    padding: 5px 9px;
+}
+
+button.fireteam-leader {
+    background: rgb(255, 64, 129);
+    color: $mid-grey;
+}
+
+
+button.join-fireteam-button {
+    border: 1px dashed $light-grey;
+    background: transparent;
+    width: auto;
+    padding: 0 10px;
+}
+/* chat window  */
+
+div.beacon-chat {
+	margin-top: 5px;
+}
+
+div.message {
+    margin: 0 5px;
+    position: relative;
+    @include border-radius(5px);
+}
+/*
+div.message:before {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 11px;
+    border-width: 10px 20px 0px 0px;
+    border-style: solid;
+    border-color: #1A1D21 transparent;
+    display: block;
+    width: 0;
+}
+div.message:after {
+    content: "";
+    position: absolute;
+    bottom: -9px;
+    left: 13px;
+    border-width: 10px 20px 0px 0px;
+    border-style: solid;
+    border-color: $grey transparent;
+    display: block;
+    width: 0;
+    z-index: 9;
+}
+div.message.your-msg:before {
+    left: auto;
+    right: 20px;
+    border-width: 10px 0px 0px 20px;
+    border-color: #262A2E;
+}
+div.message.your-msg:after {
+    left: auto;
+    right: 20px;
+    border-width: 10px 0px 0px 20px;
+    border-color: $pink;
+
+}
+*/
+
+/*
+.message-body {
+	margin-left: 10px;
+	display: inline-block;
+  margin-left: 20px;
+  display: inline-block;
+  vertical-align: middle;
+}
+*/
+
+.message-icon {
+    box-shadow: inset 45px 0 0 #E2E7ED;
+    @include border-radius(5px 0 0 5px);
+    height: 100%;
+    vertical-align: middle;
+}
+.message-icon:before {
+    font-size: 28px;
+    padding: 7px 10px;
+    color: $mid-grey;
+}
+.message-right.message-icon {
+  @include border-radius(0 5px 5px 0);
+  box-shadow: inset 45px 0 0 $pink;
+}
+
+/* beacon detail */
+
+ion-view[name=beacon-detail] .bar-subheader {
+    height: auto;
+    background: transparent;
+    margin: 0;
+    padding: 0;
+    border-color: transparent;
+}
+ion-view[name=beacon-detail] .bar-subheader .list:last-child.card {
+    margin-bottom: 0;
+}
+ion-view[name=beacon-detail] .has-subheader {
+    top: 200px;
+}
+/****************** FLOAT BUTTON *************************/
+
+.float-button-wrapper {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+.float-button {
+    @include border-radius(50px);
+    padding: 28px;
+    font-size: 24px;
+    background-color: $pink;
+    z-index: 9999;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
+}
+.float-button .height_fix {
+    margin-top: 100%;
+}
+.float-button .content {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    margin-top: -12px;
+    /* Note, this must be half the font size */
+
+    color: $grey;
+}
+/************* slidebox beacon create *****************/
+
+.byline {
+    color: $grey;
+    font-size: 18px;
+    text-transform: lowercase;
+    margin-top: 5px;
+}
+/************* Logo *************/
+
+.logo-wrapper {
+    text-align: center;
+    width: 100%;
+    padding: 50px 50px 10px;
+}
+/************ alignment tweaks ******************/
+
+
+/**************** beacon card **************/
+
+.action-toolbar {
+  margin-top: 20px;
+}
+
+.beacon-card {
+    background-color: #262A2E;
+}
+
+.beacon-left, .beacon-right {
+    display: inline-block;
+}
+
+.beacon-right {
+    max-width : 150px;
+}
+
+.beacon-left .meta-details {
+    text-align: center;
+    margin: 10px auto 0 auto;
+    background: transparent;
+    color: $grey;
+    position: relative;
+}
+
+.beacon-left .icon {
+  display: block;
+  font-size: 50px;
+  color: rgba(255,255,255, 0.2);
+}
+
+.beacon-left .meta-label {
+  font-family: 'SixCaps';
+  font-size: 32px;
+  position: absolute;
+  top: 20px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.list.beacon .col.beacon-right {
+  padding: 16px;
+}
+/**************** beacon detail ************/
+
+.fireteamOnboard {
+    background-color: #ccc;
+    @include border-radius(10px);
+    display: inline-block;
+    vertical-align: middle;
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+}
+.fireteamOnboard.team-leader {
+    background-color: pink;
+}
+/****************** platform ****************/
+
+.platform-icon, .mic-icon {
+    font-size: 20px;
+}
+/*
+.ion-playstation.ps3 {color: blue}
+.ion-playstation.ps4 {color: yellow}
+.ion-xbox.one {color: green}
+.ion-xbox.360 {color: white}
+*/
+/**************** meta blocks *******************/
+
+.meta-details {
+    background: #ccc;
+    display: inline-block;
+    @include border-radius(20px);
+    padding: 5px 9px;
+    margin-right: 5px;
+    color: rgb(59, 66, 74);
+    vertical-align: middle;
+    margin-top: 10px;
+}
+.meta-details h3 {
+    display: inline-block;
+}
+.meta-details i, .meta-details span.ion-icon {
+    display: inline-block;
+    vertical-align: baseline;
+}
+.meta-details span.ion-icon:before {
+    margin-right: 5px;
+}
+.text-lower {
+    text-transform: lowercase;
+}
+.meta-details.small {
+    font-size: 0.9em;
+}
+
+.meta-details.no-spaces {
+    background-color: $pink;
+}

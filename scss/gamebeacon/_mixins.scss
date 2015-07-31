@@ -1,0 +1,24 @@
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+
+@mixin linear-gradient($direction, $color-stops...) {
+  background-image: -webkit-linear-gradient($direction, $color-stops);
+  background-image: -o-linear-gradient($direction, $color-stops);
+  background-image: linear-gradient($direction, $color-stops);
+}
+
+@mixin pos-btn-grad () {
+  @include linear-gradient(65deg, $green 0%, #6B9AD3 100%);
+}
+
+@mixin blue-grad () {
+  @include linear-gradient(64deg, $green 5%, #437CAA 100%);
+}
+
+@mixin purple-grad () {
+  @include linear-gradient(64deg, $purple 5%, #927AB8 100%);
+}
