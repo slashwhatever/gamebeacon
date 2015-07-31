@@ -14,6 +14,7 @@ var DestinyBuddy = angular.module('destinybuddy', [
   'destinybuddy.services',
   'destinybuddy.directives',
   'angularMoment',
+  'ngCordova',
   'ng-mfb'
 ])
 
