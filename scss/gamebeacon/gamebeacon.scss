@@ -32,9 +32,6 @@ h2, h3 {
 .text-center {
     text-align: center;
 }
-.popup-container .popup {
-    background-color: rgba(104, 104, 104, 0.9);
-}
 
 .item-input {
 	background-color: $mid-grey;
@@ -48,17 +45,11 @@ input[type=color], input[type=date], input[type=datetime-local], input[type=date
 .bar-footer {
     background: $mid-grey;
 }
-.tabs-positive>.tabs, .tabs.tabs-positive, .bar.bar-positive {
-    border-color: #1A1D21;
-    background-color: #4C87AE;
-    color: $light-grey;
-}
+
 .tab-item {
     color: #fff;
 }
-.bar.bar-positive .title {
-    color: $grey;
-}
+
 .list-inset {
     background-color: transparent;
 }
@@ -215,7 +206,7 @@ also be of any width and height */
 /***************** beacon cards ****************/
 
 .beacon-card {
-    background-color: $mid-grey;
+    background-color: lighten($dark-blue, 5%);
 }
 
 .beacon-list-empty {
@@ -429,10 +420,6 @@ ion-view[name=beacon-detail] .has-subheader {
   margin-top: 20px;
 }
 
-.beacon-card {
-    background-color: #262A2E;
-}
-
 .beacon-left, .beacon-right {
     display: inline-block;
 }
@@ -496,7 +483,7 @@ ion-view[name=beacon-detail] .has-subheader {
 /**************** meta blocks *******************/
 
 .meta-details {
-    background: #ccc;
+    background: $grey;
     display: inline-block;
     @include border-radius(20px);
     padding: 5px 9px;

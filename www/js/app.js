@@ -148,12 +148,12 @@ var DestinyBuddy = angular.module('destinybuddy', [
     }
   })
 
-  .state('app.feedback', {
-    url: '/feedback',
+  .state('app.donate', {
+    url: '/donate',
     views: {
       'main-view': {
-        templateUrl: 'templates/app-feedback.html',
-        controller: 'FeedbackController'
+        templateUrl: 'templates/app-donate.html',
+        controller: 'DonateController'
       }
     }
   })

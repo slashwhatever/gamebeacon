@@ -108,7 +108,7 @@ angular.module('destinybuddy.controllers', ['destinybuddy.services'])
       // we need to reset the skip here as we're resetting the list
       $scope.skip = 0;
 
-      $scope.beacons = response.results;
+      $scope.beacons = response.results.length > 0 ? response.results : null;
 
       $scope.$broadcast('scroll.refreshComplete');
     });
@@ -331,6 +331,9 @@ angular.module('destinybuddy.controllers', ['destinybuddy.services'])
 
 }])
 
+
+.controller('DonateController', ['$rootScope', '$scope', function($rootScope, $scope) {
+}])
 
 .controller('FeedbackController', ['$rootScope', '$scope', function($rootScope, $scope) {
 

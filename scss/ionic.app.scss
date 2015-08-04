@@ -17,15 +17,13 @@ $dark:                            #444 !default;
 
 @import "gamebeacon/variables";
 @import "gamebeacon/mixins";
-
-
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
-$positive:                        #057b6c !default;
+$positive: #04C6DE !default;
+$energized: #FC4482 !default;
 //$energized: 				#ff4081 !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
-
 @import "gamebeacon/fonts";
 @import "gamebeacon/overrides";
 @import "gamebeacon/gamebeacon";
