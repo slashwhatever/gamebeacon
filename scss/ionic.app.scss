@@ -20,7 +20,9 @@ $dark:                            #444 !default;
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
 $positive: #04C6DE !default;
-$energized: #FC4482 !default;
+$energized: #CDFC80 !default;
+$assertive: #FC4482 !default;
+$calm: #624EC9 !default;
 //$energized: 				#ff4081 !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
