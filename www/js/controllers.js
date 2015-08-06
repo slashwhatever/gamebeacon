@@ -227,8 +227,9 @@ angular.module('destinybuddy.controllers', ['destinybuddy.services'])
       ChatService.save(msg, $scope.beacon.objectId).then(function(response) {
 
         // add a new item to the messages list (this will get replaced with the proper version on refresh)
-        $scope.messages.push({
+        $scope.messages.unshift({
           objectId: response.objectId,
+          createdAt: response.createdAt,
           message: msg,
           from: $scope.currentUser
         })

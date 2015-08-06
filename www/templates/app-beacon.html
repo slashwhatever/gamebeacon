@@ -12,11 +12,17 @@
         <beacon-header></beacon-header>
         <beacon-meta></beacon-meta>
         <beacon-actions></beacon-actions>
-        <fireteam-members ng-hide="myBeacon" action="guardianAction( beacon )" fireteam="beacon.fireteamOnboard" beacon="beacon"></fireteam-members>
 
     </div>
 
-    <beacon-chat class="beacon-chat"></beacon-chat>
+    <tabset>
+      <tab heading="Chat">
+        <beacon-chat class="beacon-chat"></beacon-chat>
+      </tab>
+      <tab heading="Fireteam">
+	      <fireteam-members ng-hide="myBeacon" action="guardianAction( beacon )" fireteam="beacon.fireteamOnboard" beacon="beacon"></fireteam-members>
+      </tab>
+    </tabset>
 
   </div>
 

@@ -730,8 +730,9 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
             method: 'GET',
             headers: appConfig.parseHttpsHeaders,
             params: {
-                where: '@where',
-                'include': 'from,to,mission'
+                'where': '@where',
+                'order': '-createdAt',
+                'include': 'from,to,mission,createdAt'
             }
         },
         save: {
@@ -750,7 +751,6 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
             var d = $q.defer();
 
             var messages = Messages.list({
-                order: 'createdAt',
                 where: '{"beacon":{"__type":"Pointer","className":"beacons","objectId":"' + beaconId + '"}}'
             }, function(response) {
                 d.resolve(response);
