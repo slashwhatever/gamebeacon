@@ -9,12 +9,12 @@ var PROXY_ADDRESS = 'http://0.0.0.0:58086'
 // the 2nd parameter is an array of 'requires'
 // 'destinybuddy.controllers' is found in controllers.js
 var DestinyBuddy = angular.module('destinybuddy', [
-  'ionic',
+  'ionic','ionic.service.core','ionic.service.deploy','ionic.service.push','ngCordova',
   'destinybuddy.controllers',
   'destinybuddy.services',
   'destinybuddy.directives',
   'angularMoment',
-  'ngCordova',
+  
   'ng-mfb'
 ])
 
