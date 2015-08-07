@@ -8201,12 +8201,13 @@ button.fireteam-button {
   border-width: 0;
   vertical-align: middle;
   color: #3B424A;
+  background-color: #04C6DE;
   text-transform: lowercase;
   padding: 10px;
   margin-bottom: 10px; }
 
 button.fireteam-leader {
-  background: #ff4081;
+  background: #FFEC3A;
   color: #3B424A; }
 
 button.join-fireteam-button {

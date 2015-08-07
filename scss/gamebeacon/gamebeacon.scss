@@ -306,13 +306,14 @@ button.fireteam-button {
     border-width: 0;
     vertical-align: middle;
     color: $mid-grey;
+    background-color: $blue;
     text-transform: lowercase;
     padding: 10px;
     margin-bottom: 10px;
 }
 
 button.fireteam-leader {
-    background: rgb(255, 64, 129);
+    background: $yellow;
     color: $mid-grey;
 }
 
