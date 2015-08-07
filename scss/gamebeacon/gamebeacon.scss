@@ -21,14 +21,26 @@ h2, h3 {
     font-family: $core-font-family;
 }
 
-
-.app-title {
-  font-family: 'SixCaps';
-  font-size: 50px;
-  text-align: center;
-  padding-bottom: 50px;
+a {
+	color: $grey;
 }
 
+.tutorial-screenshot {
+	width: 90%;
+	border: 1px solid $grey;
+}
+.app-title {
+  font-family: $core-font-family;
+  font-size: 50px;
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+.app-byline {
+	font-family: $core-font-family;
+	font-size: 18px;
+	text-align: center;
+}
 .text-center {
     text-align: center;
 }
@@ -110,6 +122,21 @@ label.new-message input {
     padding: 20px 0;
 }
 
+.help-slider {
+		position: absolute !important;
+	  top: 0 ;
+	  bottom: 0;
+	  left: 0;
+	  right: 0;
+}
+
+.help-slider.has-header {
+	  top: 44px;
+}
+
+.help-slider .slider-pager {
+
+}
 .create-beacon-slide {
     font-size: 40px;
     height: 150px;
@@ -185,9 +212,21 @@ also be of any width and height */
     width: 10000px;
     vertical-align: middle;
     padding: 10px 10px;
-    border-radius: 5px 0 0 5px;
+    @include border-radius(5px 0 0 5px);
     background: $mid-grey;
 }
+.message-username {
+	font-weight: 700;
+}
+.their-msg .message-body {
+	@include border-radius(0 5px 5px 0);
+}
+
+.message-timestamp.your-msg-timestamp {
+	text-align: right;
+}
+
+
 .message-middle {
     vertical-align: middle
 }
@@ -208,6 +247,16 @@ also be of any width and height */
 .beacon-card {
     background-color: lighten($dark-blue, 5%);
 }
+
+.beacon-card.my-beacon:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-color: transparent $yellow transparent transparent;
+    border-style: solid;
+    border-width: 0 25px 25px 0;
+  }
 
 .beacon-list-empty {
     text-align: center;
@@ -259,6 +308,7 @@ button.fireteam-button {
     color: $mid-grey;
     text-transform: lowercase;
     padding: 10px;
+    margin-bottom: 10px;
 }
 
 button.fireteam-leader {

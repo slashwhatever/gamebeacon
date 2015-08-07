@@ -234,3 +234,11 @@ $button-gap-multiplier : 60px;
   height: 100%;
   font-size: 32px;
 }
+
+
+.button.button-energized:hover {
+    color: $dark-blue;
+}
+.button.button-energized {
+    color: $dark-blue;
+}

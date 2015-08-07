@@ -194,7 +194,7 @@ angular.module('destinybuddy.controllers', ['destinybuddy.services'])
   $scope.joinBeacon = function(beacon) {
     Beacon.updateFireteam(beacon, 'join').then(function() {
       $scope.myBeacon = beacon.objectId;
-      $state.go('app.beacon', {
+      $state.go($state.current, {
         beaconId: beacon.objectId
       }, {
         reload: true,
@@ -212,7 +212,7 @@ angular.module('destinybuddy.controllers', ['destinybuddy.services'])
       if (res) {
         Beacon.delete(beacon).then(function() {
           $scope.myBeacon = null;
-          $state.go('app.beacons', null, {
+          $state.go('app.beacons', {}, {
             reload: true,
             notify: true
           });
@@ -234,6 +234,16 @@ angular.module('destinybuddy.controllers', ['destinybuddy.services'])
           from: $scope.currentUser
         })
       })
+    }
+
+    $scope.leaveBeacon = function(beacon) {
+      Beacon.updateFireteam(beacon, 'leave').then(function() {
+        $scope.myBeacon = null;
+        $state.go('app.beacons', {}, {
+          reload: true,
+          notify: true
+        });
+      });
     }
 
     $scope.guardianAction = function(object) {

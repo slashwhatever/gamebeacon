@@ -7,7 +7,7 @@
         <ion-refresher pulling-icon="spiral" on-refresh="refreshBeaconList()"></ion-refresher>
 
         <!-- beacon card -->
-        <div class="beacon-card" ng-repeat="beacon in beacons">
+        <div class="beacon-card" ng-class="{'my-beacon' : beacon.userIsCreator }" ng-repeat="beacon in beacons">
 
             <beacon-header></beacon-header>
             <beacon-meta></beacon-meta>

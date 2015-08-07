@@ -1,14 +1,20 @@
-$core-font-family       : "SofiaProLight", "Helvetica Neue", Roboto, sans-serif;
-$caps-font-family       : "SixCaps", "Helvetica Neue",Roboto,sans-serif;
-$modern-font-family     : "ExoBold", "Helvetica Neue",Roboto,sans-serif;
+$core-font-family: "SofiaProLight","Helvetica Neue", Roboto, sans-serif;
+$caps-font-family: "SixCaps", "Helvetica Neue", Roboto, sans-serif;
+$modern-font-family: "ExoBold", "Helvetica Neue", Roboto, sans-serif;
 
-$grey 		    : #E2E7EB;
-$mid-grey      : #3B424A;
-$dark-grey      : #262A2E;
-$light-grey     : #96A6AD;
-$purple         : #8091C6;
-$green          : #6BB6C4;
-$blue-grey           : #353F49;
-$dark-blue           : #272F36;
-$blue           : #5B7FAC;
-$pink           : rgb(255, 64, 129);
+$grey: #E2E7EB;
+$light-grey: #96A6AD;
+$mid-grey: #3B424A;
+$dark-grey: #262A2E;
+$blue-grey: #353F49;
+
+$dark-blue: #272F36;
+$smoke-blue: #5B7FAC;
+$green-blue: #6BB6C4;
+
+// color wheel stuff
+$yellow: #FFEC3A;
+$green: #7CFC69;
+$pink: #FC4482;
+$blue: #04C6DE;
+$purple: #4E48B5;

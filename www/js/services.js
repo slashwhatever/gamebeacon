@@ -158,10 +158,10 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
                 _.each(response.results, prepareBeaconData);
 
                 // move the active users beacon to the top of the list (if they have one)
-                var userBeaconIdx = _.findIndex(response.fireteamOnboard, function(i) {
-                    return i.objectId == $rootScope.currentUser.objectId
-                })
-                if (userBeaconIdx > -1) _.move(beacons, userBeaconIdx, 0);
+                var userBeaconIdx = _.findIndex(response.results, function(i) {
+                    return i.userIsCreator == true
+                });
+                if (userBeaconIdx > -1) _.move(response.results, userBeaconIdx, 0);
 
                 $ionicLoading.hide();
                 d.resolve(response);
