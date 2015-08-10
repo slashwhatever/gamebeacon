@@ -795,6 +795,7 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
     var User = $resource(appConfig.parseRestBaseUrl + 'login/', {
         username: '@username',
         password: '@password',
+        confirmPassword: '@confirmPassword',
         email: '@email',
         gamertag: '@gamertag',
         platform: '@platform'
@@ -846,6 +847,7 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
                 username: user.username,
                 email: user.email,
                 password: user.password,
+                confirmPassword: user.confirmPassword,
                 gamertag: user.gamertag,
                 platform: UtilsService.getObjectAsPointer('platforms', user.platform.objectId),
                 region: UtilsService.getObjectAsPointer('regions', user.region.objectId)

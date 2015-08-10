@@ -20,6 +20,14 @@ h1, .h1 {
   text-align: right;
 }
 
+/******************** form ********************/
+.input-label {
+	color: $grey;
+}
+
+.item-select select {
+	background-color: transparent;
+}
 /******************** pane ********************/
 .pane {
     background-color: $dark-blue;
@@ -237,7 +245,7 @@ $button-gap-multiplier : 60px;
 
 
 .button.button-energized:hover {
-    color: $dark-blue;
+    color: #fff;
 }
 .button.button-energized {
     color: $dark-blue;

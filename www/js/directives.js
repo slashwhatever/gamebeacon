@@ -1,5 +1,6 @@
 angular.module('destinybuddy.directives', [])
 
+
 .directive('tab', function() {
 	return {
 		restrict: 'E',
@@ -70,25 +71,25 @@ angular.module('destinybuddy.directives', [])
 }])
 
 .directive('beaconActions', ['UtilsService', function(UtilsService) {
-  return {
-    restrict: 'E',
-    replace: true,
-    templateUrl: 'templates/fragments/beacon-actions.html',
-    link: function( scope, elem, attrs ) {
+	return {
+		restrict: 'E',
+		replace: true,
+		templateUrl: 'templates/fragments/beacon-actions.html',
+		link: function( scope, elem, attrs ) {
 
-      var userIsCreator = scope.beacon.userIsCreator,
-	      userHasBeacon = UtilsService.getCurrentUser().myBeacon,
-        userOnboard = UtilsService.userOnboard( scope.beacon ),
-        beaconActive = scope.beacon.timeLeft > 0,
-        hasSpaces = scope.beacon.fireteamSpaces > 0
+			var userIsCreator = scope.beacon.userIsCreator,
+			userHasBeacon = UtilsService.getCurrentUser().myBeacon,
+			userOnboard = UtilsService.userOnboard( scope.beacon ),
+			beaconActive = scope.beacon.timeLeft > 0,
+			hasSpaces = scope.beacon.fireteamSpaces > 0
 
-      scope.allowJoin = !userHasBeacon && (beaconActive && hasSpaces && (!userIsCreator && !userOnboard))
-      scope.allowLeave = beaconActive && (!userIsCreator && userOnboard)
-      scope.allowDelete = userIsCreator
-      scope.allowView = scope.beacons // this cheeky little check will hide the view button in beacon detail view
+			scope.allowJoin = !userHasBeacon && (beaconActive && hasSpaces && (!userIsCreator && !userOnboard))
+			scope.allowLeave = beaconActive && (!userIsCreator && userOnboard)
+			scope.allowDelete = userIsCreator
+			scope.allowView = scope.beacons // this cheeky little check will hide the view button in beacon detail view
 
-    }
-  };
+		}
+	};
 }])
 
 .directive('fireteamMembers', ['UtilsService', function(UtilsService) {
@@ -103,9 +104,9 @@ angular.module('destinybuddy.directives', [])
 		link: function(scope, elem, attrs) {
 
 			var userIsCreator = scope.beacon.userIsCreator,
-				userOnboard = UtilsService.userOnboard(scope.beacon),
-				beaconActive = scope.beacon.timeLeft > 0,
-				hasSpaces = scope.beacon.fireteamSpaces > 0
+			userOnboard = UtilsService.userOnboard(scope.beacon),
+			beaconActive = scope.beacon.timeLeft > 0,
+			hasSpaces = scope.beacon.fireteamSpaces > 0
 
 			scope.allowJoin = beaconActive && hasSpaces && (!userIsCreator && !userOnboard)
 
@@ -127,7 +128,7 @@ angular.module('destinybuddy.directives', [])
 			// we need to convert the timeLeft into minites and seconds
 
 			var stop,
-				startTimer = function() {
+			startTimer = function() {
 					// Don't start a new timer if we are already running
 					if (angular.isDefined(stop)) return;
 
@@ -238,3 +239,22 @@ angular.module('destinybuddy.directives', [])
 		}
 	}
 })
+
+.directive("compareTo", function() {
+	return {
+		require: "ngModel",
+		scope: {
+			otherModelValue: "=compareTo"
+		},
+		link: function(scope, element, attributes, ngModel) {
+
+			ngModel.$validators.compareTo = function(modelValue) {
+				return modelValue == scope.otherModelValue;
+			};
+
+			scope.$watch("otherModelValue", function() {
+				ngModel.$validate();
+			});
+		}
+	};
+});

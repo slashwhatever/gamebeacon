@@ -7735,6 +7735,13 @@ h1, .h1 {
 .col-right {
   text-align: right; }
 
+/******************** form ********************/
+.input-label {
+  color: #E2E7EB; }
+
+.item-select select {
+  background-color: transparent; }
+
 /******************** pane ********************/
 .pane {
   background-color: #272F36; }
@@ -7916,7 +7923,7 @@ button {
   font-size: 32px; }
 
 .button.button-energized:hover {
-  color: #272F36; }
+  color: #fff; }
 
 .button.button-energized {
   color: #272F36; }

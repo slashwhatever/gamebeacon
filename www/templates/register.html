@@ -1,42 +1,46 @@
 <ion-view title="Register">
-<ion-content>
-
-<form name="registerForm" ng-submit="register(registerForm)">
-  <div class="list list-inset">
-    <label class="item item-input">
-      <input type="text" placeholder="Username" name="username" ng-model="user.username" autocomplete="off">
-    </label>
-    <label class="item item-input">
-      <input type="text" placeholder="Email" name="email" ng-model="user.email" autocomplete="off">
-    </label>
-    <label class="item item-input">
-      <input type="password" placeholder="Password" name="password" ng-model="user.password" required autocomplete="off">
-    </label>
-  </div>
-  <div class="list list-inset">
-    <label class="item item-input">
-      <input type="text" placeholder="Gamertag" name="gamertag" ng-model="user.gamertag" autocomplete="off">
-    </label>
-    <label class="item item-input item-select">
-      <div class="input-label">
-        Platform
-      </div>
-      <select ng-model="user.platform" ng-options="platform.name for platform in platforms"></select>
-    </label>
-    <label class="item item-input item-select">
-      <div class="input-label">
-        Platform
-      </div>
-      <select ng-model="user.region" ng-options="region.name for region in regions"></select>
-    </label>
-
-  </div>
-
-</form>
-
-<div class="padding">
-  <button class="button button-block button-positive" ng-click="register(user)">Register</button>
-</div>
-
-</ion-content>
+		<ion-content>
+				<h3 class="text-center padding">Registration</h3>
+				<form name="registerForm" ng-submit="register(registerForm)" novalidate>
+						<div class="list list-inset">
+								<p class="text-center">Your username can be anything you like but your gamertag must be genuine or people won't be able to invite you into games</p>
+								<label class="item item-input">
+										<input type="text" placeholder="Username" name="username" ng-model="user.username" autocomplete="off" form-validate-after>
+								</label>
+								<label class="item item-input">
+										<input type="text" placeholder="Gamertag" name="gamertag" ng-model="user.gamertag" required autocomplete="off" form-validate-after>
+								</label>
+						</div>
+						<div class="list list-inset">
+								<p class="text-center">Tell us what you play and where</p>
+								<label class="item item-input item-select">
+										<div class="input-label">
+												Platform
+										</div>
+										<select ng-model="user.platform" ng-options="platform.name for platform in platforms" required form-validate-after></select>
+								</label>
+								<label class="item item-input item-select">
+										<div class="input-label">
+												Region
+										</div>
+										<select ng-model="user.region" ng-options="region.name for region in regions" required form-validate-after></select>
+								</label>
+						</div>
+						<div class="list list-inset">
+							<p class="text-center">We will send you an email to finalize the authentication on your gamebeacon account</p>
+								<label class="item item-input">
+										<input type="text" placeholder="Email" name="email" ng-model="user.email" autocomplete="off" required form-validate-after>
+								</label>
+								<label class="item item-input">
+										<input type="password" placeholder="Password" name="password" ng-model="user.password" required autocomplete="off" form-validate-after>
+								</label>
+								<label class="item item-input">
+										<input type="password" placeholder="Confirm Password" name="confirmPassword" ng-model="user.confirmPassword" required autocomplete="off" compare-to="user.password" form-validate-after>
+								</label>
+						</div>
+				</form>
+				<div class="padding">
+						<button class="button button-block button-positive" ng-click="register(user)">Register</button>
+				</div>
+		</ion-content>
 </ion-view>
