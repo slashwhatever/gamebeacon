@@ -652,6 +652,19 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 
 .factory('AuthService', ['$resource', '$rootScope', '$ionicLoading', '$q', 'appConfig', 'UIService', 'UtilsService', '$cordovaToast', function($resource, $rootScope, $ionicLoading, $q, appConfig, UIService, UtilsService, $cordovaToast) {
 
+
+/*	return function(customHeaders){
+    return $resource('/api/user', {}, {
+      connect: {
+        method: 'POST',
+        params: {},
+        isArray: false,
+        headers: customHeaders
+      }
+    });
+  };
+*/
+
 	var customHeaders = function() {
 			var user = UtilsService.getCurrentUser()
 			return user ? user.sessionToken : null
@@ -755,17 +768,26 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 
 		},
 		updateProfile: function(user) {
-			var d = $q.defer();
+			var d = $q.defer(), user, PUser, puser;
 
-			User.updateProfile({
-				username: user.username,
-				gamertag: user.gamertag,
-				platform: UtilsService.getObjectAsPointer('platforms', user.platform.objectId),
-				region: UtilsService.getObjectAsPointer('regions', user.region.objectId)
-			}, function(user) {
-				d.resolve(user);
-			}, function(response) {
-				$cordovaToast.showShortCenter(response.data.error)
+			user = User.getCurrentUser({}, function(response){
+
+				user.set("username", user.username);
+				user.save(user.objectId, {
+					success: function(user) {
+						ObjectService.update('pusers', user.puser.objectId, {
+							'platform': user.platform,
+							'region': user.region
+						}, function(response){
+							UIService.showAlert({title: 'Done!', template: 'User details updated.'})
+						},
+						function(error){
+							UIService.showAlert({title: 'Oops!', template: 'Could not update user details. Try again.'})
+						});
+					}
+				});
+			}, function(error){
+				UIService.showAlert({title: 'Oops!', template: 'Could not get user details. Try again.'})
 			});
 
 			return d.promise;
