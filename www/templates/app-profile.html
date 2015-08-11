@@ -5,54 +5,40 @@
   </ion-nav-bar>
 
   <ion-content scroll="true">
-
-    <div class="row">
-
-      <div class="col col-33 col-offset-33 text-center">
-        <h2 class="username">{{ profile.username }}</h2>
-        <p class="meta-detail small lower">Joined: {{ profile.buddySince.iso | amCalendar }}</p>
-      </div>
-
-    </div>
-
-    <div class="row">
-      <div class="col">
-
-        <div class="item item-icon-top">
-          <i class="icon ion-ios-game-controller-a"></i>
-          <h3>{{ profile.gamertag }}</h3>
-        </div>
-
-      </div>
-      <div class="col">
-
-        <div class="item item-icon-top">
-          <i class="icon {{profile.platform.icon}}"></i>
-          <h3>{{ profile.platform.name }}</h3>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col">
-
-        <div class="item item-icon-top">
-          <i class="icon ion-ios-world"></i>
-          <h3>{{ profile.region.name }}</h3>
-        </div>
-
-      </div>
-
-      <div class="col">
-
-        <div ng-show="profile.mic" class="item item-icon-top">
-          <i class="icon {{profile.mic.icon}}"></i>
-          <h3>{{ profile.mic.description }}</h3>
-        </div>
-
-      </div>
-    </div>
-
+  		<h3 class="text-center padding">User profile</h3>
+  		<form name="profileForm" ng-submit="updateProfile(profileForm)" novalidate>
+  				<div class="list list-inset">
+  						<p class="text-center">Your username should match your gamertag or people won't be able to invite you into games</p>
+  						<label class="item item-input">
+  								<input type="text" placeholder="Username (Gamertag)" name="username" ng-model="user.username" required autocomplete="off" form-validate-after>
+  						</label>
+  				</div>
+  				<div class="list list-inset">
+  						<p class="text-center">Tell us what you play and where so we can match you with similar players</p>
+  						<label class="item item-input item-select">
+  								<div class="input-label">
+  										Platform
+  								</div>
+  								<select ng-model="user.platform" ng-options="platform.name for platform in platforms" required form-validate-after></select>
+  						</label>
+  						<label class="item item-input item-select">
+  								<div class="input-label">
+  										Region
+  								</div>
+  								<select ng-model="user.region" ng-options="region.name for region in regions" required form-validate-after></select>
+  						</label>
+  				</div>
+  				<div class="list list-inset">
+  						<label class="item item-input">
+  								<input type="password" placeholder="Password" name="password" ng-model="user.password" required autocomplete="off" form-validate-after>
+  						</label>
+  						<label class="item item-input">
+  								<input type="password" placeholder="Confirm Password" name="confirmPassword" ng-model="user.confirmPassword" required autocomplete="off" compare-to="user.password" form-validate-after>
+  						</label>
+  				</div>
+  		</form>
+  		<div class="padding">
+  				<button class="button button-block button-positive" ng-click="updateProfile(user)">Update</button>
+  		</div>
   </ion-content>
 </ion-view>

@@ -8,6 +8,31 @@ angular.module('destinybuddy.controllers', ['destinybuddy.services'])
 
 	_.extend($scope.profile, $rootScope.currentUser)
 
+	$scope.updateProfile = function( user ) {
+		AuthService.updateProfile(user)
+			.then(function(response) {
+				if (response && response.$resolved) {
+					UIService.showAlert({
+						title: 'Success!',
+						template: 'You have updated your profile details'
+					}, function() {
+						$state.go('app.beacons')
+					})
+				} else {
+					UIService.showAlert({
+						title: 'Failed!',
+						template: 'Looks like there was a problem updating those details. Try again.'
+					})
+				}
+			}, function(error) {
+				$scope.showSignupResult({
+					title: 'Failed!',
+					template: error.message
+				})
+			})
+	};
+
+
 }])
 
 .controller('LoginController', ['$rootScope', '$scope', '$state', 'AuthService', function($rootScope, $scope, $state, AuthService) {

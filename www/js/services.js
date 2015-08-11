@@ -817,6 +817,11 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
             url: appConfig.parseRestBaseUrl + 'functions/signup/',
             method: 'POST',
             headers: appConfig.parseHttpsHeaders
+        },
+        updateProfile: {
+            url: appConfig.parseRestBaseUrl + 'functions/updateProfile/',
+            method: 'POST',
+            headers: appConfig.parseHttpsHeaders
         }
     });
 
@@ -845,10 +850,28 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 
             User.signup({
                 username: user.username,
+                gamertag: user.gamertag,
                 email: user.email,
                 password: user.password,
                 confirmPassword: user.confirmPassword,
-                gamertag: user.gamertag,
+                platform: UtilsService.getObjectAsPointer('platforms', user.platform.objectId),
+                region: UtilsService.getObjectAsPointer('regions', user.region.objectId)
+            }, function(user) {
+                d.resolve(user);
+            }, function(response) {
+                $cordovaToast.showShortCenter(response.data.error)
+            });
+
+            return d.promise;
+
+        },
+        updateProfile: function(user) {
+            var d = $q.defer();
+
+            User.updateProfile({
+                username: user.username,
+                password: user.password,
+                confirmPassword: user.confirmPassword,
                 platform: UtilsService.getObjectAsPointer('platforms', user.platform.objectId),
                 region: UtilsService.getObjectAsPointer('regions', user.region.objectId)
             }, function(user) {
