@@ -1,44 +1,45 @@
 <ion-view name="user-profile" title="User Profile">
-
-  <ion-nav-bar align-title="right" class="bar-positive nav-title-slide-ios7">
-    <ion-nav-back-button class="button-clear"><i class="icon ion-chevron-left"></i> Back</ion-nav-back-button>
-  </ion-nav-bar>
-
-  <ion-content scroll="true">
-  		<h3 class="text-center padding">User profile</h3>
-  		<form name="profileForm" ng-submit="updateProfile(profileForm)" novalidate>
-  				<div class="list list-inset">
-  						<p class="text-center">Your username should match your gamertag or people won't be able to invite you into games</p>
-  						<label class="item item-input">
-  								<input type="text" placeholder="Username (Gamertag)" name="username" ng-model="user.username" required autocomplete="off" form-validate-after>
-  						</label>
-  				</div>
-  				<div class="list list-inset">
-  						<p class="text-center">Tell us what you play and where so we can match you with similar players</p>
-  						<label class="item item-input item-select">
-  								<div class="input-label">
-  										Platform
-  								</div>
-  								<select ng-model="user.platform" ng-options="platform.name for platform in platforms" required form-validate-after></select>
-  						</label>
-  						<label class="item item-input item-select">
-  								<div class="input-label">
-  										Region
-  								</div>
-  								<select ng-model="user.region" ng-options="region.name for region in regions" required form-validate-after></select>
-  						</label>
-  				</div>
-  				<div class="list list-inset">
-  						<label class="item item-input">
-  								<input type="password" placeholder="Password" name="password" ng-model="user.password" required autocomplete="off" form-validate-after>
-  						</label>
-  						<label class="item item-input">
-  								<input type="password" placeholder="Confirm Password" name="confirmPassword" ng-model="user.confirmPassword" required autocomplete="off" compare-to="user.password" form-validate-after>
-  						</label>
-  				</div>
-  		</form>
-  		<div class="padding">
-  				<button class="button button-block button-positive" ng-click="updateProfile(user)">Update</button>
-  		</div>
-  </ion-content>
+	<ion-nav-bar align-title="right" class="bar-positive nav-title-slide-ios7">
+		<ion-nav-back-button class="button-clear"><i class="icon ion-chevron-left"></i> Back</ion-nav-back-button>
+	</ion-nav-bar>
+	<ion-content scroll="true">
+		<h3 class="text-center padding">User profile</h3>
+		<form name="profileForm" ng-submit="updateProfile(profileForm)">
+			<div class="list list-inset">
+				<p class="text-center">Your username can be anything you like but your gamertag must be genuine or people won't be able to invite you into games</p>
+				<label class="item item-input">
+					<input type="text" placeholder="Username" name="username" ng-model="profile.username" autocomplete="off">
+				</label>
+				<label class="item item-input">
+					<input type="text" placeholder="Gamertag" name="gamertag" ng-model="profile.gamertag" required autocomplete="off">
+				</label>
+			</div>
+			<div class="list list-inset">
+				<p class="text-center">Tell us what you play and where so we can match you with similar players</p>
+				<label class="item item-input item-select">
+					<div class="input-label">
+						Platform
+					</div>
+					<select ng-model="profile.platform.name" ng-options="platform.name for platform in platforms" required></select>
+				</label>
+				<label class="item item-input item-select">
+					<div class="input-label">
+						Region
+					</div>
+					<select ng-model="profile.region.name" ng-options="region.name for region in regions" required></select>
+				</label>
+			</div>
+			<div class="list list-inset">
+				<p class="text-center">Password resets must be done via your registered email address</p>
+				<div class="row">
+					<div class="col col-50 col-offset-25">
+						<button class="button button-block button-outline button-positive" ng-click="requestPasswordReset(profile.user)">Reset Password</button>
+					</div>
+				</div>
+			</div>
+		</form>
+		<div class="padding">
+			<button class="button button-block button-positive" ng-click="updateProfile(profile)">Update</button>
+		</div>
+	</ion-content>
 </ion-view>

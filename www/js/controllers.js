@@ -1,6 +1,6 @@
 angular.module('destinybuddy.controllers', ['destinybuddy.services'])
 
-.controller('UserController', ['$rootScope', '$scope', 'UtilsService', function($rootScope, $scope, UtilsService) {
+.controller('UserController', ['$rootScope', '$scope', 'UtilsService', 'AuthService', function($rootScope, $scope, UtilsService, AuthService) {
 
 	$scope.profile = {
 		platformIcon: UtilsService.getPlatformIcon($scope.currentUser.platform.name)
@@ -8,7 +8,35 @@ angular.module('destinybuddy.controllers', ['destinybuddy.services'])
 
 	_.extend($scope.profile, $rootScope.currentUser)
 
-	$scope.updateProfile = function( user ) {
+	$scope.profile = {
+		platformIcon: UtilsService.getPlatformIcon($scope.currentUser.platform.name)
+	}
+
+	_.extend($scope.profile, $rootScope.currentUser)
+
+	$scope.requestPasswordReset = function(user) {
+		AuthService.requestPasswordReset(user)
+			.then(function(response) {
+				if (response && response.$resolved) {
+					UIService.showAlert({
+						title: 'Done!',
+						template: 'We have emailed you details of how to reset your password.'
+					})
+				} else {
+					UIService.showAlert({
+						title: 'Oops!',
+						template: 'Something went wrong. Try again.'
+					})
+				}
+			}, function(error) {
+				UIService.showAlert({
+					title: 'Oops!',
+					template: 'Something went wrong. Try again.'
+				})
+			})
+	};
+
+	$scope.updateProfile = function(user) {
 		AuthService.updateProfile(user)
 			.then(function(response) {
 				if (response && response.$resolved) {
@@ -25,7 +53,7 @@ angular.module('destinybuddy.controllers', ['destinybuddy.services'])
 					})
 				}
 			}, function(error) {
-				$scope.showSignupResult({
+				UIService.showAlert({
 					title: 'Failed!',
 					template: error.message
 				})
@@ -87,7 +115,7 @@ angular.module('destinybuddy.controllers', ['destinybuddy.services'])
 					})
 				}
 			}, function(error) {
-				$scope.showSignupResult({
+				UIService.showAlert({
 					title: 'Failed!',
 					template: error.message
 				})

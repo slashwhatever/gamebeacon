@@ -14,7 +14,6 @@ var DestinyBuddy = angular.module('destinybuddy', [
   'destinybuddy.services',
   'destinybuddy.directives',
   'angularMoment',
-  
   'ng-mfb'
 ])
 
@@ -103,14 +102,14 @@ var DestinyBuddy = angular.module('destinybuddy', [
       missions: function (MissionService) {
         return MissionService.list()
       },
-      platforms: function (PlatformService) {
-        return PlatformService.list()
+      platforms: function (ObjectService) {
+        return ObjectService.list('platforms')
       },
-      regions: function (RegionService) {
-        return RegionService.list()
+      regions: function (ObjectService) {
+        return ObjectService.list('regions')
       },
-      mics: function (MicService) {
-        return MicService.list()
+      mics: function (ObjectService) {
+        return ObjectService.list('mics')
       }
     }
   })
@@ -120,7 +119,15 @@ var DestinyBuddy = angular.module('destinybuddy', [
     views: {
       'main-view': {
         templateUrl: 'templates/app-profile.html',
-        controller: 'UserController'
+        controller: 'UserController',
+        resolve: {
+        	platforms: function (ObjectService) {
+        	  return ObjectService.list('platforms')
+        	},
+          regions: function (ObjectService) {
+            return ObjectService.list('regions')
+          }
+        }
       }
     }
   })
@@ -139,11 +146,11 @@ var DestinyBuddy = angular.module('destinybuddy', [
     templateUrl: 'templates/register.html',
     controller: 'SignupController',
     resolve: {
-      platforms: function (PlatformService) {
-        return PlatformService.list()
-      },
-      regions: function (RegionService) {
-        return RegionService.list()
+    	platforms: function (ObjectService) {
+    	  return ObjectService.list('platforms')
+    	},
+      regions: function (ObjectService) {
+        return ObjectService.list('regions')
       }
     }
   })
