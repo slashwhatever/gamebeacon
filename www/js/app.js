@@ -11,8 +11,22 @@ var PROXY_ADDRESS = 'http://0.0.0.0:58086'
 var DestinyBuddy = angular.module('destinybuddy', [
   'ionic','ionic.service.core','ionic.service.deploy','ionic.service.push','ngCordova',
   'destinybuddy.controllers',
+  'destinybuddy.user.register.controllers',
+  'destinybuddy.beacon.list.controllers',
+  'destinybuddy.beacon.detail.controllers',
+  'destinybuddy.beacon.create.controllers',
+  'destinybuddy.tutorial.controllers',
+  'destinybuddy.user.login.controllers',
+  'destinybuddy.user.profile.controllers',
   'destinybuddy.services',
   'destinybuddy.directives',
+  'destinybuddy.beacontabset.directives',
+  'destinybuddy.beaconheader.directives',
+  'destinybuddy.beacontimer.directives',
+  'destinybuddy.fireteam.directives',
+  'destinybuddy.beaconchat.directives',
+  'destinybuddy.beaconmeta.directives',
+  'destinybuddy.beaconactions.directives',
   'angularMoment',
   'ng-mfb'
 ])
@@ -50,7 +64,7 @@ var DestinyBuddy = angular.module('destinybuddy', [
 
   .state('login', {
     url: '/login',
-    templateUrl: 'templates/login.html',
+    templateUrl: 'app/components/user/login/loginView.html',
     controller: 'LoginController',
     data: {
       requireLogin: false
@@ -70,8 +84,8 @@ var DestinyBuddy = angular.module('destinybuddy', [
     url: '/beacons',
     views: {
       'main-view': {
-        templateUrl: 'templates/app-beacons.html',
-        controller: 'ListBeaconsController'
+        templateUrl: 'app/components/beacon/list/listView.html',
+        controller: 'ListController'
       }
     }
   })
@@ -80,8 +94,8 @@ var DestinyBuddy = angular.module('destinybuddy', [
     url: '/beacons/:beaconId',
     views: {
       'main-view': {
-        templateUrl: 'templates/app-beacon.html',
-        controller: 'GetBeaconController',
+        templateUrl: 'app/components/beacon/detail/detailView.html',
+        controller: 'DetailController',
         resolve: {
           beacon: function ($stateParams, Beacon) {
             return Beacon.get($stateParams.beaconId)
@@ -96,8 +110,8 @@ var DestinyBuddy = angular.module('destinybuddy', [
 
   .state('beacon-create', {
     url: '/beacon-create',
-    templateUrl: 'templates/beacon-create.html',
-    controller: 'CreateBeaconController',
+    templateUrl: 'app/components/beacon/create/createView.html',
+    controller: 'CreateController',
     resolve: {
       missions: function (ObjectService) {
         return ObjectService.list('missions')
@@ -118,8 +132,8 @@ var DestinyBuddy = angular.module('destinybuddy', [
     url: '/profile',
     views: {
       'main-view': {
-        templateUrl: 'templates/app-profile.html',
-        controller: 'UserController',
+        templateUrl: 'app/components/user/profile/profileView.html',
+        controller: 'ProfileController',
         resolve: {
         	platforms: function (ObjectService) {
         	  return ObjectService.list('platforms')
@@ -136,15 +150,15 @@ var DestinyBuddy = angular.module('destinybuddy', [
     url: '/about',
     views: {
       'main-view': {
-        templateUrl: 'templates/app-about.html'
+        templateUrl: 'app/components/about/aboutView.html'
       }
     }
   })
 
   .state('signup', {
     url: '/register',
-    templateUrl: 'templates/register.html',
-    controller: 'SignupController',
+    templateUrl: 'app/components/user/register/registerView.html',
+    controller: 'RegisterController',
     resolve: {
     	platforms: function (ObjectService) {
     	  return ObjectService.list('platforms')
@@ -159,16 +173,15 @@ var DestinyBuddy = angular.module('destinybuddy', [
     url: '/donate',
     views: {
       'main-view': {
-        templateUrl: 'templates/app-donate.html',
-        controller: 'DonateController'
+        templateUrl: 'app/components/donate/donateView.html'
       }
     }
   })
 
   .state('tutorial', {
     url: '/',
-    templateUrl: 'templates/tutorial.html',
-    controller: 'TutorialCtrl'
+    templateUrl: 'app/components/tutorial/tutorialView.html',
+    controller: 'TutorialController'
   })
 
   // if none of the above states are matched, use this as the fallback

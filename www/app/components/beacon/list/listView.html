@@ -1,0 +1,46 @@
+<ion-view name="beacon-list" title="Active Beacons" cache-view="false">
+
+  <ion-nav-bar align-title="right" class="bar-positive nav-title-slide-ios7"></ion-nav-bar>
+
+    <ion-content scroll="true">
+
+        <ion-refresher pulling-icon="spiral" on-refresh="refreshBeaconList()"></ion-refresher>
+
+        <!-- beacon card -->
+        <div class="beacon-card" ng-class="{'my-beacon' : beacon.userIsCreator }" ng-repeat="beacon in beacons">
+
+            <beacon-header></beacon-header>
+            <beacon-meta></beacon-meta>
+            <beacon-actions></beacon-actions>
+
+        </div>
+
+        <!-- no beacons -->
+        <div ng-hide="beacons" class="row">
+            <div class="col col-80 col-offset-10">
+                <div class="beacon-list-empty padding">
+
+                    <h1>No beacons!</h1>
+                    <p ui-sref="beacon-create">There are no beacons right now - tap here to create one</p>
+
+                </div>
+            </div>
+        </div>
+
+        <ion-infinite-scroll ng-if="moreBeacons" on-infinite="getBeaconChunk()"></ion-infinite-scroll>
+
+    </ion-content>
+
+    <nav mfb-menu position="br" effect="zoomin"
+         active-icon="ion-chevron-down" resting-icon="ion-navicon-round"
+         toggling-method="click">
+        <button mfb-button template-url="app/shared/floatButton/floatButton.html" bg="positive-bg" icon="ion-document-text" ng-if="$state.current.name === 'app.beacons'" label="All beacons" ui-sref="app.beacons"></button>
+        <button mfb-button template-url="app/shared/floatButton/floatButton.html" bg="balanced-bg" icon="ion-plus" label="Create beacon" ng-if="!myBeacon" ui-sref="beacon-create"></button>
+        <button mfb-button template-url="app/shared/floatButton/floatButton.html" bg="balanced-bg" icon="ion-radio-waves" label="My beacon" ng-if="myBeacon" ui-sref="app.beacon( {beaconId:  myBeacon.objectId } )"></button>
+        <button mfb-button template-url="app/shared/floatButton/floatButton.html" bg="calm-bg" icon="ion-person" label="Profile" ui-sref="app.profile"></button>
+        <button mfb-button template-url="app/shared/floatButton/floatButton.html" bg="calm-bg" icon="ion-clipboard" label="About" ui-sref="app.about"></button>
+        <button mfb-button template-url="app/shared/floatButton/floatButton.html" bg="energized-bg" icon="ion-help" label="Tutorial" ui-sref="tutorial"></button>
+        <button mfb-button template-url="app/shared/floatButton/floatButton.html" bg="energized-bg" icon="ion-heart" label="Donate" ui-sref="app.donate"></button>
+    </nav>
+
+</ion-view>

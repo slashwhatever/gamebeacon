@@ -1,11 +1,11 @@
 angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 
 .factory('UtilsService', ['appConfig', '$rootScope', function(appConfig, $rootScope) {
-	return {
+	var funcs = {
 		userOnboard: function(beacon) {
 			return _.findIndex(beacon.fireteamOnboard, function(i) {
 				// is the current user in the list of fireteam members?
-				return $rootScope.currentUser.puserId == i.objectId
+				return i ? funcs.getCurrentUser().puserId == i.objectId : false
 			}) > -1
 		},
 		findMyBeacon: function(beacons) {
@@ -51,7 +51,9 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 					break;
 			}
 		}
-	}
+	};
+
+	return funcs
 }])
 
 .factory('UIService', ['appConfig', '$ionicPopup', '$rootScope', function(appConfig, $ionicPopup, $rootScope) {
@@ -132,13 +134,10 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 		// is the current user the beacon creator?
 		beacon['userIsCreator'] = _.findIndex(beacon.fireteamOnboard, function(i) {
 			// is the current user the same as the beacon creator user?
-			return UtilsService.getCurrentUser().objectId == beacon.creator.objectId
+			return UtilsService.getCurrentUser().puersId == beacon.creator.objectId
 		}) > -1
 
-		beacon['alreadyOnboard'] = _.findIndex(beacon.fireteamOnboard, function(i) {
-			// is the current user in the list of fireteam members?
-			return UtilsService.getCurrentUser().objectId == i.objectId
-		}) > -1
+		beacon['alreadyOnboard'] = UtilsService.userOnboard(beacon)
 
 		beacon.platformIcon = UtilsService.getPlatformIcon(beacon.platform.name);
 		beacon.fireteamSpaces = beacon.fireteamRequired - (beacon.fireteamOnboard ? beacon.fireteamOnboard.length - 1 : 0);
@@ -334,9 +333,9 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 		})
 
 	return {
-		list: function(id) {
+		list: function(beaconId) {
 			var d = $q.defer();
-			Messages.list({where: '{"beacon":{"__type":"Pointer","className":"beacons","objectId":"' + id + '"}}'}, function(response) {
+			Messages.list({where: '{"beacon":{"__type":"Pointer","className":"beacons","objectId":"' + beaconId + '"}}'}, function(response) {
 				d.resolve(response);
 			}, function(error){
 				d.reject(error)
@@ -377,29 +376,40 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 	}
 }])
 
-.factory('PUserService', ['$resource', 'appConfig', function($resource, appConfig) {
-	var PUser = $resource(appConfig.parseRestBaseUrl + 'classes/pusers/:id', {
-		id: '@id'
-	}, {
-		get: {
-			headers: appConfig.parseHttpsHeaders
-		},
-		list: {
-			method: 'GET',
-			headers: appConfig.parseHttpsHeaders
-		},
-		save: {
-			method: 'POST',
-			headers: appConfig.parseHttpsHeaders
-		},
-		update: {
-			method: 'PUT',
-			headers: appConfig.parseHttpsHeaders
-		}
-	});
+.factory('PUserService', ['$resource', '$rootScope', '$q', 'appConfig', function($resource, $rootScope, $q, appConfig) {
+
+	var PUser = function(id) {
+		return $resource(appConfig.parseRestBaseUrl + 'classes/pusers/:id', {
+			id: '@id'
+		}, {
+			get: {
+				headers: _.extend({}, {
+					'X-Parse-Session-Token': $rootScope.currentUser.sessionToken
+				}, appConfig.parseHttpsHeaders)
+			},
+			list: {
+				method: 'GET',
+				headers: _.extend({}, {
+					'X-Parse-Session-Token': $rootScope.currentUser.sessionToken
+				}, appConfig.parseHttpsHeaders)
+			},
+			save: {
+				method: 'POST',
+				headers: _.extend({}, {
+					'X-Parse-Session-Token': $rootScope.currentUser.sessionToken
+				}, appConfig.parseHttpsHeaders)
+			},
+			update: {
+				method: 'PUT',
+				headers: _.extend({}, {
+					'X-Parse-Session-Token': $rootScope.currentUser.sessionToken
+				}, appConfig.parseHttpsHeaders)
+			}
+		});
+	}
 
 	return {
-		get: function() {
+		get: function(id) {
 			var d = $q.defer();
 			PUser(id).get(function(response) {
 				d.resolve(response);
@@ -428,10 +438,10 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 			});
 			return d.promise
 		},
-		update: function() {
+		update: function(puser, params) {
 			var d = $q.defer();
 
-			PUser(id).update(function(response) {
+			PUser().update(puser, params, function(response) {
 				d.resolve(response);
 			}, function(error){
 				d.reject(error)
@@ -483,7 +493,7 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 			});
 			return d.promise
 		},
-		list: function(id) {
+		list: function() {
 			var d = $q.defer();
 			User().list(function(response) {
 				d.resolve(response);
@@ -709,26 +719,19 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 			}, function(response) {
 				if (response && response.updatedAt) {
 					PUserService.update({
-						id: user.puserId
+						gamertag: user.gamertag,
+						platform: UtilsService.getObjectAsPointer('platforms', user.platform.objectId),
+						region: UtilsService.getObjectAsPointer('regions', user.region.objectId)
 					}, {
-						'gamertag': user.gamertag
+						id: user.puserId
 					}, function(response) {
-						UIService.showAlert({
-							title: 'Done!',
-							template: 'Your profile has been updated.'
-						})
+						d.resolve(response);
 					}, function(error) {
-						UIService.showAlert({
-							title: 'Oops!',
-							template: 'Could not update your profile. Try again.'
-						})
+						d.reject(error);
 					});
 				}
 			}, function(error) {
-				UIService.showAlert({
-					title: 'Oops!',
-					template: 'Could not get user details. Try again.'
-				})
+				d.reject(error);
 			});
 
 			return d.promise;
