@@ -86,8 +86,8 @@ var DestinyBuddy = angular.module('destinybuddy', [
           beacon: function ($stateParams, Beacon) {
             return Beacon.get($stateParams.beaconId)
           },
-          messages: function ($stateParams, ChatService) {
-            return ChatService.list($stateParams.beaconId)
+          messages: function ($stateParams, MessagesService) {
+            return MessagesService.list($stateParams.beaconId)
           }
         }
       }
@@ -99,8 +99,8 @@ var DestinyBuddy = angular.module('destinybuddy', [
     templateUrl: 'templates/beacon-create.html',
     controller: 'CreateBeaconController',
     resolve: {
-      missions: function (MissionService) {
-        return MissionService.list()
+      missions: function (ObjectService) {
+        return ObjectService.list('missions')
       },
       platforms: function (ObjectService) {
         return ObjectService.list('platforms')

@@ -5,7 +5,7 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 		userOnboard: function(beacon) {
 			return _.findIndex(beacon.fireteamOnboard, function(i) {
 				// is the current user in the list of fireteam members?
-				return $rootScope.currentUser.objectId == i.objectId
+				return $rootScope.currentUser.puserId == i.objectId
 			}) > -1
 		},
 		findMyBeacon: function(beacons) {
@@ -278,7 +278,7 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 
 			Beacon.updateFireteam({
 					objectId: beacon.objectId,
-					fireteamOnboard: JSON.parse('{"__op":"' + opObj[operation].action + '","objects":[' + JSON.stringify(UtilsService.getObjectAsPointer('pusers', $rootScope.currentUser.objectId)) + ']}')
+					fireteamOnboard: JSON.parse('{"__op":"' + opObj[operation].action + '","objects":[' + JSON.stringify(UtilsService.getObjectAsPointer('pusers', $rootScope.currentUser.puserId)) + ']}')
 				},
 				function(response) {
 					$ionicLoading.hide();
@@ -302,6 +302,217 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 		}
 	});
 }])
+
+
+.factory('MessagesService', ['$rootScope', '$resource', '$q', 'appConfig', 'UtilsService', function($rootScope, $resource, $q, appConfig, UtilsService) {
+
+	var Messages = $resource(
+		appConfig.parseRestBaseUrl + 'classes/messages/:id', {
+			id: '@id',
+			where: '@where'
+		}, {
+			get: {
+				headers: appConfig.parseHttpsHeaders
+			},
+			list: {
+				method: 'GET',
+				params: {
+					'where': '@where',
+					'order': '-createdAt',
+					'include': 'from,to,mission,createdAt'
+				},
+				headers: appConfig.parseHttpsHeaders
+			},
+			save: {
+				method: 'POST',
+				headers: appConfig.parseHttpsHeaders
+			},
+			update: {
+				method: 'PUT',
+				headers: appConfig.parseHttpsHeaders
+			}
+		})
+
+	return {
+		list: function(id) {
+			var d = $q.defer();
+			Messages.list({where: '{"beacon":{"__type":"Pointer","className":"beacons","objectId":"' + id + '"}}'}, function(response) {
+				d.resolve(response);
+			}, function(error){
+				d.reject(error)
+			});
+			return d.promise
+		},
+		get: function(id) {
+			var d = $q.defer();
+			Messages.get({id: id}, function(response) {
+				d.resolve(response);
+			}, function(error){
+				d.reject(error)
+			});
+			return d.promise
+		},
+		save: function(message, beaconId) {
+			var d = $q.defer();
+			Messages.save({
+				message: message,
+				beacon: UtilsService.getObjectAsPointer('beacons', beaconId),
+				from: UtilsService.getObjectAsPointer('pusers', $rootScope.currentUser.puserId)
+			}, function(response) {
+				d.resolve(response);
+			}, function(error){
+				d.reject(error)
+			});
+			return d.promise
+		},
+		update: function(message) {
+			var d = $q.defer();
+			Messages.update({message: message}, {id: id}, function(response) {
+				d.resolve(response);
+			}, function(error){
+				d.reject(error)
+			});
+			return d.promise
+		}
+	}
+}])
+
+.factory('PUserService', ['$resource', 'appConfig', function($resource, appConfig) {
+	var PUser = $resource(appConfig.parseRestBaseUrl + 'classes/pusers/:id', {
+		id: '@id'
+	}, {
+		get: {
+			headers: appConfig.parseHttpsHeaders
+		},
+		list: {
+			method: 'GET',
+			headers: appConfig.parseHttpsHeaders
+		},
+		save: {
+			method: 'POST',
+			headers: appConfig.parseHttpsHeaders
+		},
+		update: {
+			method: 'PUT',
+			headers: appConfig.parseHttpsHeaders
+		}
+	});
+
+	return {
+		get: function() {
+			var d = $q.defer();
+			PUser(id).get(function(response) {
+				d.resolve(response);
+			}, function(error){
+				d.reject(error)
+			});
+			return d.promise
+		},
+		list: function() {
+			var d = $q.defer();
+
+			PUser().list(function(response) {
+				d.resolve(response);
+			}, function(error){
+				d.reject(error)
+			});
+			return d.promise
+		},
+		save: function() {
+			var d = $q.defer();
+
+			PUser().save(function(response) {
+				d.resolve(response);
+			}, function(error){
+				d.reject(error)
+			});
+			return d.promise
+		},
+		update: function() {
+			var d = $q.defer();
+
+			PUser(id).update(function(response) {
+				d.resolve(response);
+			}, function(error){
+				d.reject(error)
+			});
+			return d.promise
+		}
+	}
+}])
+
+.factory('UserService', ['$resource', '$rootScope', 'appConfig', function($resource, $rootScope, appConfig) {
+	var User = function(id) {
+		return $resource(appConfig.parseRestBaseUrl + 'users/:id', {
+			id: '@id'
+		}, {
+			get: {
+				headers: _.extend({}, {
+					'X-Parse-Session-Token': $rootScope.currentUser.sessionToken
+				}, appConfig.parseHttpsHeaders)
+			},
+			list: {
+				method: 'GET',
+				headers: _.extend({}, {
+					'X-Parse-Session-Token': $rootScope.currentUser.sessionToken
+				}, appConfig.parseHttpsHeaders)
+			},
+			save: {
+				method: 'POST',
+				headers: _.extend({}, {
+					'X-Parse-Session-Token': $rootScope.currentUser.sessionToken
+				}, appConfig.parseHttpsHeaders)
+			},
+			update: {
+				method: 'PUT',
+				headers: _.extend({}, {
+					'X-Parse-Session-Token': $rootScope.currentUser.sessionToken
+				}, appConfig.parseHttpsHeaders)
+			}
+		});
+	}
+
+	return {
+		get: function(id) {
+			var d = $q.defer();
+
+			User(id).get(function(response) {
+				d.resolve(response);
+			}, function(error){
+				d.reject(error)
+			});
+			return d.promise
+		},
+		list: function(id) {
+			var d = $q.defer();
+			User().list(function(response) {
+				d.resolve(response);
+			}, function(error){
+				d.reject(error)
+			});
+			return d.promise
+		},
+		save: function() {
+			var d = $q.defer();
+			User().save(function(response) {
+				d.resolve(response);
+			}, function(error){
+				d.reject(error)
+			});
+			return d.promise
+		},
+		update: function(id) {
+			var d = $q.defer();
+			User(id).update(function(response) {
+				d.resolve(response);
+			}, function(error){
+				d.reject(error)
+			});
+			return d.promise
+		}
+	}
+}])
+
 
 .factory('ObjectService', ['$resource', '$q', '$ionicLoading', 'appConfig', function($resource, $q, $ionicLoading, appConfig) {
 
@@ -329,403 +540,121 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 	return {
 		list: function(objectName) {
 			var d = $q.defer();
-			$ionicLoading.show({
-				template: 'Loading...'
-			});
-			var objects = Objects.list({
-				objectName: objectName
-			}, function(response) {
-				$ionicLoading.hide();
+			Objects.list({}, {objectName: objectName}, function(response) {
 				d.resolve(response);
-			}, function() {
-				$ionicLoading.hide();
+			}, function(error){
+				d.reject(error)
 			});
 			return d.promise
 		},
 		get: function(objectName, objectId) {
 			var d = $q.defer();
-			$ionicLoading.show({
-				template: 'Loading...'
-			});
-
-			var object = Objects.get({
-				objectName: objectName,
-				objectId: objectId
-			}, function(response) {
-				$ionicLoading.hide();
+			Objects.get({}, {objectName: objectName, objectId: objectId}, function(response) {
 				d.resolve(response);
-			}, function() {
-				$ionicLoading.hide();
+			}, function(error){
+				d.reject(error)
 			});
 			return d.promise
+
 		},
 		save: function() {
-			var d = $q.defer();
-			$ionicLoading.show({
-				template: 'Loading...'
-			});
 
-			var object = Objects.save({
-				objectName: objectName
-			}, function(response) {
-				$ionicLoading.hide();
+			var d = $q.defer();
+			Objects.save({}, {objectName: objectName}, function(response) {
 				d.resolve(response);
-			}, function() {
-				$ionicLoading.hide();
+			}, function(error){
+				d.reject(error)
 			});
 			return d.promise
 		},
-		update: function(object) {
+		update: function(objectName, objectId, params) {
 			var d = $q.defer();
 
-			$ionicLoading.show({
-				template: 'Loading...'
-			});
-			var object = Objects.update(object, function(response) {
-				$ionicLoading.hide();
+			var d = $q.defer();
+			Objects.update(params, {objectName: objectName, objectId: objectId}, function(response) {
 				d.resolve(response);
-			}, function() {
-				$ionicLoading.hide();
+			}, function(error){
+				d.reject(error)
 			});
 			return d.promise
+
 		}
 	}
 
 }])
 
-.factory('MissionService', ['$resource', '$q', '$ionicLoading', 'appConfig', function($resource, $q, $ionicLoading, appConfig) {
+.factory('AuthService', ['$resource', '$rootScope', '$ionicLoading', '$q', 'appConfig', 'PUserService', 'UIService', 'UtilsService', '$cordovaToast', function($resource, $rootScope, $ionicLoading, $q, appConfig, PUserService, UIService, UtilsService, $cordovaToast) {
 
-	var Missions = $resource(appConfig.parseRestBaseUrl + 'classes/missions/:missionId', {
-		missionId: '@missionId'
-	}, {
-		get: {
-			headers: appConfig.parseHttpsHeaders
-		},
-		list: {
-			method: 'GET',
-			headers: appConfig.parseHttpsHeaders,
-			params: {
-				'order': 'order',
-				'include': 'levels,checkpoints'
-			}
-		},
-		save: {
-			method: 'POST',
-			headers: appConfig.parseHttpsHeaders
-		},
-		update: {
-			method: 'PUT',
-			headers: appConfig.parseHttpsHeaders
-		}
-	});
-
-	return {
-		list: function() {
-			var d = $q.defer();
-
-			$ionicLoading.show({
-				template: 'Loading...'
-			});
-
-			var missions = Missions.list({}, function(response) {
-				$ionicLoading.hide()
-				d.resolve(response);
-			}, function() {
-				$ionicLoading.hide()
-			});
-			return d.promise
-		},
-		get: function(missionId) {
-			var d = $q.defer();
-
-			$ionicLoading.show({
-				template: 'Loading...'
-			});
-
-			var mission = Missions.get({
-				missionId: missionId
-			}, function(response) {
-				$ionicLoading.hide()
-				d.resolve(response);
-			}, function() {
-				$ionicLoading.hide();
-			});
-			return d.promise
-		},
-		save: function() {
-			var d = $q.defer();
-
-			$ionicLoading.show({
-				template: 'Loading...'
-			});
-
-			var mission = Missions.save({}, function(response) {
-				$ionicLoading.hide()
-				d.resolve(response);
-			}, function() {
-				$ionicLoading.hide();
-			});
-			return d.promise
-		},
-		update: function(mission) {
-			var d = $q.defer();
-
-			$ionicLoading.show({
-				template: 'Loading...'
-			});
-
-			var mission = Missions.update(mission, function(response) {
-				$ionicLoading.hide()
-				d.resolve(response);
-			}, function() {
-				$ionicLoading.hide();
-			});
-			return d.promise
-		}
-	}
-}])
-
-.factory('CheckpointService', ['$resource', '$q', '$ionicLoading', 'appConfig', function($resource, $q, $ionicLoading, appConfig) {
-
-	var Resource = $resource(appConfig.parseRestBaseUrl + 'classes/checkpoints/:checkpointId', {
-		checkpointId: '@checkpointId'
-	}, {
-		get: {
-			headers: appConfig.parseHttpsHeaders
-		},
-		list: {
-			method: 'GET',
-			headers: appConfig.parseHttpsHeaders,
-			params: {
-				'order': 'order'
-			}
-		},
-		save: {
-			method: 'POST',
-			headers: appConfig.parseHttpsHeaders
-		},
-		update: {
-			method: 'PUT',
-			headers: appConfig.parseHttpsHeaders
-		}
-	});
-
-	return {
-		list: function() {
-			var d = $q.defer();
-
-			$ionicLoading.show({
-				template: 'Loading...'
-			});
-
-			var checkpoints = Resource.list({}, function(response) {
-				$ionicLoading.hide()
-				d.resolve(response);
-			}, function() {
-				$ionicLoading.hide()
-			});
-			return d.promise
-		},
-		get: function(checkpointId) {
-			var d = $q.defer();
-
-			$ionicLoading.show({
-				template: 'Loading...'
-			});
-
-			var checkpoint = Resource.get({
-				checkpointId: checkpointId
-			}, function(response) {
-				$ionicLoading.hide()
-				d.resolve(response);
-			}, function() {
-				$ionicLoading.hide();
-			});
-			return d.promise
-		},
-		save: function() {
-			var d = $q.defer();
-
-			$ionicLoading.show({
-				template: 'Loading...'
-			});
-
-			var checkpoint = Resource.save({}, function(response) {
-				$ionicLoading.hide()
-				d.resolve(response);
-			}, function() {
-				$ionicLoading.hide();
-			});
-			return d.promise
-		},
-		update: function(mission) {
-			var d = $q.defer();
-
-			$ionicLoading.show({
-				template: 'Loading...'
-			});
-
-			var checkpoint = Resource.update(checkpoint, function(response) {
-				$ionicLoading.hide()
-				d.resolve(response);
-			}, function() {
-				$ionicLoading.hide();
-			});
-			return d.promise
-		}
-	}
-}])
-
-.factory('ChatService', ['$rootScope', '$resource', '$q', 'appConfig', 'UtilsService', function($rootScope, $resource, $q, appConfig, UtilsService) {
-
-	var Messages = $resource(appConfig.parseRestBaseUrl + 'classes/messages/:messageId', {
-		messageId: '@messageId',
-		beaconId: '@beaconId',
-		where: '@where'
-	}, {
-		get: {
-			headers: appConfig.parseHttpsHeaders
-		},
-		list: {
-			method: 'GET',
-			headers: appConfig.parseHttpsHeaders,
-			params: {
-				'where': '@where',
-				'order': '-createdAt',
-				'include': 'from,to,mission,createdAt'
-			}
-		},
-		save: {
-			url: appConfig.parseRestBaseUrl + 'classes/messages/:message/:beacon',
-			method: 'POST',
-			headers: appConfig.parseHttpsHeaders
-		},
-		update: {
-			method: 'PUT',
-			headers: appConfig.parseHttpsHeaders
-		}
-	});
-
-	return {
-		list: function(beaconId) {
-			var d = $q.defer();
-
-			var messages = Messages.list({
-				where: '{"beacon":{"__type":"Pointer","className":"beacons","objectId":"' + beaconId + '"}}'
-			}, function(response) {
-				d.resolve(response);
-			});
-			return d.promise
-		},
-		get: function(messageId) {
-			var d = $q.defer();
-
-			var message = Messages.get({
-				messageId: messageId
-			}, function(response) {
-				d.resolve(response);
-			});
-			return d.promise
-		},
-		save: function(message, beaconId) {
-			var d = $q.defer();
-
-			var messages = Messages.save({
-				message: message,
-				beacon: UtilsService.getObjectAsPointer('beacons', beaconId),
-				from: UtilsService.getObjectAsPointer('pusers', $rootScope.currentUser.objectId)
-			}, function(response) {
-				d.resolve(response);
-			});
-			return d.promise
-		},
-		update: function(message) {
-			var d = $q.defer();
-
-			var messages = Messages.update(messages, function(response) {
-				d.resolve(response);
-			});
-			return d.promise
-		}
-	}
-}])
-
-.factory('AuthService', ['$resource', '$rootScope', '$ionicLoading', '$q', 'appConfig', 'UIService', 'UtilsService', '$cordovaToast', function($resource, $rootScope, $ionicLoading, $q, appConfig, UIService, UtilsService, $cordovaToast) {
-
-
-/*	return function(customHeaders){
-    return $resource('/api/user', {}, {
-      connect: {
-        method: 'POST',
-        params: {},
-        isArray: false,
-        headers: customHeaders
-      }
-    });
-  };
-*/
-
-	var customHeaders = function() {
-			var user = UtilsService.getCurrentUser()
-			return user ? user.sessionToken : null
-		},
-		User = $resource(appConfig.parseRestBaseUrl + 'login/', {
-			puserId: '@puserId'
+	var User = function(customHeaders) {
+		return $resource(appConfig.parseRestBaseUrl + 'login/', {
+			puserId: '@puserId',
+			userId: '@userId'
 		}, {
 			getPUser: {
 				url: appConfig.parseRestBaseUrl + 'classes/pusers/:puserId',
 				method: 'GET',
-				headers: appConfig.parseHttpsHeaders,
 				params: {
 					'include': 'platform,region'
-				}
+				},
+				headers: _.extend({}, customHeaders, appConfig.parseHttpsHeaders)
 			},
 			login: {
 				url: appConfig.parseRestBaseUrl + 'login/',
 				method: 'GET',
-				headers: appConfig.parseHttpsHeaders
+				headers: _.extend({}, customHeaders, appConfig.parseHttpsHeaders)
 			},
 			signup: {
 				url: appConfig.parseRestBaseUrl + 'functions/signup/',
 				method: 'POST',
-				headers: appConfig.parseHttpsHeaders
+				headers: _.extend({}, customHeaders, appConfig.parseHttpsHeaders)
 			},
 			updateProfile: {
 				url: appConfig.parseRestBaseUrl + 'functions/updateProfile/',
-				method: 'POST',
-				headers: appConfig.parseHttpsHeaders
+				method: 'PUT',
+				headers: _.extend({}, customHeaders, appConfig.parseHttpsHeaders)
+			},
+			updateUser: {
+				url: appConfig.parseRestBaseUrl + 'users/:userId/',
+				method: 'PUT',
+				headers: _.extend({}, customHeaders, appConfig.parseHttpsHeaders)
+			},
+			updatePUser: {
+				url: appConfig.parseRestBaseUrl + 'pusers/:puserId/',
+				method: 'PUT',
+				headers: _.extend({}, customHeaders, appConfig.parseHttpsHeaders)
 			},
 			getCurrentUser: {
 				url: appConfig.parseRestBaseUrl + 'users/me',
 				method: 'GET',
-				headers: _.extend({
-					'X-Parse-Session-Token': customHeaders()
-				}, appConfig.parseHttpsHeaders)
+				headers: _.extend({}, customHeaders, appConfig.parseHttpsHeaders)
 			}
 		});
+	}
 
 	return {
 		login: function(user) {
 			var d = $q.defer();
 
-			User.login({
+			User().login({
 				username: user.username,
 				password: user.password
 			}, function(userRes) {
 				if (userRes && userRes.$resolved) {
 					if (userRes.emailVerified) {
-						User.getPUser({
+						User().getPUser({
 							puserId: userRes.puser.objectId
 						}, function(pUserRes) {
 							if (pUserRes && pUserRes.$resolved) {
 
 								var fullUser = {};
-								fullUser.objectId = pUserRes.objectId;
+								fullUser.userId = userRes.objectId;
+								fullUser.puserId = pUserRes.objectId;
 								fullUser.username = userRes.username;
 								fullUser.gamertag = pUserRes.gamertag;
 								fullUser.buddySince = userRes.createdAt;
 								fullUser.platform = pUserRes.platform;
 								fullUser.region = pUserRes.region;
+								fullUser.sessionToken = userRes.sessionToken;
 
 								$rootScope.currentUser = fullUser
 								d.resolve(fullUser);
@@ -750,7 +679,7 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 		signup: function(user) {
 			var d = $q.defer();
 
-			User.signup({
+			User().signup({
 				username: user.username,
 				gamertag: user.gamertag,
 				email: user.email,
@@ -768,26 +697,38 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 
 		},
 		updateProfile: function(user) {
-			var d = $q.defer(), user, PUser, puser;
+			var d = $q.defer(),
+				user, PUser, puser;
 
-			user = User.getCurrentUser({}, function(response){
-
-				user.set("username", user.username);
-				user.save(user.objectId, {
-					success: function(user) {
-						ObjectService.update('pusers', user.puser.objectId, {
-							'platform': user.platform,
-							'region': user.region
-						}, function(response){
-							UIService.showAlert({title: 'Done!', template: 'User details updated.'})
-						},
-						function(error){
-							UIService.showAlert({title: 'Oops!', template: 'Could not update user details. Try again.'})
-						});
-					}
-				});
-			}, function(error){
-				UIService.showAlert({title: 'Oops!', template: 'Could not get user details. Try again.'})
+			User({
+				'X-Parse-Session-Token': $rootScope.currentUser.sessionToken
+			}).updateUser({
+				username: user.username
+			}, {
+				userId: user.userId
+			}, function(response) {
+				if (response && response.updatedAt) {
+					PUserService.update({
+						id: user.puserId
+					}, {
+						'gamertag': user.gamertag
+					}, function(response) {
+						UIService.showAlert({
+							title: 'Done!',
+							template: 'Your profile has been updated.'
+						})
+					}, function(error) {
+						UIService.showAlert({
+							title: 'Oops!',
+							template: 'Could not update your profile. Try again.'
+						})
+					});
+				}
+			}, function(error) {
+				UIService.showAlert({
+					title: 'Oops!',
+					template: 'Could not get user details. Try again.'
+				})
 			});
 
 			return d.promise;
@@ -800,8 +741,8 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 				template: 'Loading...'
 			});
 
-			User.getFullUser({
-				objectId: $rootScope.currentUser.objectId
+			User().getFullUser({
+				objectId: $rootScope.currentUser.puserId
 			}, function(response) {
 				if (response) {
 					$rootScope.currentUser = response;
@@ -821,7 +762,9 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 		getCurrentUser: function() {
 			var d = $q.defer();
 
-			User.getCurrentUser($rootScope.currentUser.sessionToken, function(response) {
+			User({
+				'X-Parse-Session-Token': $rootScope.currentUser.sessionToken
+			}).getCurrentUser({}, function(response) {
 				if (response) {
 					d.resolve(response);
 				}

@@ -335,10 +335,10 @@ angular.module('destinybuddy.controllers', ['destinybuddy.services'])
 			'mic': UtilsService.getObjectAsPointer('mics', $scope.mics[$ionicSlideBoxDelegate.$getByHandle('mic-selector').currentIndex()].objectId),
 			'level': hasLevel ? UtilsService.getObjectAsPointer('levels', $scope.levels[$ionicSlideBoxDelegate.$getByHandle('level-selector').currentIndex()].objectId) : null,
 			'fireteamRequired': $ionicSlideBoxDelegate.$getByHandle('fireteam-selector').currentIndex() + 1,
-			'fireteamOnboard': [UtilsService.getObjectAsPointer('pusers', $rootScope.currentUser.objectId)],
+			'fireteamOnboard': [UtilsService.getObjectAsPointer('pusers', $rootScope.currentUser.puserId)],
 			'platform': UtilsService.getObjectAsPointer('platforms', $scope.platforms[$ionicSlideBoxDelegate.$getByHandle('platform-selector').currentIndex()].objectId),
 			'region': UtilsService.getObjectAsPointer('regions', $scope.regions[$ionicSlideBoxDelegate.$getByHandle('region-selector').currentIndex()].objectId),
-			'creator': UtilsService.getObjectAsPointer('pusers', $rootScope.currentUser.objectId),
+			'creator': UtilsService.getObjectAsPointer('pusers', $rootScope.currentUser.puserId),
 			'active': true
 		}).then(function(response) {
 			$state.go('app.beacons', null, {
