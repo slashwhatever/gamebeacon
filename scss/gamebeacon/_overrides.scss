@@ -228,6 +228,29 @@ $button-gap-multiplier : 60px;
     right : 50px;
 }
 
+.mfb-component--br .mfb-component__list li[bg=balanced-bg] .mfb-component__button--child {
+    background-color: $balanced;
+    color: $white;
+}
+.mfb-component--br .mfb-component__list li[bg=energized-bg] .mfb-component__button--child {
+    background-color: $energized;
+    color: $white;
+}
+.mfb-component--br .mfb-component__list li[bg=calm-bg] .mfb-component__button--child {
+    background-color: $calm;
+    color: $white;
+}
+.mfb-component--br .mfb-component__list li[bg=positive-bg] .mfb-component__button--child {
+    background-color: $positive;
+    color: $white;
+}
+.mfb-component--br .mfb-component__list li[bg=assertive-bg] .mfb-component__button--child {
+    background-color: $assertive;
+    color: $white;
+}
+
+
+
 [data-mfb-label]:after {
     margin-top: -17.5px;
     padding: 8px;
@@ -244,10 +267,3 @@ $button-gap-multiplier : 60px;
   font-size: 32px;
 }
 
-
-.button.button-energized:hover {
-    color: #fff;
-}
-.button.button-energized {
-    color: $dark-blue;
-}

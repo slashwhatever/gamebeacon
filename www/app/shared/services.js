@@ -88,7 +88,7 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 					'order': '-createdAt',
 					'limit': '@limit',
 					'skip': '@skip',
-					'where': '{"active":true}'
+					'where': '@where'
 				}
 			},
 			save: {
@@ -134,7 +134,7 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 		// is the current user the beacon creator?
 		beacon['userIsCreator'] = _.findIndex(beacon.fireteamOnboard, function(i) {
 			// is the current user the same as the beacon creator user?
-			return UtilsService.getCurrentUser().puersId == beacon.creator.objectId
+			return UtilsService.getCurrentUser().puserId == beacon.creator.objectId
 		}) > -1
 
 		beacon['alreadyOnboard'] = UtilsService.userOnboard(beacon)
@@ -302,44 +302,45 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 	});
 }])
 
-
-
 .factory('ObjectService', ['$resource', '$q', '$ionicLoading', 'appConfig', function($resource, $q, $ionicLoading, appConfig) {
 
-	var Objects = $resource(appConfig.parseRestBaseUrl + 'classes/:objectName/:objectId', {
-		objectName: '@objectName',
-		objectId: '@objectId'
-	}, {
-		get: {
-			headers: appConfig.parseHttpsHeaders
-		},
-		list: {
-			method: 'GET',
-			headers: appConfig.parseHttpsHeaders
-		},
-		save: {
-			method: 'POST',
-			headers: appConfig.parseHttpsHeaders
-		},
-		update: {
-			method: 'PUT',
-			headers: appConfig.parseHttpsHeaders
-		}
-	});
+	var Objects = function(obj) {
+		return $resource(appConfig.parseRestBaseUrl + 'classes/:objectName/:objectId', {
+			objectName: '@objectName',
+			objectId: '@objectId',
+			where:'@where'
+		}, {
+			get: _.extend({}, {
+				headers: appConfig.parseHttpsHeaders
+			}, obj),
+			list: _.extend({}, {
+				method: 'GET',
+				headers: appConfig.parseHttpsHeaders
+			}, obj),
+			save: _.extend({}, {
+				method: 'POST',
+				headers: appConfig.parseHttpsHeaders
+			}, obj),
+			update: _.extend({}, {
+				method: 'PUT',
+				headers: appConfig.parseHttpsHeaders
+			}, obj)
+		});
+	}
 
 	return {
-		list: function(objectName) {
+		list: function(objectName, obj) {
 			var d = $q.defer();
-			Objects.list({}, {objectName: objectName}, function(response) {
+			Objects(obj).list({}, {objectName: objectName}, function(response) {
 				d.resolve(response);
 			}, function(error){
 				d.reject(error)
 			});
 			return d.promise
 		},
-		get: function(objectName, objectId) {
+		get: function(objectName, objectId, obj) {
 			var d = $q.defer();
-			Objects.get({}, {objectName: objectName, objectId: objectId}, function(response) {
+			Objects(obj).get({}, {objectName: objectName, objectId: objectId}, function(response) {
 				d.resolve(response);
 			}, function(error){
 				d.reject(error)
@@ -347,21 +348,21 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 			return d.promise
 
 		},
-		save: function() {
+		save: function(obj) {
 
 			var d = $q.defer();
-			Objects.save({}, {objectName: objectName}, function(response) {
+			Objects(obj).save({}, {objectName: objectName}, function(response) {
 				d.resolve(response);
 			}, function(error){
 				d.reject(error)
 			});
 			return d.promise
 		},
-		update: function(objectName, objectId, params) {
+		update: function(objectName, objectId, obj) {
 			var d = $q.defer();
 
 			var d = $q.defer();
-			Objects.update(params, {objectName: objectName, objectId: objectId}, function(response) {
+			Objects(obj).update(params, {objectName: objectName, objectId: objectId}, function(response) {
 				d.resolve(response);
 			}, function(error){
 				d.reject(error)

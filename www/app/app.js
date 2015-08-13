@@ -88,23 +88,8 @@ var DestinyBuddy = angular.module('destinybuddy', [
         templateUrl: 'app/components/beacon/list/listView.html',
         controller: 'ListController',
         resolve: {
-        	missions: function (ObjectService) {
-        	  return ObjectService.list('missions')
-        	},
-        	levels: function (ObjectService) {
-        	  return ObjectService.list('levels')
-        	},
-        	checkpoints: function (ObjectService) {
-        	  return ObjectService.list('checkpoints')
-        	},
-        	platforms: function (ObjectService) {
-        	  return ObjectService.list('platforms')
-        	},
-        	regions: function (ObjectService) {
-        	  return ObjectService.list('regions')
-        	},
-        	mics: function (ObjectService) {
-        	  return ObjectService.list('mics')
+        	initialData : function(listControllerInitialData){
+        		return listControllerInitialData()
         	}
         }
       }
