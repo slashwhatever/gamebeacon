@@ -1,6 +1,4 @@
-angular.module('destinybuddy.directives', [])
-
-
+angular.module('destinybuddy.shared.directives', [])
 
 .directive('headerShrink', function($document) {
 	var fadeAmt;
@@ -43,22 +41,3 @@ angular.module('destinybuddy.directives', [])
 		}
 	}
 })
-
-.directive("compareTo", function() {
-	return {
-		require: "ngModel",
-		scope: {
-			otherModelValue: "=compareTo"
-		},
-		link: function(scope, element, attributes, ngModel) {
-
-			ngModel.$validators.compareTo = function(modelValue) {
-				return modelValue == scope.otherModelValue;
-			};
-
-			scope.$watch("otherModelValue", function() {
-				ngModel.$validate();
-			});
-		}
-	};
-});

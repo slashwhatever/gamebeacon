@@ -1,18 +1,11 @@
 angular.module('destinybuddy.user.profile.controllers', ['destinybuddy.services'])
 
-.controller('ProfileController', ['$rootScope', '$scope', '$state', 'UtilsService', 'AuthService', 'PUserService', 'UIService', function($rootScope, $scope, $state, UtilsService, AuthService, PUserService, UIService) {
+.controller('ProfileController', ['$rootScope', '$scope', '$state', 'platforms', 'regions', 'UtilsService', 'AuthService', 'PUserService', 'UIService', function($rootScope, $scope, $state, platforms, regions, UtilsService, AuthService, PUserService, UIService) {
 
-	$scope.profile = {
-		platformIcon: UtilsService.getPlatformIcon($scope.currentUser.platform.name)
-	}
-
-	_.extend($scope.profile, $rootScope.currentUser)
-
-	$scope.profile = {
-		platformIcon: UtilsService.getPlatformIcon($scope.currentUser.platform.name)
-	}
-
-	_.extend($scope.profile, $rootScope.currentUser)
+/*	$scope.platforms = platforms.results;
+	$scope.regions = regions.results;
+*/
+	$scope.profile = $rootScope.currentUser;
 
 	$scope.requestPasswordReset = function(user) {
 		AuthService.requestPasswordReset(user)
@@ -36,10 +29,13 @@ angular.module('destinybuddy.user.profile.controllers', ['destinybuddy.services'
 			})
 	};
 
-	$scope.updateProfile = function(user) {
+	$scope.updateProfile = function(profile) {
 		PUserService.update({
-			gamertag: user.gamertag,
 			id: $rootScope.currentUser.puserId
+		}, {
+			gamertag: profile.gamertag,
+			platform: UtilsService.getObjectAsPointer('platforms', profile.platform.objectId),
+			region: UtilsService.getObjectAsPointer('regions', profile.region.objectId)
 		}).then(function(response) {
 				if (response && response.$resolved) {
 					UIService.showAlert({

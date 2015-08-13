@@ -1,6 +1,6 @@
 angular.module('destinybuddy.beacon.detail.controllers', ['destinybuddy.services'])
 
-.controller('DetailController', ['$scope', '$rootScope', '$state', '$stateParams', '$ionicPopup', '$interval', '$ionicActionSheet', 'beacon', 'messages', 'MessagesService', 'UtilsService', 'Beacon', function($scope, $rootScope, $state, $stateParams, $ionicPopup, $interval, $ionicActionSheet, beacon, messages, MessagesService, UtilsService, Beacon) {
+.controller('DetailController', ['$scope', '$rootScope', '$state', '$stateParams', '$ionicPopup', '$interval', '$ionicActionSheet', 'beacon', 'messages', 'ChatService', 'UtilsService', 'Beacon', function($scope, $rootScope, $state, $stateParams, $ionicPopup, $interval, $ionicActionSheet, beacon, messages, ChatService, UtilsService, Beacon) {
 
 	var msgRefresh;
 
@@ -9,7 +9,7 @@ angular.module('destinybuddy.beacon.detail.controllers', ['destinybuddy.services
 	$scope.currentUser = UtilsService.getCurrentUser();
 
 	var refreshMessages = function() {
-		MessagesService.list($scope.beacon.objectId).then(function(response) {
+		ChatService.list($scope.beacon.objectId).then(function(response) {
 			$scope.messages = response.results;
 		})
 	};
@@ -55,7 +55,7 @@ angular.module('destinybuddy.beacon.detail.controllers', ['destinybuddy.services
 	$scope.sendMessage = function() {
 		var msg = this.newMessage;
 		this.newMessage = null; // clear the text entry box
-		MessagesService.save(msg, $scope.beacon.objectId).then(function(response) {
+		ChatService.save(msg, $scope.beacon.objectId).then(function(response) {
 
 			// add a new item to the messages list (this will get replaced with the proper version on refresh)
 			$scope.messages.unshift({

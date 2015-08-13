@@ -34,18 +34,18 @@
 	<!-- Cordova is bootstrapped by ionic-service-core, uncomment this if you remove ionic-service-core... -->
 	<!-- <script src="cordova.js"></script> -->
 	<!-- app js -->
-	<script src="js/app.js"></script>
+	<script src="app/app.js"></script>
+
 	<script src="app/shared/config.js"></script>
-	<script src="js/controllers.js"></script>
+	<script src="app/shared/services.js"></script>
+	<script src="app/shared/directives.js"></script>
+
 	<script src="app/components/user/register/registerController.js"></script>
+
 	<script src="app/components/beacon/list/listController.js"></script>
 	<script src="app/components/beacon/detail/detailController.js"></script>
 	<script src="app/components/beacon/create/createController.js"></script>
-	<script src="app/components/tutorial/tutorialController.js"></script>
-	<script src="app/components/user/login/loginController.js"></script>
-	<script src="app/components/user/profile/profileController.js"></script>
-	<script src="js/services.js"></script>
-	<script src="app/shared/directives.js"></script>
+
 	<script src="app/components/beacon/header/headerDirective.js"></script>
 	<script src="app/components/beacon/tabset/tabsetDirective.js"></script>
 	<script src="app/components/beacon/meta/metaDirective.js"></script>
@@ -53,7 +53,17 @@
 	<script src="app/components/beacon/fireteam/fireteamDirective.js"></script>
 	<script src="app/components/beacon/chat/chatDirective.js"></script>
 	<script src="app/components/beacon/actions/actionsDirective.js"></script>
-	<script src="js/mixins.js"></script>
+
+	<script src="app/components/tutorial/tutorialController.js"></script>
+
+	<script src="app/components/user/login/loginController.js"></script>
+	<script src="app/components/user/profile/profileController.js"></script>
+
+	<script src="app/components/user/userService.js"></script>
+	<script src="app/components/user/pUserService.js"></script>
+
+
+	<script src="app/mixins.js"></script>
 </head>
 
 <body ng-app="destinybuddy" animation="slide-left-right-ios7">

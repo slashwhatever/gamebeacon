@@ -1,6 +1,6 @@
 angular.module('destinybuddy.beacon.create.controllers', ['destinybuddy.services'])
 
-.controller('CreateController', ['$scope', '$rootScope', '$state', 'missions', 'platforms', 'regions', 'mics', 'Beacon', 'UtilsService', '$ionicSlideBoxDelegate', '$timeout', function($scope, $rootScope, $state, missions, platforms, regions, mics, Beacon, UtilsService, $ionicSlideBoxDelegate, $timeout) {
+.controller('CreateController', ['$scope', '$rootScope', '$state', 'Beacon', 'UtilsService', '$ionicSlideBoxDelegate', '$timeout', function($scope, $rootScope, $state, Beacon, UtilsService, $ionicSlideBoxDelegate, $timeout) {
 
 	// Called when the form is submitted
 	$scope.createBeacon = function() {
@@ -56,13 +56,13 @@ angular.module('destinybuddy.beacon.create.controllers', ['destinybuddy.services
 
 
 	// define all the starting variables for the view
-	$scope.missions = missions.results;
-	$scope.platforms = platforms.results;
-	$scope.regions = regions.results;
-	$scope.checkpoints = $scope.missions[0].checkpoints ? $scope.missions[0].checkpoints : null;
-	$scope.mics = mics.results;
-	$scope.levels = $scope.missions[0].levels ? $scope.missions[0].levels : null;
-	$scope.maxFireteam = $scope.getMaxFireTeam($scope.missions[0]);
+	$scope.missions = $rootScope.missions;
+	$scope.platforms = $rootScope.platforms;
+	$scope.regions = $rootScope.regions;
+	$scope.checkpoints = $rootScope.missions[0].checkpoints ? $rootScope.missions[0].checkpoints : null;
+	$scope.mics = $rootScope.mics;
+	$scope.levels = $rootScope.missions[0].levels ? $rootScope.missions[0].levels : null;
+	$scope.maxFireteam = $scope.getMaxFireTeam($rootScope.missions[0]);
 
 	// set the starting slides for the platform and region
 	$scope.defaultPlatform = _.findIndex($scope.platforms, {

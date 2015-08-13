@@ -17,20 +17,20 @@
 					<div class="input-label">
 						Platform
 					</div>
-					<select ng-model="profile.platform.name" ng-options="platform.name for platform in platforms" required></select>
+					<select ng-model="profile.platform.objectId" ng-options="platform.objectId as platform.name for platform in platforms"></select>
 				</label>
 				<label class="item item-input item-select">
 					<div class="input-label">
 						Region
 					</div>
-					<select ng-model="profile.region.name" ng-options="region.name for region in regions" required></select>
+					<select ng-model="profile.region.objectId" ng-options="region.objectId as region.name for region in regions"></select>
 				</label>
 			</div>
 			<div class="list list-inset">
-				<p class="text-center">Password resets must be done via your registered email address</p>
+				<p class="text-center">Password reset will send you an email to your registered email address</p>
 				<div class="row">
 					<div class="col col-50 col-offset-25">
-						<button class="button button-block button-outline button-positive" ng-click="requestPasswordReset(profile.user)">Reset Password</button>
+						<button class="button button-block button-outline button-assertive" ng-click="requestPasswordReset(profile.user)">Reset Password</button>
 					</div>
 				</div>
 			</div>

@@ -10,7 +10,6 @@ var PROXY_ADDRESS = 'http://0.0.0.0:58086'
 // 'destinybuddy.controllers' is found in controllers.js
 var DestinyBuddy = angular.module('destinybuddy', [
   'ionic','ionic.service.core','ionic.service.deploy','ionic.service.push','ngCordova',
-  'destinybuddy.controllers',
   'destinybuddy.user.register.controllers',
   'destinybuddy.beacon.list.controllers',
   'destinybuddy.beacon.detail.controllers',
@@ -19,7 +18,9 @@ var DestinyBuddy = angular.module('destinybuddy', [
   'destinybuddy.user.login.controllers',
   'destinybuddy.user.profile.controllers',
   'destinybuddy.services',
-  'destinybuddy.directives',
+  'destinybuddy.user.services',
+  'destinybuddy.puser.services',
+  'destinybuddy.shared.directives',
   'destinybuddy.beacontabset.directives',
   'destinybuddy.beaconheader.directives',
   'destinybuddy.beacontimer.directives',
@@ -85,7 +86,27 @@ var DestinyBuddy = angular.module('destinybuddy', [
     views: {
       'main-view': {
         templateUrl: 'app/components/beacon/list/listView.html',
-        controller: 'ListController'
+        controller: 'ListController',
+        resolve: {
+        	missions: function (ObjectService) {
+        	  return ObjectService.list('missions')
+        	},
+        	levels: function (ObjectService) {
+        	  return ObjectService.list('levels')
+        	},
+        	checkpoints: function (ObjectService) {
+        	  return ObjectService.list('checkpoints')
+        	},
+        	platforms: function (ObjectService) {
+        	  return ObjectService.list('platforms')
+        	},
+        	regions: function (ObjectService) {
+        	  return ObjectService.list('regions')
+        	},
+        	mics: function (ObjectService) {
+        	  return ObjectService.list('mics')
+        	}
+        }
       }
     }
   })
@@ -100,8 +121,8 @@ var DestinyBuddy = angular.module('destinybuddy', [
           beacon: function ($stateParams, Beacon) {
             return Beacon.get($stateParams.beaconId)
           },
-          messages: function ($stateParams, MessagesService) {
-            return MessagesService.list($stateParams.beaconId)
+          messages: function ($stateParams, ChatService) {
+            return ChatService.list($stateParams.beaconId)
           }
         }
       }
@@ -111,21 +132,7 @@ var DestinyBuddy = angular.module('destinybuddy', [
   .state('beacon-create', {
     url: '/beacon-create',
     templateUrl: 'app/components/beacon/create/createView.html',
-    controller: 'CreateController',
-    resolve: {
-      missions: function (ObjectService) {
-        return ObjectService.list('missions')
-      },
-      platforms: function (ObjectService) {
-        return ObjectService.list('platforms')
-      },
-      regions: function (ObjectService) {
-        return ObjectService.list('regions')
-      },
-      mics: function (ObjectService) {
-        return ObjectService.list('mics')
-      }
-    }
+    controller: 'CreateController'
   })
 
   .state('app.profile', {
@@ -133,15 +140,7 @@ var DestinyBuddy = angular.module('destinybuddy', [
     views: {
       'main-view': {
         templateUrl: 'app/components/user/profile/profileView.html',
-        controller: 'ProfileController',
-        resolve: {
-        	platforms: function (ObjectService) {
-        	  return ObjectService.list('platforms')
-        	},
-          regions: function (ObjectService) {
-            return ObjectService.list('regions')
-          }
-        }
+        controller: 'ProfileController'
       }
     }
   })

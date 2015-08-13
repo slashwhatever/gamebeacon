@@ -7740,7 +7740,8 @@ h1, .h1 {
   color: #E2E7EB; }
 
 .item-select select {
-  background-color: transparent; }
+  background-color: transparent;
+  color: #E2E7EB; }
 
 /******************** pane ********************/
 .pane {

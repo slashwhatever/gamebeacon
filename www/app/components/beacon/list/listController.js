@@ -1,6 +1,6 @@
 angular.module('destinybuddy.beacon.list.controllers', ['destinybuddy.services'])
 
-.controller('ListController', ['$scope', '$rootScope', '$state', '$ionicPopup', 'Beacon', 'UtilsService', function($scope, $rootScope, $state, $ionicPopup, Beacon, UtilsService) {
+.controller('ListController', ['$scope', '$rootScope', '$state', '$ionicPopup', 'Beacon', 'UtilsService', 'missions', 'platforms', 'checkpoints', 'regions','levels', 'mics', function($scope, $rootScope, $state, $ionicPopup, Beacon, UtilsService, missions, platforms, checkpoints, regions, levels, mics ) {
 
 	$scope.myBeacon = null;
 	$scope.beacons = [];
@@ -11,6 +11,14 @@ angular.module('destinybuddy.beacon.list.controllers', ['destinybuddy.services']
 		label: $scope.myBeacon ? 'Create beacon' : 'My beacon',
 		icon: $scope.myBeacon ? 'ion-compose' : 'ion-radio-waves',
 	}
+
+	// these should now be available everywhere
+	$rootScope.missions = missions.results;
+	$rootScope.platforms = platforms.results;
+	$rootScope.regions = regions.results;
+	$rootScope.checkpoints = checkpoints.results;
+	$rootScope.levels = levels.results;
+	$rootScope.mics = levels.mics;
 
 	// go grab 20 beacons from the server
 	$scope.getBeaconChunk = function() {
