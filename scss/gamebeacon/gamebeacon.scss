@@ -588,3 +588,32 @@ ul.nav.nav-tabs li.active {
 ul.nav.nav-tabs li.active a {
 	color: white;
 }
+
+/* profile pic */
+
+.ion-profile-picture{
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  width: 8rem;
+  height: 8rem;
+  margin: 0.5rem auto 1rem auto;
+  background-color: #F8F8F8;
+  text-align: center;
+  color: #ccc;
+  position: relative;
+  background-position: center center;
+  background-size: auto 100%;
+}
+
+.ion-profile-picture.no-picture:before{
+  content: "\f118";
+  font-family: "Ionicons";
+  font-size: 3rem;
+  line-height: 8rem;
+  text-align: center;
+}
+
+.ion-profile-picture input[type=file]{
+  display: none;
+}

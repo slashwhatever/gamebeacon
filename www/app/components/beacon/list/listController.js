@@ -3,17 +3,17 @@ angular.module('destinybuddy.beacon.list.controllers', ['destinybuddy.services',
 .factory('listControllerInitialData', ['ObjectService', '$q', function(ObjectService, $q) {
 	return function() {
 		var missions = ObjectService.list('missions', {
-			params: {
-        'order': 'order',
-        'include': 'levels,checkpoints'
-      	}
-      }),
+				params: {
+					'order': 'order',
+					'include': 'levels,checkpoints'
+				}
+			}),
 			levels = ObjectService.list('levels'),
 			checkpoints = ObjectService.list('checkpoints', {
 				params: {
-          'order': 'order'
-        }
-      }),
+					'order': 'order'
+				}
+			}),
 			platforms = ObjectService.list('platforms'),
 			regions = ObjectService.list('regions'),
 			mics = ObjectService.list('mics');

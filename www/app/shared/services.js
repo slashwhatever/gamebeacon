@@ -64,7 +64,7 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 	}
 }])
 
-.service('Beacon', ['$resource', '$q', 'appConfig', '$rootScope', '$ionicLoading', '$cordovaToast', 'UtilsService', function($resource, $q, appConfig, $rootScope, $ionicLoading, $cordovaToast, UtilsService) {
+.service('Beacon', ['$resource', '$q', 'appConfig', '$rootScope', '$ionicLoading', 'UtilsService', function($resource, $q, appConfig, $rootScope, $ionicLoading, UtilsService) {
 
 	var me = this,
 		Beacon = $resource(appConfig.parseRestBaseUrl + 'classes/beacons/:objectId', {
@@ -148,10 +148,6 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 		list: function(params) {
 			var d = $q.defer();
 
-			$ionicLoading.show({
-				template: 'Refreshing beacons...'
-			});
-
 			var beacons = Beacon.list(params, function(response) {
 
 				_.each(response.results, prepareBeaconData);
@@ -162,52 +158,38 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 				});
 				if (userBeaconIdx > -1) _.move(response.results, userBeaconIdx, 0);
 
-				$ionicLoading.hide();
 				d.resolve(response);
-			}, function() {
-				$ionicLoading.hide();
+			}, function(error) {
+				d.reject(error);
 			});
 
 			return d.promise
 		},
 		get: function(objectId) {
 			var d = $q.defer(),
-				beacon;
+				beacon,
+				beacons = Beacon.get({
+					objectId: objectId
+				}, function(response) {
 
-			$ionicLoading.show({
-				template: 'Getting beacon...'
-			});
-
-			var beacons = Beacon.get({
-				objectId: objectId
-			}, function(response) {
-
-				beacon = response;
-
-				prepareBeaconData(beacon);
-
-				$ionicLoading.hide();
-				d.resolve(response);
-			}, function() {
-				$ionicLoading.hide();
-			});
+					beacon = response;
+					prepareBeaconData(beacon);
+					d.resolve(response);
+				}, function(error) {
+					d.reject(error);
+				});
 
 			return d.promise
 		},
 		delete: function(beacon) {
 			var d = $q.defer();
 
-			$ionicLoading.show({
-				template: 'Deleting beacon...'
-			});
-
 			var beacons = Beacon.delete({
 				objectId: beacon.objectId
 			}, function(response) {
-				$ionicLoading.hide();
 				d.resolve(response);
-			}, function() {
-				$ionicLoading.hide();
+			}, function(error) {
+				d.reject(error);
 			});
 
 			return d.promise
@@ -215,15 +197,10 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 		save: function(beacon) {
 			var d = $q.defer();
 
-			$ionicLoading.show({
-				template: 'Saving beacon...'
-			});
-
 			var beacons = Beacon.save(beacon, function(response) {
-				$ionicLoading.hide();
 				d.resolve(response);
-			}, function() {
-				$ionicLoading.hide();
+			}, function(error) {
+				d.reject(error);
 			});
 
 			return d.promise
@@ -231,18 +208,13 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 		expire: function(beacon) {
 			var d = $q.defer();
 
-			$ionicLoading.show({
-				template: 'Expiring beacon...'
-			});
-
 			Beacon.update({
 				objectId: beacon.objectId,
 				active: false
 			}, function(response) {
-				$ionicLoading.hide();
 				d.resolve(response);
-			}, function() {
-				$ionicLoading.hide();
+			}, function(error) {
+				d.reject(error);
 			});
 
 			return d.promise
@@ -281,12 +253,10 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 				},
 				function(response) {
 					$ionicLoading.hide();
-					//$cordovaToast.showShortCenter( opObj.successMsg )
 					d.resolve(response);
 				},
-				function() {
-					//$cordovaToast.showShortCenter( opObj.failMsg )
-					$ionicLoading.hide();
+				function(error) {
+					d.reject(error);
 				});
 			return d.promise
 		}
@@ -308,7 +278,7 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 		return $resource(appConfig.parseRestBaseUrl + 'classes/:objectName/:objectId', {
 			objectName: '@objectName',
 			objectId: '@objectId',
-			where:'@where'
+			where: '@where'
 		}, {
 			get: _.extend({}, {
 				headers: appConfig.parseHttpsHeaders
@@ -331,18 +301,23 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 	return {
 		list: function(objectName, obj) {
 			var d = $q.defer();
-			Objects(obj).list({}, {objectName: objectName}, function(response) {
+			Objects(obj).list({}, {
+				objectName: objectName
+			}, function(response) {
 				d.resolve(response);
-			}, function(error){
+			}, function(error) {
 				d.reject(error)
 			});
 			return d.promise
 		},
 		get: function(objectName, objectId, obj) {
 			var d = $q.defer();
-			Objects(obj).get({}, {objectName: objectName, objectId: objectId}, function(response) {
+			Objects(obj).get({}, {
+				objectName: objectName,
+				objectId: objectId
+			}, function(response) {
 				d.resolve(response);
-			}, function(error){
+			}, function(error) {
 				d.reject(error)
 			});
 			return d.promise
@@ -351,9 +326,11 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 		save: function(obj) {
 
 			var d = $q.defer();
-			Objects(obj).save({}, {objectName: objectName}, function(response) {
+			Objects(obj).save({}, {
+				objectName: objectName
+			}, function(response) {
 				d.resolve(response);
-			}, function(error){
+			}, function(error) {
 				d.reject(error)
 			});
 			return d.promise
@@ -362,9 +339,12 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 			var d = $q.defer();
 
 			var d = $q.defer();
-			Objects(obj).update(params, {objectName: objectName, objectId: objectId}, function(response) {
+			Objects(obj).update(params, {
+				objectName: objectName,
+				objectId: objectId
+			}, function(response) {
 				d.resolve(response);
-			}, function(error){
+			}, function(error) {
 				d.reject(error)
 			});
 			return d.promise

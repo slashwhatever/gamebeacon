@@ -1,10 +1,10 @@
 angular.module('destinybuddy.user.profile.controllers', ['destinybuddy.services'])
 
-.controller('ProfileController', ['$rootScope', '$scope', '$state', 'platforms', 'regions', 'UtilsService', 'AuthService', 'PUserService', 'UIService', function($rootScope, $scope, $state, platforms, regions, UtilsService, AuthService, PUserService, UIService) {
+.controller('ProfileController', ['$rootScope', '$scope', '$state', 'UtilsService', 'AuthService', 'PUserService', 'UIService', function($rootScope, $scope, $state, UtilsService, AuthService, PUserService, UIService) {
 
-/*	$scope.platforms = platforms.results;
-	$scope.regions = regions.results;
-*/
+	$scope.platforms = $rootScope.platforms;
+	$scope.regions = $rootScope.regions;
+
 	$scope.profile = $rootScope.currentUser;
 
 	$scope.requestPasswordReset = function(user) {
@@ -46,13 +46,13 @@ angular.module('destinybuddy.user.profile.controllers', ['destinybuddy.services'
 					})
 				} else {
 					UIService.showAlert({
-						title: 'Failed!',
+						title: 'Oops!',
 						template: 'Looks like there was a problem updating those details. Try again.'
 					})
 				}
 			}, function(error) {
 				UIService.showAlert({
-					title: 'Failed!',
+					title: 'Oops!',
 					template: error.message
 				})
 			})

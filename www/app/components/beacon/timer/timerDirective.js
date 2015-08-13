@@ -1,4 +1,4 @@
-angular.module('destinybuddy.beacontimer.directives', [])
+angular.module('destinybuddy.beacon.timer.directives', [])
 
 .directive('beaconTimer', ['$interval', 'Beacon', function($interval, Beacon) {
 	return {

@@ -1,4 +1,4 @@
-angular.module('destinybuddy.beaconactions.directives', [])
+angular.module('destinybuddy.beacon.actions.directives', [])
 
 .directive('beaconActions', ['UtilsService', function(UtilsService) {
 	return {
