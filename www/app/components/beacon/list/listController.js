@@ -58,7 +58,7 @@ angular.module('destinybuddy.beacon.list.controllers', ['destinybuddy.services',
 			Beacon.list({
 				limit: $scope.limit,
 				skip: $scope.skip,
-				'where': '{"createdAt":{"$gte":{ "__type": "Date", "iso": "' + new Date(new Date().getTime() - (appConfig.maxBeaconAge * 60000)).toISOString() + '" }}}' // only get beacons that are less than 30 mins old
+				'where': '{"active":true,"createdAt":{"$gte":{ "__type": "Date", "iso": "' + new Date(new Date().getTime() - (appConfig.maxBeaconAge * 60000)).toISOString() + '" }}}' // only get beacons that are less than 30 mins old
 			}).then(function(response) {
 
 				// if we have results, there may be more...
@@ -78,10 +78,14 @@ angular.module('destinybuddy.beacon.list.controllers', ['destinybuddy.services',
 		}
 
 		$scope.refreshBeaconList = function() {
-			Beacon.list().then(function(response) {
+			// we need to reset the skip here as we're resetting the list
+			$scope.skip = 0;
 
-				// we need to reset the skip here as we're resetting the list
-				$scope.skip = 0;
+			Beacon.list({
+				limit: $scope.limit,
+				skip: $scope.skip,
+				'where': '{"active":true, "createdAt":{"$gte":{ "__type": "Date", "iso": "' + new Date(new Date().getTime() - (appConfig.maxBeaconAge * 60000)).toISOString() + '" }}}' // only get beacons that are less than 30 mins old
+			}).then(function(response) {
 
 				$scope.beacons = response.results.length > 0 ? response.results : null;
 

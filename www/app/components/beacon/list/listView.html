@@ -1,7 +1,7 @@
 <ion-view name="beacon-list" title="Active Beacons" cache-view="false">
 	<ion-nav-bar align-title="right" class="bar-positive nav-title-slide-ios7"></ion-nav-bar>
 	<ion-content scroll="true">
-		<ion-refresher pulling-icon="spiral" on-refresh="refreshBeaconList()"></ion-refresher>
+		<ion-refresher pulling-text="pull to refresh" pulling-icon="ion-android-arrow-down" on-refresh="refreshBeaconList()"><ion-spinner icon="crescent"></ion-spinner></ion-refresher>
 		<!-- beacon card -->
 		<div class="beacon-card" ng-class="{'my-beacon' : beacon.userIsCreator }" ng-repeat="beacon in beacons">
 			<beacon-header></beacon-header>
