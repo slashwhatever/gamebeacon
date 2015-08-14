@@ -105,7 +105,7 @@ $border-distance: 25px !default;
 // font-size for the icons
 $icons-font-size: 18px !default;
 // font-size for labels
-$labels-font-size: 14px !default;
+$labels-font-size: 16px !default;
 // font-weight for labels
 $labels-font-weight: normal !default;
 // top & bottom padding for the labels
@@ -350,7 +350,7 @@ $number-of-child-buttons: 4 !default;
   line-height: normal;
   position: absolute;
   top: 50%;
-  margin-top: - ($labels-padding-vertical + $labels-font-size / 2);
+  margin-top: - (($labels-padding-vertical + $labels-font-size) / 2);
   transition: all $label-hover-off; // the label disappears at this speed
 }
 [data-mfb-toggle="hover"] [data-mfb-label]:hover:after,

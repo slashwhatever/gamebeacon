@@ -1,21 +1,38 @@
-First, some good news; I've worked out a way to show you all the app I've been developing on both Android and iOS! YAY!
+Firstly, thanks for being patient while I ironed out the last of the issues.
 
-You have to jump through a couple of hoops though.
+Secondly, I've worked out a way to let both Android and iOS users check out the app while it's in Alpha! YAY!
+
+You have to jump through a couple of hoops though. BOO!
+
+Seriously, don't worry - it's not difficult and it will actually make things a lot easier in the long run.
+
+So here's how you can all do it:
 
 1. You'll need to sign up for a free Ionic account here: https://apps.ionic.io/signup
-2. Once you've got an account, you'll need to download the Ionic View app to your mobile device: http://view.ionic.io/
-3. PM me the email address you signed up with in Step 1 and I will invite you into the app Beta programme.
+2. Once you've got an account, you'll need to download the 'Ionic View' app to your mobile device. You can grab that here: http://view.ionic.io/
+3. Once you've signed up, PM me the email address you signed up with in Step 1 (or you can email gamebeacon@slashwhatever.com if you prefer) and I will send you an Alpha invite.
 4. Accept the invite when it arrives in your inbox.
-5. Sign in to the Ionic View app on your mobile device using the credentials you used in Step 1 and you will see the app in Ionic View
+5. Sign in to the 'Ionic View' app on your mobile device using the credentials you used in Step 1 and you will see the gamebeacon app ready and waiting for you.
 6. Click the app to launch it!
 
-You should then be able to play with the app to your heart's content.
+Now, you will have to sign up to the actual gamebeacon app too. It's a pain, but the Ionic View app is just a window for me to be able to show you guys the app before it's on general release.
 
-Bear in mind that this initial test is purely about working out the very basic things, such as:
-- Were you able to sign up easily?
-- Do the basic functions of the app work on your device?
-- Did the app work smoothly and without any weird glitches or crashes?
+After that, you should be able to play with the app to your heart's content.
 
-Once the basic alpha test is done, I'll roll it out to a wider audience in a more official build so I can start to test how the app behaves under the stress of many more users.
+Bear in mind that this initial Alpha test is purely about working out the very basic things, such as:
+- Were you able to register for the gamebeacon app easily?
+- Do the basic functions of the gamebeacon app work on your device?
+- Did the gamebeacon app work smoothly and without any weird glitches or crashes?
+- Were you able to break the gamebeacon app in any way? If so, how?
 
-There are a ton more features I have lined up for the app already but your feedback is hugely important. Feel free to message me or email me (gamebeacon@slashwhatever.com) with your ideas, feedback and criticism - please keep it constructive :)
+The app requires a lot of users to really come into it's own so don't be disappointed if it's not quite what you expected. The more of you use it (even if it's just for a week), the better I can make it.
+
+Once the basic Alpha test is done, I'll roll it out to a wider audience in a more official build (probably on the Google Play store at the very least) so I can start to test how the app behaves under the stress of many more users.
+
+There are a ton more features I have lined up for the app already but your feedback is hugely important. Feel free to message me here or email me (gamebeacon@slashwhatever.com) with your ideas, feedback and criticism - please keep it constructive :)
+
+Already on the road map:
+- Customisable push notifications
+- Scheduling beacons
+- Follow friends
+- Real time messenger
