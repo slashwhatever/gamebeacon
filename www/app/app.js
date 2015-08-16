@@ -29,6 +29,7 @@ var DestinyBuddy = angular.module('destinybuddy', [
 	'destinybuddy.chat.services',
 	'destinybuddy.shared.directives',
 	'destinybuddy.fireteam.directives',
+	'destinybuddy.beacon.register.directives',
 	'angularMoment',
 	'ng-mfb'
 ])

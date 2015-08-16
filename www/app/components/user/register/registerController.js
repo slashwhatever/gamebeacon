@@ -28,13 +28,13 @@ angular.module('destinybuddy.user.register.controllers', ['destinybuddy.services
 					})
 				} else {
 					UIService.showAlert({
-						title: 'Failed!',
+						title: 'Oops!',
 						template: 'Looks like there was a problem signing you up. Try again.'
 					})
 				}
 			}, function(error) {
 				UIService.showAlert({
-					title: 'Failed!',
+					title: 'Oops!',
 					template: error.message
 				})
 			})
