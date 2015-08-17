@@ -10,13 +10,13 @@ angular.module('destinybuddy.user.register.controllers', ['destinybuddy.services
 		username: '',
 		email: '',
 		password: '',
-		confirmPassword: '',
 		gamertag: '',
 		platform: '',
 		region: ''
 	};
 
-	$scope.register = function() {
+	$scope.register = function( form ) {
+		if(form.$valid) {
 		AuthService.signup($scope.user)
 			.then(function(response) {
 				if (response && response.$resolved) {
@@ -38,6 +38,12 @@ angular.module('destinybuddy.user.register.controllers', ['destinybuddy.services
 					template: error.data.error
 				})
 			})
+		} else {
+			UIService.showAlert({
+				title: 'Oops!',
+				template: 'Please make sure all fields are complete.'
+			})
+		}
 	};
 
 }])
