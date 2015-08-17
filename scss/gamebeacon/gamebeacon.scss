@@ -562,17 +562,15 @@ ion-view[name=beacon-detail] .has-subheader {
 /* beacon details tabs */
 
 ul.nav.nav-tabs {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
-	}
+	@include flexbox-container();
+}
 
 ul.nav.nav-tabs li {
     text-align: center;
     color: white;
     border-bottom: 2px solid darken($positive, 20%);
     margin: 0 5px;
-    flex: 1;
+    @include flexbox-child();
     padding: 10px;
 }
 

@@ -428,21 +428,16 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 								fullUser.sessionToken = userRes.sessionToken;
 
 								$rootScope.currentUser = fullUser
-								d.resolve(fullUser);
+
+					      d.resolve(fullUser);
 							}
 						})
 					} else {
-						UIService.showAlert({
-							title: 'Oops!',
-							template: 'We need you to verify your email address by clicking the link in the email we sent you'
-						})
+						d.reject('We need you to verify your email address by clicking the link in the email we sent you');
 					}
 				}
-			}, function(errRes) {
-				UIService.showAlert({
-					title: 'Login failed',
-					template: errRes.data.error
-				})
+			}, function() {
+				d.reject('Could not log you in for some reason. Please try again');
 			});
 
 			return d.promise;
@@ -460,8 +455,8 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 				region: UtilsService.getObjectAsPointer('regions', user.region.objectId)
 			}, function(user) {
 				d.resolve(user);
-			}, function(response) {
-				$cordovaToast.showShortCenter(response.data.error)
+			}, function(error) {
+				d.reject(error);
 			});
 
 			return d.promise;

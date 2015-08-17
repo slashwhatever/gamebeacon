@@ -35,7 +35,7 @@ angular.module('destinybuddy.user.register.controllers', ['destinybuddy.services
 			}, function(error) {
 				UIService.showAlert({
 					title: 'Oops!',
-					template: error.message
+					template: error.data.error
 				})
 			})
 	};

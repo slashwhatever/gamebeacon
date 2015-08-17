@@ -1,15 +1,9 @@
-var AUTH0_CLIENT_ID = 'F0fFsJbmEnKjILhv30pu2muB3TZFmaI7';
-var AUTH0_DOMAIN = 'slashwhatever.auth0.com';
-var AUTH0_CALLBACK_URL = location.href;
-var PROXY_ADDRESS = 'http://0.0.0.0:58086'
-
-
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'destinybuddy' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'destinybuddy.controllers' is found in controllers.js
 var DestinyBuddy = angular.module('destinybuddy', [
-	'ionic', 'ionic.service.core', 'ionic.service.deploy', 'ionic.service.push', 'ngCordova',
+	'ionic', 'ionic.service.core', 'ionic.service.analytics', 'ionic.service.deploy', 'ionic.service.push', 'ngCordova',
 	'destinybuddy.user.register.controllers',
 	'destinybuddy.user.login.controllers',
 	'destinybuddy.user.profile.controllers',
@@ -34,8 +28,10 @@ var DestinyBuddy = angular.module('destinybuddy', [
 	'ng-mfb'
 ])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $ionicAnalytics) {
 	$ionicPlatform.ready(function() {
+
+		$ionicAnalytics.register();
 
 		if (window.cordova && window.cordova.plugins.Keyboard) {
 			//Lets hide the accessory bar fo the keyboard (ios)
