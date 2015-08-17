@@ -620,7 +620,7 @@ ul.nav.nav-tabs li.active a {
 /* form validation */
 
 form i.icon.error {
-  color: #ef4e3a; }
+  color: $pink; }
 
 
 form input + i.icon.error {
@@ -638,3 +638,8 @@ form .has-success {
 
 form.ng-submitted input.ng-valid + i.icon.error {
   display: none; }
+
+
+.item-input .icon {
+    min-width: 24px;
+}
