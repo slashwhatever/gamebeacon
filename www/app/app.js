@@ -2,6 +2,9 @@
 // 'destinybuddy' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'destinybuddy.controllers' is found in controllers.js
+//
+
+
 var DestinyBuddy = angular.module('destinybuddy', [
 	'ionic', 'ionic.service.core', 'ionic.service.analytics', 'ionic.service.deploy', 'ionic.service.push', 'ngCordova',
 	'destinybuddy.user.register.controllers',
@@ -80,7 +83,7 @@ var DestinyBuddy = angular.module('destinybuddy', [
 
 	.state('app', {
 		url: '/app',
-		templateUrl: 'templates/main.html',
+		templateUrl: 'app/shared/mainView.html',
 		abstract: true,
 		data: {
 			requireLogin: true

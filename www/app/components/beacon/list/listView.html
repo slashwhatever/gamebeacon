@@ -3,7 +3,7 @@
 	<ion-content scroll="true">
 		<ion-refresher pulling-text="pull to refresh" pulling-icon="ion-android-arrow-down" on-refresh="refreshBeaconList()"><ion-spinner icon="crescent"></ion-spinner></ion-refresher>
 		<!-- beacon card -->
-		<div class="beacon-card" ng-class="{'my-beacon' : beacon.userIsCreator }" ng-repeat="beacon in beacons">
+		<div class="beacon-card" ng-class="{'my-beacon' : beacon.userIsCreator }" ng-repeat="beacon in beacons track by beacon.objectId">
 			<beacon-header></beacon-header>
 			<beacon-meta></beacon-meta>
 			<beacon-actions></beacon-actions>

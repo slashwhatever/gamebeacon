@@ -6,10 +6,12 @@ var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
+var addStream = require('add-stream');
 
 var paths = {
   sass: ['./scss/**/*.scss']
-};
+},
+angularTemplateCache = require('gulp-angular-templatecache');
 
 gulp.task('default', ['sass']);
 
@@ -51,11 +53,21 @@ gulp.task('git-check', function(done) {
   done();
 });
 
-var templateCache = require('gulp-angular-templatecache');
+function prepareTemplates() {
+  return gulp.src('app/components/**/*.html')
+    //.pipe(minify and preprocess the template html here)
+    .pipe(angularTemplateCache());
+}
 
-gulp.task('templates', function () {
-  return gulp.src(paths.templates)
-    .pipe(angularTemplateCache())
-    .pipe(concat('templates.js')
-    .pipe(gulp.dest('./www/lib/'));
+gulp.task('templates', function() {
+	debugger;
+  return gulp.src('app/**/*.js')
+    //.pipe(concat your app js files somehow)
+
+    // append the template js onto app.js
+    .pipe(addStream.obj(prepareTemplates()))
+    .pipe(concat('app.js'))
+
+    //.pipe(ng annotate, minify, etc)
+    .pipe(gulp.dest('build/scripts'));
 });
