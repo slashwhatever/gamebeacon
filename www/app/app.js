@@ -24,6 +24,7 @@ var DestinyBuddy = angular.module('destinybuddy', [
 	'destinybuddy.shared.directives',
 	'destinybuddy.fireteam.directives',
 	'destinybuddy.beacon.register.directives',
+	'templates',
 	'angularMoment',
 	'ng-mfb'
 ])
@@ -51,7 +52,14 @@ var DestinyBuddy = angular.module('destinybuddy', [
 
 })
 
-.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicConfigProvider) {
+.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicConfigProvider, $ionicAppProvider) {
+
+	$ionicAppProvider.identify({
+    app_id: '9a8d7d97',
+    api_key: '98133d25feed986f15023597a927f0b93686964a77106882',
+    dev_push:false,
+    gcm_key:"1038280762685"
+  });
 
 	if (ionic.Platform.isAndroid()) $ionicConfigProvider.scrolling.jsScrolling(false);
 

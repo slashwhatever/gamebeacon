@@ -50,3 +50,12 @@ gulp.task('git-check', function(done) {
   }
   done();
 });
+
+var templateCache = require('gulp-angular-templatecache');
+
+gulp.task('templates', function () {
+  return gulp.src(paths.templates)
+    .pipe(angularTemplateCache())
+    .pipe(concat('templates.js')
+    .pipe(gulp.dest('./www/lib/'));
+});
