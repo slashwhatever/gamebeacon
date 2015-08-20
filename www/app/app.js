@@ -10,6 +10,7 @@ var DestinyBuddy = angular.module('destinybuddy', [
 	'destinybuddy.user.register.controllers',
 	'destinybuddy.user.login.controllers',
 	'destinybuddy.user.profile.controllers',
+	'destinybuddy.user.reset.controllers',
 	'destinybuddy.beacon.list.controllers',
 	'destinybuddy.beacon.detail.controllers',
 	'destinybuddy.beacon.create.controllers',
@@ -160,6 +161,12 @@ var DestinyBuddy = angular.module('destinybuddy', [
 				return ObjectService.list('regions')
 			}
 		}
+	})
+
+	.state('reset-password', {
+		url: '/reset-password',
+		templateUrl: 'app/components/user/reset/resetPasswordView.html',
+		controller: 'ResetController'
 	})
 
 	.state('app.donate', {

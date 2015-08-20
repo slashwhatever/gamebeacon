@@ -359,8 +359,17 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 	var User = function(customHeaders) {
 		return $resource(appConfig.parseRestBaseUrl + 'login/', {
 			puserId: '@puserId',
-			userId: '@userId'
+			userId: '@userId',
+			email: '@email'
 		}, {
+			requestPasswordReset: {
+				url: appConfig.parseRestBaseUrl + 'requestPasswordReset',
+				method: 'POST',
+				params: {
+					'email': '@email'
+				},
+				headers: _.extend({}, customHeaders, appConfig.parseHttpsHeaders)
+			},
 			getPUser: {
 				url: appConfig.parseRestBaseUrl + 'classes/pusers/:puserId',
 				method: 'GET',
@@ -403,6 +412,17 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 	}
 
 	return {
+		requestPasswordReset: function(email) {
+			var d = $q.defer();
+
+			User().requestPasswordReset({
+				email: email
+			}, function(userRes) {
+				d.resolve();
+			});
+
+			return d.promise;
+		},
 		login: function(user) {
 			var d = $q.defer();
 
@@ -436,8 +456,8 @@ angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
 						d.reject('We need you to verify your email address by clicking the link in the email we sent you');
 					}
 				}
-			}, function() {
-				d.reject('Could not log you in for some reason. Please try again');
+			}, function( response ) {
+				d.reject('Could not log you in: ' + response.data.error);
 			});
 
 			return d.promise;
