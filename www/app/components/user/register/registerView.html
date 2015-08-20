@@ -23,12 +23,14 @@
 						Platform
 					</div>
 					<select ng-model-options="{ updateOn: 'blur' }" ng-class="{'error': form.platform.$error.required}" ng-model="user.platform" ng-options="platform.name for platform in platforms" required="required"></select>
+					 <i class="icon ion-alert-circled error"></i>
 				</label>
 				<label class="item item-input item-select">
 					<div class="input-label">
 						Region
 					</div>
 					<select ng-model-options="{ updateOn: 'blur' }" ng-class="{'error': form.region.$error.required}" ng-model="user.region" ng-options="region.name for region in regions" required="required"></select>
+					 <i class="icon ion-alert-circled error"></i>
 				</label>
 			</div>
 			<div class="list list-inset">
