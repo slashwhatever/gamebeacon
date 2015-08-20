@@ -5,10 +5,11 @@
 	<ion-content>
 		<h3 class="text-center padding">Sign Up!</h3>
 		<form name="registerForm" on-valid-submit="register()" novalidate>
+
 			<div class="list list-inset">
 				<p class="text-center">Your username can be anything you like but your gamertag must be genuine or people won't be able to invite you into games</p>
 				<label class="item item-input">
-					<input ng-model-options="{ updateOn: 'blur' }" ng-class="{'error': form.username.$error.required}" type="text" placeholder="Username" name="username" ng-model="user.username" autocomplete="off" required="required">
+					<input ng-model-options="{ updateOn: 'blur' }" ng-class="{'error': form.username.$error.required}" type="text" name="username" ng-model="user.username" autocomplete="off" required="required">
 					 <i class="icon ion-alert-circled error"></i>
 				</label>
 				<label class="item item-input">
@@ -32,6 +33,17 @@
 					<select ng-model-options="{ updateOn: 'blur' }" ng-class="{'error': form.region.$error.required}" ng-model="user.region" ng-options="region.name for region in regions" required="required"></select>
 					 <i class="icon ion-alert-circled error"></i>
 				</label>
+				<label class="item item-toggle">
+					<div class="input-label">
+     					Mic
+ 					</div>
+				     <label class="toggle toggle-positive">
+				       <input type="checkbox" ng-model="user.mic">
+				       <div class="track">
+				         <div class="handle"></div>
+				       </div>
+				     </label>
+  				</label>
 			</div>
 			<div class="list list-inset">
 				<p class="text-center">We will send you an email to finalize the authentication on your gamebeacon account</p>

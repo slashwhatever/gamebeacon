@@ -7939,6 +7939,14 @@ button {
   height: 100%;
   font-size: 32px; }
 
+/************ toggles *************/
+.toggle .handle {
+  background-color: #fff; }
+
+.toggle .track {
+  border: solid 2px #353F49;
+  background-color: #3B424A; }
+
 body {
   font-family: "SofiaProLight", "Helvetica Neue", Roboto, sans-serif;
   color: #fff;

@@ -261,3 +261,12 @@ $button-gap-multiplier : 55px;
   height: 100%;
   font-size: 32px;
 }
+
+/************ toggles *************/
+.toggle .handle {
+    background-color: $white;
+}
+.toggle .track {
+    border: solid 2px $blue-grey;
+    background-color: $mid-grey;
+}
