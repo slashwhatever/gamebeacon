@@ -6,3 +6,4 @@ platforms/
 plugins/
 gamebeacon.sublime-project
 gamebeacon.sublime-workspace
+npm-debug.log

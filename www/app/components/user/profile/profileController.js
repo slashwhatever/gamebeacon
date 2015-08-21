@@ -8,7 +8,7 @@ angular.module('gamebeacon.user.profile.controllers', ['gamebeacon.services'])
 	$scope.profile = $rootScope.currentUser;
 
 	$scope.requestPasswordReset = function(user) {
-		AuthService.requestPasswordReset(user)
+		AuthService.requestPasswordReset(user.email)
 			.then(function(response) {
 				if (response && response.$resolved) {
 					UIService.showAlert({

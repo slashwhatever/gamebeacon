@@ -1,6 +1,6 @@
 angular.module('gamebeacon.user.login.controllers', ['gamebeacon.services'])
 
-.controller('LoginController', ['$rootScope', '$scope', '$state', '$ionicUser', '$ionicPush', 'AuthService', function($rootScope, $scope, $state, $ionicUser, $ionicPush, AuthService) {
+.controller('LoginController', ['$rootScope', '$scope', '$state', '$ionicUser', '$ionicPush', 'UIService', 'AuthService', function($rootScope, $scope, $state, $ionicUser, $ionicPush, UIService, AuthService) {
 
 	$scope.user = {
 		username: '',
@@ -37,6 +37,11 @@ angular.module('gamebeacon.user.login.controllers', ['gamebeacon.services'])
 	$scope.logout = function(form) {
 		$rootScope.currentUser = null
 		$state.go('login');
+	}
+
+	$scope.requestPasswordReset = function(form) {
+		$rootScope.currentUser = null
+		$state.go('reset-password');
 	}
 
 	// Handles incoming device tokens
