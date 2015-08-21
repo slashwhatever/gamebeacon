@@ -1,4 +1,4 @@
-angular.module('destinybuddy.user.profile.controllers', ['destinybuddy.services'])
+angular.module('gamebeacon.user.profile.controllers', ['gamebeacon.services'])
 
 .controller('ProfileController', ['$rootScope', '$scope', '$state', 'UtilsService', 'AuthService', 'PUserService', 'UIService', function($rootScope, $scope, $state, UtilsService, AuthService, PUserService, UIService) {
 

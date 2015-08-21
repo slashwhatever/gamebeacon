@@ -1,4 +1,4 @@
-angular.module('destinybuddy.beacon.register.directives', [])
+angular.module('gamebeacon.beacon.register.directives', [])
 
 .directive('onValidSubmit', ['$parse', '$timeout', function($parse, $timeout) {
     return {

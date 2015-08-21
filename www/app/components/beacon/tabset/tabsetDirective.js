@@ -1,4 +1,4 @@
-angular.module('destinybuddy.beacon.tabset.directives', [])
+angular.module('gamebeacon.beacon.tabset.directives', [])
 
 .directive('tab', function() {
 	return {

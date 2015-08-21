@@ -1,4 +1,4 @@
-angular.module('destinybuddy.services', ['ngResource', 'destinybuddy.config'])
+angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 
 .factory('UtilsService', ['appConfig', '$rootScope', function(appConfig, $rootScope) {
 	var funcs = {

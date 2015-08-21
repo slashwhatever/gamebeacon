@@ -1,4 +1,4 @@
-angular.module('destinybuddy.chat.services', ['ngResource', 'destinybuddy.config'])
+angular.module('gamebeacon.chat.services', ['ngResource', 'gamebeacon.config'])
 
 .factory('ChatService', ['$rootScope', '$resource', '$q', 'appConfig', 'UtilsService', function($rootScope, $resource, $q, appConfig, UtilsService) {
 

@@ -1,4 +1,4 @@
-angular.module('destinybuddy.beacon.meta.directives', [])
+angular.module('gamebeacon.beacon.meta.directives', [])
 
 .directive('beaconMeta', [function() {
 	return {

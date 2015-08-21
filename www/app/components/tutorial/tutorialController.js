@@ -1,4 +1,4 @@
-angular.module('destinybuddy.tutorial.controllers', ['destinybuddy.services'])
+angular.module('gamebeacon.tutorial.controllers', ['gamebeacon.services'])
 
 .controller('TutorialController', function($scope, $state, $ionicSlideBoxDelegate) {
 

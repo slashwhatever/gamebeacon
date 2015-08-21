@@ -1,4 +1,4 @@
-angular.module('destinybuddy.user.services', ['ngResource', 'destinybuddy.config'])
+angular.module('gamebeacon.user.services', ['ngResource', 'gamebeacon.config'])
 
 .factory('UserService', ['$resource', '$rootScope', 'appConfig', function($resource, $rootScope, appConfig) {
 	var User = function(id) {

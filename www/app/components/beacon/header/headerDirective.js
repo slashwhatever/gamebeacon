@@ -1,4 +1,4 @@
-angular.module('destinybuddy.beacon.header.directives', [])
+angular.module('gamebeacon.beacon.header.directives', [])
 
 .directive('beaconHeader', [function() {
 	return {

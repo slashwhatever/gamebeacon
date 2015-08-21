@@ -1,4 +1,4 @@
-angular.module('destinybuddy.beacon.chat.directives', [])
+angular.module('gamebeacon.beacon.chat.directives', [])
 
 .directive('beaconChat', ['UtilsService', function(UtilsService) {
 	return {

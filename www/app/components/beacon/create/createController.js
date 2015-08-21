@@ -1,4 +1,4 @@
-angular.module('destinybuddy.beacon.create.controllers', ['destinybuddy.services'])
+angular.module('gamebeacon.beacon.create.controllers', ['gamebeacon.services'])
 
 .controller('CreateController', ['$scope', '$rootScope', '$state', 'Beacon', 'UtilsService', '$ionicSlideBoxDelegate', '$timeout', function($scope, $rootScope, $state, Beacon, UtilsService, $ionicSlideBoxDelegate, $timeout) {
 

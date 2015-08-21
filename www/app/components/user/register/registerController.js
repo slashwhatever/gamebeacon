@@ -1,4 +1,4 @@
-angular.module('destinybuddy.user.register.controllers', ['destinybuddy.services'])
+angular.module('gamebeacon.user.register.controllers', ['gamebeacon.services'])
 
 
 .controller('RegisterController', ['$rootScope', '$scope', '$state', 'platforms', 'regions', 'AuthService', 'UIService', 'UtilsService', function($rootScope, $scope, $state, platforms, regions, AuthService, UIService, UtilsService) {

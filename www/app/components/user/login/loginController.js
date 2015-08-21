@@ -1,4 +1,4 @@
-angular.module('destinybuddy.user.login.controllers', ['destinybuddy.services'])
+angular.module('gamebeacon.user.login.controllers', ['gamebeacon.services'])
 
 .controller('LoginController', ['$rootScope', '$scope', '$state', '$ionicUser', '$ionicPush', 'AuthService', function($rootScope, $scope, $state, $ionicUser, $ionicPush, AuthService) {
 
@@ -8,6 +8,7 @@ angular.module('destinybuddy.user.login.controllers', ['destinybuddy.services'])
 	};
 
 	$scope.login = function(form) {
+
 		AuthService.login($scope.user).then(function(response) {
 
 			// register device for push

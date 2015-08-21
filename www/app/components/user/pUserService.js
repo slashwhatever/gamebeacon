@@ -1,4 +1,4 @@
-angular.module('destinybuddy.puser.services', ['ngResource', 'destinybuddy.config'])
+angular.module('gamebeacon.puser.services', ['ngResource', 'gamebeacon.config'])
 
 .factory('PUserService', ['$resource', '$rootScope', '$q', 'appConfig', function($resource, $rootScope, $q, appConfig) {
 

@@ -1,4 +1,4 @@
-angular.module('destinybuddy.shared.directives', [])
+angular.module('gamebeacon.shared.directives', [])
 
 .directive('headerShrink', function($document) {
 	var fadeAmt;

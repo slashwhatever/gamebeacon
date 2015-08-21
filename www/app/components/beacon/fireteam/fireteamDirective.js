@@ -1,4 +1,4 @@
-angular.module('destinybuddy.fireteam.directives', [])
+angular.module('gamebeacon.fireteam.directives', [])
 
 .directive('fireteamMembers', ['UtilsService', function(UtilsService) {
 	return {

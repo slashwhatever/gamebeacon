@@ -1,4 +1,4 @@
-angular.module('destinybuddy.beacon.list.controllers', ['destinybuddy.services', 'destinybuddy.config'])
+angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'gamebeacon.config'])
 
 .factory('listControllerInitialData', ['ObjectService', '$q', function(ObjectService, $q) {
 	return function() {
