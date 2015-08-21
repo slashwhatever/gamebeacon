@@ -62,7 +62,7 @@ var GameBeacon = angular.module('gamebeacon', [
 	$ionicAppProvider.identify({
 		app_id: '9a8d7d97',
 		api_key: '98133d25feed986f15023597a927f0b93686964a77106882',
-		dev_push: false,
+		dev_push: true,
 		gcm_key: "1038280762685"
 	});
 
