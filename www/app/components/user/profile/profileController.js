@@ -4,8 +4,14 @@ angular.module('gamebeacon.user.profile.controllers', ['gamebeacon.services'])
 
 	$scope.platforms = $rootScope.platforms;
 	$scope.regions = $rootScope.regions;
+	$scope.mics = $rootScope.mics;
 
-	$scope.profile = $rootScope.currentUser;
+	$scope.profile = {
+		'gamertag': $rootScope.currentUser.gamertag,
+		'platform': $rootScope.currentUser.platform,
+		'region': $rootScope.currentUser.region,
+		'mic': $rootScope.currentUser.mic.description == 'Mic required'
+	}
 
 	$scope.requestPasswordReset = function(user) {
 		AuthService.requestPasswordReset(user.email)
@@ -33,9 +39,10 @@ angular.module('gamebeacon.user.profile.controllers', ['gamebeacon.services'])
 		PUserService.update({
 			id: $rootScope.currentUser.puserId
 		}, {
-			gamertag: profile.gamertag,
-			platform: UtilsService.getObjectAsPointer('platforms', profile.platform.objectId),
-			region: UtilsService.getObjectAsPointer('regions', profile.region.objectId)
+			gamertag: $scope.profile.gamertag,
+			platform: UtilsService.getObjectAsPointer('platforms', $scope.profile.platform.objectId),
+			region: UtilsService.getObjectAsPointer('regions', $scope.profile.region.objectId),
+			mic: UtilsService.getObjectAsPointer('mics', _.findWhere($scope.mics, {description : $scope.profile.mic ? 'Mic required' : 'Mic optional'}).objectId)
 		}).then(function(response) {
 				if (response && response.$resolved) {
 					UIService.showAlert({

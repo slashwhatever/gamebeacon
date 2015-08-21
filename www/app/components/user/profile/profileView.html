@@ -25,6 +25,17 @@
 					</div>
 					<select ng-model="profile.region.objectId" ng-options="region.objectId as region.name for region in regions"></select>
 				</label>
+				<label class="item item-toggle">
+					<div class="input-label">
+						Mic
+					</div>
+					<label class="toggle toggle-positive">
+						<input type="checkbox" ng-model="profile.mic">
+						<div class="track">
+							<div class="handle"></div>
+						</div>
+					</label>
+				</label>
 			</div>
 			<div class="list list-inset">
 				<p class="text-center">Password reset will send you an email to your registered email address</p>

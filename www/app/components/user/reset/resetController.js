@@ -1,4 +1,4 @@
-angular.module('destinybuddy.user.reset.controllers', ['destinybuddy.services'])
+angular.module('gamebeacon.user.reset.controllers', ['gamebeacon.services'])
 
 
 .controller('ResetController', ['$rootScope', '$scope', '$state', 'AuthService', 'UIService', 'UtilsService', function($rootScope, $scope, $state, AuthService, UIService, UtilsService) {
@@ -10,7 +10,7 @@ angular.module('destinybuddy.user.reset.controllers', ['destinybuddy.services'])
             .then(function(response) {
                 UIService.showAlert({
                     title: 'Done!',
-                    template: 'If your email addres is registered with gamebeacon, you will shortly receive instructions to reset your password.'
+                    template: 'If your email address is registered with gamebeacon, you will shortly receive instructions to reset your password.'
                 })
             })
         }

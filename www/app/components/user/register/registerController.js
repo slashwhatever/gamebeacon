@@ -1,10 +1,10 @@
 angular.module('gamebeacon.user.register.controllers', ['gamebeacon.services'])
 
-
-.controller('RegisterController', ['$rootScope', '$scope', '$state', 'platforms', 'regions', 'AuthService', 'UIService', 'UtilsService', function($rootScope, $scope, $state, platforms, regions, AuthService, UIService, UtilsService) {
+.controller('RegisterController', ['$rootScope', '$scope', '$state', 'platforms', 'regions', 'mics', 'AuthService', 'UIService', 'UtilsService', function($rootScope, $scope, $state, platforms, regions, mics, AuthService, UIService, UtilsService) {
 
 	$scope.platforms = platforms.results;
 	$scope.regions = regions.results;
+	$scope.mics = mics.results;
 
 	$scope.user = {
 		username: '',
@@ -12,17 +12,26 @@ angular.module('gamebeacon.user.register.controllers', ['gamebeacon.services'])
 		password: '',
 		gamertag: '',
 		platform: '',
-		region: ''
+		region: '',
+		mic: ''
 	};
 
 	$scope.register = function( form ) {
 		if(form.$valid) {
-		AuthService.signup($scope.user)
+			AuthService.signup({
+				username: $scope.user.username,
+				gamertag: $scope.user.gamertag,
+				email: $scope.user.email,
+				password: $scope.user.password,
+				platform: UtilsService.getObjectAsPointer('platforms', $scope.user.platform.objectId),
+				region: UtilsService.getObjectAsPointer('regions', $scope.user.region.objectId),
+				mic: UtilsService.getObjectAsPointer('mics', _.findWhere($scope.mics, {description : $scope.user.mic ? 'Mic required' : 'Mic optional'}).objectId)
+			})
 			.then(function(response) {
 				if (response && response.$resolved) {
 					UIService.showAlert({
 						title: 'Success!',
-						template: 'Now we need you to go click the confirmation link in the email we just sent you....please :)'
+						template: 'Confirm your account by clicking the link in the email we just sent you...please :)'
 					}, function() {
 						$state.go('login')
 					})

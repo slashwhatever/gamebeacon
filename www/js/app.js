@@ -7,27 +7,28 @@
 
 var GameBeacon = angular.module('gamebeacon', [
 	'ionic', 'ionic.service.core', 'ionic.service.analytics', 'ionic.service.deploy', 'ionic.service.push', 'ngCordova',
-	'destinybuddy.user.register.controllers',
-	'destinybuddy.user.login.controllers',
-	'destinybuddy.user.profile.controllers',
-	'destinybuddy.user.reset.controllers',
-	'destinybuddy.beacon.list.controllers',
-	'destinybuddy.beacon.detail.controllers',
-	'destinybuddy.beacon.create.controllers',
-	'destinybuddy.beacon.tabset.directives',
-	'destinybuddy.beacon.header.directives',
-	'destinybuddy.beacon.timer.directives',
-	'destinybuddy.beacon.chat.directives',
-	'destinybuddy.beacon.meta.directives',
-	'destinybuddy.beacon.actions.directives',
-	'destinybuddy.tutorial.controllers',
-	'destinybuddy.services',
-	'destinybuddy.user.services',
-	'destinybuddy.puser.services',
-	'destinybuddy.chat.services',
-	'destinybuddy.shared.directives',
-	'destinybuddy.fireteam.directives',
-	'destinybuddy.beacon.register.directives',
+	'gamebeacon.user.register.controllers',
+	'gamebeacon.user.reset.controllers',
+	'gamebeacon.user.login.controllers',
+	'gamebeacon.user.profile.controllers',
+	'gamebeacon.user.reset.controllers',
+	'gamebeacon.beacon.list.controllers',
+	'gamebeacon.beacon.detail.controllers',
+	'gamebeacon.beacon.create.controllers',
+	'gamebeacon.beacon.tabset.directives',
+	'gamebeacon.beacon.header.directives',
+	'gamebeacon.beacon.timer.directives',
+	'gamebeacon.beacon.chat.directives',
+	'gamebeacon.beacon.meta.directives',
+	'gamebeacon.beacon.actions.directives',
+	'gamebeacon.tutorial.controllers',
+	'gamebeacon.services',
+	'gamebeacon.user.services',
+	'gamebeacon.puser.services',
+	'gamebeacon.chat.services',
+	'gamebeacon.shared.directives',
+	'gamebeacon.fireteam.directives',
+	'gamebeacon.beacon.register.directives',
 	'templates',
 	'angularMoment',
 	'ng-mfb'
@@ -59,11 +60,11 @@ var GameBeacon = angular.module('gamebeacon', [
 .config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicConfigProvider, $ionicAppProvider) {
 
 	$ionicAppProvider.identify({
-    app_id: '9a8d7d97',
-    api_key: '98133d25feed986f15023597a927f0b93686964a77106882',
-    dev_push:false,
-    gcm_key:"1038280762685"
-  });
+		app_id: '9a8d7d97',
+		api_key: '98133d25feed986f15023597a927f0b93686964a77106882',
+		dev_push: false,
+		gcm_key: "1038280762685"
+	});
 
 	if (ionic.Platform.isAndroid()) $ionicConfigProvider.scrolling.jsScrolling(false);
 
@@ -159,6 +160,9 @@ var GameBeacon = angular.module('gamebeacon', [
 			},
 			regions: function(ObjectService) {
 				return ObjectService.list('regions')
+			},
+			mics: function(ObjectService) {
+				return ObjectService.list('mics')
 			}
 		}
 	})

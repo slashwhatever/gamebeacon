@@ -7779,6 +7779,23 @@ button {
 .item-input {
   background-color: #353F49; }
 
+/************ toggles *************/
+.item-toggle {
+  background-color: #353F49; }
+
+.toggle .handle {
+  background-color: #fff; }
+
+.toggle .track {
+  border: solid 2px #262A2E;
+  background-color: #262A2E; }
+
+.item-toggle {
+  padding: 6px 0 5px 16px; }
+
+.item-toggle .toggle {
+  top: 8px; }
+
 /******************** material float button ********************/
 .mfb-component__list > li {
   right: 10px; }
@@ -7939,14 +7956,6 @@ button {
   height: 100%;
   font-size: 32px; }
 
-/************ toggles *************/
-.toggle .handle {
-  background-color: #fff; }
-
-.toggle .track {
-  border: solid 2px #353F49;
-  background-color: #3B424A; }
-
 body {
   font-family: "SofiaProLight", "Helvetica Neue", Roboto, sans-serif;
   color: #fff;
@@ -7989,9 +7998,6 @@ a {
 
 .text-center {
   text-align: center; }
-
-.item-input {
-  background-color: #3B424A; }
 
 input[type=color], input[type=date], input[type=datetime-local], input[type=datetime], input[type=email], input[type=month], input[type=number], input[type=password], input[type=search], input[type=tel], input[type=text], input[type=time], input[type=url], input[type=week], textarea {
   color: #E2E7EB; }

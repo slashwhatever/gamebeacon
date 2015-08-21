@@ -10,7 +10,8 @@ var addStream = require('add-stream');
 var angularTemplateCache = require('gulp-angular-templatecache');
 
 var paths = {
-  sass: ['./scss/**/*.scss']
+  sass: ['./scss/**/*.scss'],
+  templates: ['./www/app/components/**/*.html']
 };
 
 gulp.task('default', ['sass', 'templates']);
@@ -31,6 +32,7 @@ gulp.task('sass', function(done) {
 
 gulp.task('watch', function() {
   gulp.watch(paths.sass, ['sass']);
+  gulp.watch(paths.templates, ['templates']);
 });
 
 gulp.task('install', ['git-check'], function() {
@@ -55,7 +57,7 @@ gulp.task('git-check', function(done) {
 
 gulp.task('templates', function() {
   return gulp
-  	.src('www/app/components/**/*.html')
+  	.src(paths.templates)
     .pipe(angularTemplateCache({root: 'app/components/'}))
     .pipe(concat('compiledTemplates.js'))
     .pipe(gulp.dest('./www/lib/'));

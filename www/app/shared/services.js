@@ -374,7 +374,7 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 				url: appConfig.parseRestBaseUrl + 'classes/pusers/:puserId',
 				method: 'GET',
 				params: {
-					'include': 'platform,region'
+					'include': 'platform,region,mic'
 				},
 				headers: _.extend({}, customHeaders, appConfig.parseHttpsHeaders)
 			},
@@ -386,11 +386,6 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 			signup: {
 				url: appConfig.parseRestBaseUrl + 'functions/signup/',
 				method: 'POST',
-				headers: _.extend({}, customHeaders, appConfig.parseHttpsHeaders)
-			},
-			updateProfile: {
-				url: appConfig.parseRestBaseUrl + 'functions/updateProfile/',
-				method: 'PUT',
 				headers: _.extend({}, customHeaders, appConfig.parseHttpsHeaders)
 			},
 			updateUser: {
@@ -445,18 +440,19 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 								fullUser.buddySince = userRes.createdAt;
 								fullUser.platform = pUserRes.platform;
 								fullUser.region = pUserRes.region;
+								fullUser.mic = pUserRes.mic;
 								fullUser.sessionToken = userRes.sessionToken;
 
 								$rootScope.currentUser = fullUser
 
-					      d.resolve(fullUser);
+								d.resolve(fullUser);
 							}
 						})
 					} else {
 						d.reject('We need you to verify your email address by clicking the link in the email we sent you');
 					}
 				}
-			}, function( response ) {
+			}, function(response) {
 				d.reject('Could not log you in: ' + response.data.error);
 			});
 
@@ -465,47 +461,8 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 		signup: function(user) {
 			var d = $q.defer();
 
-			User().signup({
-				username: user.username,
-				gamertag: user.gamertag,
-				email: user.email,
-				password: user.password,
-				confirmPassword: user.confirmPassword,
-				platform: UtilsService.getObjectAsPointer('platforms', user.platform.objectId),
-				region: UtilsService.getObjectAsPointer('regions', user.region.objectId)
-			}, function(user) {
+			User().signup(user, function(user) {
 				d.resolve(user);
-			}, function(error) {
-				d.reject(error);
-			});
-
-			return d.promise;
-
-		},
-		updateProfile: function(user) {
-			var d = $q.defer(),
-				user, PUser, puser;
-
-			User({
-				'X-Parse-Session-Token': $rootScope.currentUser.sessionToken
-			}).updateUser({
-				username: user.username
-			}, {
-				userId: user.userId
-			}, function(response) {
-				if (response && response.updatedAt) {
-					PUserService.update({
-						gamertag: user.gamertag,
-						platform: UtilsService.getObjectAsPointer('platforms', user.platform.objectId),
-						region: UtilsService.getObjectAsPointer('regions', user.region.objectId)
-					}, {
-						id: user.puserId
-					}, function(response) {
-						d.resolve(response);
-					}, function(error) {
-						d.reject(error);
-					});
-				}
 			}, function(error) {
 				d.reject(error);
 			});
@@ -559,3 +516,194 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 	}
 
 }])
+
+.factory('PushService', function(appConfig, $http, $ionicPopup) {
+	return {
+		registerPush: function(tester) {
+
+			console.log('Push Register as Tester: ' + tester);
+
+			var pushNotification;
+			pushNotification = window.plugins.pushNotification;
+
+			// result contains any message sent from the plugin call
+			var successHandler = function successHandler(result) {
+				//alert('Success Handler Result = ' + result);
+			};
+
+			// result contains any error description text returned from the plugin call
+			var errorHandler = function errorHandler(error) {
+				//alert('Error Handler Error = ' + error);
+			};
+
+			var tokenHandler = function tokenHandler(result) {
+				// Your iOS push server needs to know the token before it can push to this device
+				// here is where you might want to send it the token for later use.
+
+				// Rest call to Parse to Insert/Update the Installation record for this Device
+				$http({
+					url: "https://api.parse.com/1/installations",
+					method: "POST",
+					data: {
+						"deviceType": "ios",
+						"deviceToken": result,
+						"testdevice": tester,
+						"channels": [""]
+					},
+					headers: {
+						"X-Parse-Application-Id": appConfig.parseAppKey,
+						"X-Parse-REST-API-Key": appConfig.parseRestKey,
+						"Content-Type": "application/json"
+					}
+				}).success(function(data, status, headers, config) {
+					console.log("iOS Token: " + result);
+					//alert('iOS registered success = ' + data + ' Status ' + status);
+				}).error(function(data, status, headers, config) {
+					//alert('iOS register failure = ' + data + ' Status ' + status);
+				});
+			};
+
+			// iOS
+			onNotificationAPN = function onNotificationAPN(event) {
+				console.log('onNotificationAPN Triggered');
+				if (event.alert) {
+					UIService.showAlert({
+						title: 'gamebeacon',
+						template: event.alert
+					}, function(res) {
+						console.log('iOS Message: ' + event.alert);
+					});
+					console.log("iOS Msg Received. Msg: " + event.alert);
+
+				}
+				if (event.sound) {
+					var snd = new Media(event.sound);
+					snd.play();
+				}
+				if (event.badge) {
+					pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, event.badge);
+				}
+			}
+
+			// Android
+			onNotificationGCM = function onNotificationGCM(e) {
+				console.log('onNotificationGCM Triggered: ' + e.event);
+				//alert('GCM event = ' + e.event);
+
+				//TODO : Fix up registering GCM devices and having duplicate gcmRegId's on Installation class if user
+				//       reinstalls app as it will get a new unique InstallationId and therefore write new record.
+				//       Even don't attempt to write/update the record if the installationid and gcmregid haven't changed
+				//       this would require saving them to localstorage to check - InstallationId is already saved to
+				//       localstorage by parse sdk.
+
+				switch (e.event) {
+					case 'registered':
+						if (e.regid.length > 0) {
+							//alert('GCM registered event regid = ' + e.regid);
+							//alert('Parse InstallationId = ' + CommonService.parseInstallationId);
+							// Rest call to Parse to Insert/Update the Installation record for this Device
+							$http({
+								url: "https://api.parse.com/1/installations",
+								method: "POST",
+								data: {
+									"deviceType": "android",
+									"installationId": Parse._getInstallationId(),
+									"gcmRegId": e.regid,
+									"testdevice": tester,
+									"channels": [""]
+								},
+								headers: {
+									"X-Parse-Application-Id": appConfig.parseAppKey,
+									"X-Parse-REST-API-Key": appConfig.parseRestKey,
+									"Content-Type": "application/json"
+								}
+							}).success(function(data, status, headers, config) {
+								console.log("GCM RegID: " + e.regid);
+								console.log("GCM Parse InstallationID: " + Parse._getInstallationId());
+								//alert('GCM registered success = ' + data + ' Status ' + status);
+							}).error(function(data, status, headers, config) {
+								//alert('GCM registered failure = ' + data + ' Status ' + status);
+							});
+						}
+						break;
+
+					case 'message':
+						// if this flag is set, this notification happened while we were in the foreground.
+						// you might want to play a sound to get the user's attention, throw up a dialog, etc.
+						if (e.foreground) {
+							UIService.showAlert({
+								title: 'gamebeacon',
+								template: e.payload.message
+							}, function(res) {
+								//console.log('GCM inline notification event' + e.payload.message);
+							});
+							console.log("GCM Foreground Msg Received. Msg: " + e.payload.message);
+							//navigator.notification.alert(e.payload.message);
+							//alert('GCM inline notification event' + e.payload.message);
+
+							// if the notification contains a soundname, play it.
+							//var my_media = new Media("/android_asset/www/"+e.soundname);
+							//my_media.play();
+						} else { // launched because the user touched a notification in the notification tray.
+							if (e.coldstart) {
+								UIService.showAlert({
+									title: 'gamebeacon',
+									template: e.payload.message
+								}, function(res) {
+									//console.log('GCM coldstart notification event' + e.payload.message);
+								});
+								console.log("GCM Coldstart Msg Received. Msg: " + e.payload.message);
+								//navigator.notification.alert(e.payload.message);
+								//alert('GCM coldstart notification event' + e.payload.message);
+							} else {
+								UIService.showAlert({
+									title: 'gamebeacon',
+									template: e.payload.message
+								}, function(res) {
+									//console.log('GCM background notification event' + e.payload.message);
+								});
+								console.log("GCM Background Msg Received. Msg: " + e.payload.message);
+								//navigator.notification.alert(e.payload.message);
+								//alert('GCM background notification event' + e.payload.message);
+							}
+						}
+						//console.log("GCM Msg Count: " + e.payload.msgcnt);
+						//alert('GCM message = ' + e.payload.message);
+						//alert('GCM msgcnt = ' + e.payload.msgcnt);
+						break;
+
+					case 'error':
+						console.log("GCM Error: " + e.msg);
+						//alert('GCM error = ' + e.msg);
+						break;
+
+					default:
+						console.log("GCM unknown event");
+						//alert('GCM unknown event');
+						break;
+				}
+			}
+
+			// Do PushPlugin Register here
+			if (ionic.Platform.isAndroid()) {
+				console.log("Push GCM Register Sent");
+				pushNotification.register(
+					successHandler,
+					errorHandler, {
+						"senderID": '1038280762685',
+						"ecb": "onNotificationGCM"
+					});
+			} else {
+				console.log("Push iOS Register Sent");
+				pushNotification.register(
+					tokenHandler,
+					errorHandler, {
+						"badge": "true",
+						"sound": "true",
+						"alert": "true",
+						"ecb": "onNotificationAPN"
+					});
+			};
+		}
+	};
+})

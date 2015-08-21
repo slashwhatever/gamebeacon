@@ -19,6 +19,8 @@ angular.module('gamebeacon.beacon.create.controllers', ['gamebeacon.services'])
 			'creator': UtilsService.getObjectAsPointer('pusers', $rootScope.currentUser.puserId),
 			'active': true
 		}).then(function(response) {
+			// create a scheduled push here if the beacon was created
+
 			$state.go('app.beacons', null, {
 				reload: true,
 				notify: true
@@ -54,7 +56,6 @@ angular.module('gamebeacon.beacon.create.controllers', ['gamebeacon.services'])
 		return _.range(1, mission.maxFireteam)
 	}
 
-
 	// define all the starting variables for the view
 	$scope.missions = $rootScope.missions;
 	$scope.platforms = $rootScope.platforms;
@@ -64,7 +65,10 @@ angular.module('gamebeacon.beacon.create.controllers', ['gamebeacon.services'])
 	$scope.levels = $rootScope.missions[0].levels ? $rootScope.missions[0].levels : null;
 	$scope.maxFireteam = $scope.getMaxFireTeam($rootScope.missions[0]);
 
-	// set the starting slides for the platform and region
+	// set the starting slides for the mic, platform and region
+	$scope.defaultMic = _.findIndex($scope.mics, {
+		objectId: $rootScope.currentUser.mic.objectId
+	})
 	$scope.defaultPlatform = _.findIndex($scope.platforms, {
 		objectId: $rootScope.currentUser.platform.objectId
 	})
