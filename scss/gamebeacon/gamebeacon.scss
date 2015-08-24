@@ -249,6 +249,7 @@ also be of any width and height */
 
 .beacon-card {
     background-color: lighten($dark-blue, 5%);
+    overflow: hidden;
 }
 
 .beacon-card.my-beacon:after {

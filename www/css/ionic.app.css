@@ -8181,7 +8181,8 @@ also be of any width and height */
 /**************** EOF - taken from bootstrap ****************/
 /***************** beacon cards ****************/
 .beacon-card {
-  background-color: #323c45; }
+  background-color: #323c45;
+  overflow: hidden; }
 
 .beacon-card.my-beacon:after {
   content: '';
