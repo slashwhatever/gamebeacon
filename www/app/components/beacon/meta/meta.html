@@ -2,15 +2,15 @@
   <div class="col">
     <div class="meta-details">
       <i class="icon ion-icon ion-earth"></i>
-      <span class="meta-label">{{ beacon.region.name }}</span>
+      <span class="meta-label">{{ ::beacon.region.name }}</span>
     </div>
     <div class="meta-details">
-      <i class="icon ion-icon {{beacon.platform.icon}}"></i>
-      <span class="meta-label">{{ beacon.platform.shortName }}</span>
+      <i class="icon ion-icon {{::beacon.platform.icon}}"></i>
+      <span class="meta-label">{{ ::beacon.platform.shortName }}</span>
     </div>
-    <div ng-if="beacon.level" class="meta-details beacon-level">
+    <div ng-if="::beacon.level" class="meta-details beacon-level">
       <i class="icon ion-icon ion-ribbon-b"></i>
-      <span class="meta-label">{{ beacon.level.value }}</span>
+      <span class="meta-label">{{ ::beacon.level.value }}</span>
     </div>
     <div class="meta-details spaces-left" ng-class="{'no-spaces' : beacon.fireteamSpaces == 0}">
       <i class="icon ion-icon ion-person-stalker"></i>

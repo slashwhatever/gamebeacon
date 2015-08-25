@@ -57,7 +57,12 @@ var GameBeacon = angular.module('gamebeacon', [
 
 })
 
-.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicConfigProvider, $ionicAppProvider) {
+.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicConfigProvider, $ionicAppProvider, $logProvider, $compileProvider, appConfig) {
+
+	if (appConfig.productionMode) {
+		$compileProvider.debugInfoEnabled(false);
+		$logProvider.debugEnabled(false);
+	}
 
 	$ionicAppProvider.identify({
 		app_id: '9a8d7d97',
@@ -66,7 +71,7 @@ var GameBeacon = angular.module('gamebeacon', [
 		gcm_key: "1038280762685"
 	});
 
-	if (ionic.Platform.isAndroid()) $ionicConfigProvider.scrolling.jsScrolling(false);
+	$ionicConfigProvider.scrolling.jsScrolling(false);
 
 	// Ionic uses AngularUI Router which uses the concept of states
 	// Learn more here: https://github.com/angular-ui/ui-router

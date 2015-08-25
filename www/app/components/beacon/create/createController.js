@@ -7,9 +7,10 @@ angular.module('gamebeacon.beacon.create.controllers', ['gamebeacon.services'])
 	'Beacon',
 	'UtilsService',
 	'PushService',
+	'MsgService',
 	'$ionicSlideBoxDelegate',
 	'$timeout',
-	function($scope, $rootScope, $state, Beacon, UtilsService, PushService, $ionicSlideBoxDelegate, $timeout) {
+	function($scope, $rootScope, $state, Beacon, UtilsService, PushService, MsgService, $ionicSlideBoxDelegate, $timeout) {
 
 		// Called when the form is submitted
 		$scope.createBeacon = function() {
@@ -28,11 +29,20 @@ angular.module('gamebeacon.beacon.create.controllers', ['gamebeacon.services'])
 				'creator': UtilsService.getObjectAsPointer('pusers', $rootScope.currentUser.puserId),
 				'active': true
 			}).then(function(response) {
-				// create a scheduled push here if the beacon was created
-				PushService.sendPush($rootScope.currentUser.puserId, {
+
+				// subscribe the user to a channel for this beacon
+				PushService.subscribe({
+					channel: 'OWNER' + response.objectId,
+					puserId: $rootScope.currentUser.puserId
+				});
+
+				// if the beacon was created, create a scheduled push that will go to all subscribers of the beacon channel
+				PushService.sendPush({
+					channels: [response.objectId],
+					//where: '{"puser":{"__type":"Pointer","className":"pusers","objectId":"' + $rootScope.currentUser.puserId + '"}}',
 					push_time : new Date(new Date().getTime() + (15 * 60000)).toISOString(),
 					expiration_time : new Date(new Date().getTime() + (30 * 60000)).toISOString(),
-					alert: 'Your gamebeacon kicks off in 15 minutes. Have you invited everyone into your game?'
+					alert: MsgService.msg('createBeacon')
 				});
 				$state.go('app.beacons', null, {
 					reload: true,
@@ -41,19 +51,25 @@ angular.module('gamebeacon.beacon.create.controllers', ['gamebeacon.services'])
 			})
 		};
 
-		$scope.$watch('levels', function() {
-			$ionicSlideBoxDelegate.$getByHandle('level-selector').slide(0, 100);
-			$ionicSlideBoxDelegate.$getByHandle('level-selector').update();
+		$scope.$watch('levels', function(newVal, oldVal) {
+			if ( newVal ) {
+				$ionicSlideBoxDelegate.$getByHandle('level-selector').slide(0, 100);
+				$ionicSlideBoxDelegate.$getByHandle('level-selector').update();
+			}
 		});
 
-		$scope.$watch('checkpoints', function() {
-			$ionicSlideBoxDelegate.$getByHandle('checkpoint-selector').slide(0, 100);
-			$ionicSlideBoxDelegate.$getByHandle('checkpoint-selector').update();
+		$scope.$watch('checkpoints', function(newVal, oldVal) {
+			if ( newVal ) {
+				$ionicSlideBoxDelegate.$getByHandle('checkpoint-selector').slide(0, 100);
+				$ionicSlideBoxDelegate.$getByHandle('checkpoint-selector').update();
+			}
 		});
 
-		$scope.$watch('maxFireteam', function() {
-			$ionicSlideBoxDelegate.$getByHandle('fireteam-selector').slide(0, 100);
-			$ionicSlideBoxDelegate.$getByHandle('fireteam-selector').update();
+		$scope.$watch('maxFireteam', function(newVal, oldVal) {
+			if ( newVal ) {
+				$ionicSlideBoxDelegate.$getByHandle('fireteam-selector').slide(0, 100);
+				$ionicSlideBoxDelegate.$getByHandle('fireteam-selector').update();
+			}
 		});
 
 		$scope.updateMission = function(index) {

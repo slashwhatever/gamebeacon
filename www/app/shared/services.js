@@ -1,5 +1,52 @@
 angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 
+.factory('MsgService', [function() {
+
+	return {
+		msg: function(msg) {
+			var out = '',
+				messages={
+					createBeacon:'Your gamebeacon kicks off in 15 minutes. Have you invited everyone into your game?'
+				};
+
+				try {
+					return messages[msg]
+				} catch(e) {
+					return ''
+				}
+		}
+	}
+
+}])
+
+.factory('LogService', ['$log', function($log) {
+
+	return {
+		log: function(message, level) {
+			switch (level) {
+				case 'error':
+					$log.error(message);
+					break;
+				case 'warn':
+					$log.warn(message);
+					break;
+				case 'info':
+					$log.info(message);
+					break;
+				case 'log':
+					$log.log(message);
+					break;
+				case 'debug':
+					$log.debug(message);
+					break;
+				default:
+					$log.debug(message);
+			}
+		}
+	}
+
+}])
+
 .factory('UtilsService', ['appConfig', '$rootScope', function(appConfig, $rootScope) {
 	var funcs = {
 		userOnboard: function(beacon) {
@@ -252,6 +299,28 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 					fireteamOnboard: JSON.parse('{"__op":"' + opObj[operation].action + '","objects":[' + JSON.stringify(UtilsService.getObjectAsPointer('pusers', $rootScope.currentUser.puserId)) + ']}')
 				},
 				function(response) {
+
+					switch ( operation ) {
+						case 'join':
+							PushService.subscribe({
+								channel: 'MEMBER' + beacon.objectId,
+								puserId: $rootScope.currentUser.puserId
+							});
+							break;
+						case 'leave':
+							PushService.unsubscribe({
+								channel: 'MEMBER' + beacon.objectId,
+								puserId: $rootScope.currentUser.puserId
+							});
+							break;
+						case 'kick':
+							PushService.unsubscribe({
+								channel: 'MEMBER' + beacon.objectId,
+								puserId: $rootScope.currentUser.puserId				// TODO: make sure this is the id of the person being kicked
+							});
+							break;
+					}
+
 					$ionicLoading.hide();
 					d.resolve(response);
 				},
@@ -521,19 +590,22 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 	'appConfig',
 	'$http',
 	'$resource',
+	'LogService',
 	'UtilsService',
-	function(appConfig, $http, $resource, UtilsService) {
+	function(appConfig, $http, $resource, LogService, UtilsService) {
 
 		var Push = $resource(appConfig.parseRestBaseUrl + 'push/', {}, {
-			send: {
+			updateSubscription: {
+				url: appConfig.parseRestBaseUrl + 'functions/updateSubscription/',
 				method: 'POST',
-				headers: {
-					"X-Parse-Application-Id": appConfig.parseAppKey,
-					"X-Parse-REST-API-Key": appConfig.parseRestKey,
-					"Content-Type": "application/json"
-				},
+				headers: appConfig.parseHttpsHeaders
+			},
+			send: {
+				//url: appConfig.parseRestBaseUrl + 'functions/sendPush/',
+				method: 'POST',
+				headers: appConfig.parseHttpsHeaders,
 				transformRequest: function(data, headers) {
-					var ret = _.pick(data, 'push_time', 'expiration_time', 'where');
+					var ret = _.pick(data, 'push_time', 'expiration_time', 'where', 'channels');
 					ret.data = {
 						'alert': data.alert,
 						'badge': 'Increment',
@@ -545,13 +617,29 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 		});
 
 		return {
-			sendPush: function(puserId, opts) {
+			subscribe: function(opts) {
 
-				var defs = {
-					where: '{"puser":{"__type":"Pointer","className":"pusers","objectId":"' + puserId + '"}}'
-				};
+				Push.updateSubscription(_.extend(opts, {action: 'sub'}),
+					function(data, status, headers, config) {
+						//alert('iOS registered success = ' + data + ' Status ' + status);
+					},
+					function(error) {
+						//alert('iOS register failure = ' + data + ' Status ' + status);
+					});
+			},
+			unsubscribe: function(opts) {
 
-				Push.send(_.extend(defs, opts),
+				Push.updateSubscription(_.extend(opts, {action: 'unsub'}),
+					function(data, status, headers, config) {
+						//alert('iOS registered success = ' + data + ' Status ' + status);
+					},
+					function(error) {
+						//alert('iOS register failure = ' + data + ' Status ' + status);
+					});
+			},
+			sendPush: function(opts) {
+
+				Push.send(opts,
 					function(data, status, headers, config) {
 						//alert('iOS registered success = ' + data + ' Status ' + status);
 					},
@@ -561,7 +649,7 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 			},
 			registerPush: function(puserId) {
 
-				console.log('Push Register as Tester: ' + puserId);
+				LogService.log('Push Register as Tester: ' + puserId);
 
 				var pushNotification;
 				pushNotification = window.plugins.pushNotification;
@@ -585,8 +673,8 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 						data: {
 							'deviceType': 'ios',
 							'deviceToken': result,
-							'puser': UtilsService.getObjectAsPointer('puser', puserId),
-							'channels': ['']
+							'installationId': Parse._getInstallationId(),
+							'puser': UtilsService.getObjectAsPointer('pusers', puserId)
 						},
 						headers: {
 							'X-Parse-Application-Id': appConfig.parseAppKey,
@@ -594,24 +682,24 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 							'Content-Type': 'application/json'
 						}
 					}).success(function(data, status, headers, config) {
-						console.log('iOS Token: ' + result);
-						console.log('iOS registered success = ' + data + ' Status ' + status);
+						LogService.log('iOS Token: ' + result);
+						LogService.log('iOS registered success = ' + data + ' Status ' + status);
 					}).error(function(data, status, headers, config) {
-						console.log('iOS register failure = ' + data + ' Status ' + status);
+						LogService.log('iOS register failure = ' + data + ' Status ' + status);
 					});
 				};
 
 				// iOS
 				onNotificationAPN = function onNotificationAPN(event) {
-					console.log('onNotificationAPN Triggered');
+					LogService.log('onNotificationAPN Triggered');
 					if (event.alert) {
 						UIService.showAlert({
 							title: 'gamebeacon',
 							template: event.alert
 						}, function(res) {
-							console.log('iOS Message: ' + event.alert);
+							LogService.log('iOS Message: ' + event.alert);
 						});
-						console.log('iOS Msg Received. Msg: ' + event.alert);
+						LogService.log('iOS Msg Received. Msg: ' + event.alert);
 
 					}
 					if (event.sound) {
@@ -625,7 +713,7 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 
 				// Android
 				onNotificationGCM = function onNotificationGCM(e) {
-					console.log('onNotificationGCM Triggered: ' + e.event);
+					LogService.log('onNotificationGCM Triggered: ' + e.event);
 					//alert('GCM event = ' + e.event);
 
 					//TODO : Fix up registering GCM devices and having duplicate gcmRegId's on Installation class if user
@@ -647,8 +735,7 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 										'deviceType': 'android',
 										'installationId': Parse._getInstallationId(),
 										'gcmRegId': e.regid,
-										'puser': UtilsService.getObjectAsPointer('puser', puserId),
-										'channels': ['']
+										'puser': UtilsService.getObjectAsPointer('puser', puserId)
 									},
 									headers: {
 										'X-Parse-Application-Id': appConfig.parseAppKey,
@@ -656,8 +743,8 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 										'Content-Type': 'application/json'
 									}
 								}).success(function(data, status, headers, config) {
-									console.log('GCM RegID: ' + e.regid);
-									console.log('GCM Parse InstallationID: ' + Parse._getInstallationId());
+									LogService.log('GCM RegID: ' + e.regid);
+									LogService.log('GCM Parse InstallationID: ' + Parse._getInstallationId());
 									//alert('GCM registered success = ' + data + ' Status ' + status);
 								}).error(function(data, status, headers, config) {
 									//alert('GCM registered failure = ' + data + ' Status ' + status);
@@ -673,58 +760,42 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 									title: 'gamebeacon',
 									template: e.payload.message
 								}, function(res) {
-									//console.log('GCM inline notification event' + e.payload.message);
+									LogService.log('GCM inline notification event' + e.payload.message);
 								});
-								console.log('GCM Foreground Msg Received. Msg: ' + e.payload.message);
-								//navigator.notification.alert(e.payload.message);
-								//alert('GCM inline notification event' + e.payload.message);
-
-								// if the notification contains a soundname, play it.
-								//var my_media = new Media('/android_asset/www/'+e.soundname);
-								//my_media.play();
+								LogService.log('GCM Foreground Msg Received. Msg: ' + e.payload.message);
 							} else { // launched because the user touched a notification in the notification tray.
 								if (e.coldstart) {
 									UIService.showAlert({
 										title: 'gamebeacon',
 										template: e.payload.message
 									}, function(res) {
-										console.log('GCM coldstart notification event' + e.payload.message);
+										LogService.log('GCM coldstart notification event' + e.payload.message);
 									});
-									console.log('GCM Coldstart Msg Received. Msg: ' + e.payload.message);
-									navigator.notification.alert(e.payload.message);
-									alert('GCM coldstart notification event' + e.payload.message);
 								} else {
 									UIService.showAlert({
 										title: 'gamebeacon',
 										template: e.payload.message
 									}, function(res) {
-										console.log('GCM background notification event' + e.payload.message);
+										LogService.log('GCM background notification event' + e.payload.message);
 									});
-									console.log('GCM Background Msg Received. Msg: ' + e.payload.message);
-									navigator.notification.alert(e.payload.message);
-									alert('GCM background notification event' + e.payload.message);
 								}
 							}
-							console.log('GCM Msg Count: ' + e.payload.msgcnt);
-							alert('GCM message = ' + e.payload.message);
-							alert('GCM msgcnt = ' + e.payload.msgcnt);
+							LogService.log('GCM Msg Count: ' + e.payload.msgcnt);
 							break;
 
 						case 'error':
-							console.log('GCM Error: ' + e.msg);
-							alert('GCM error = ' + e.msg);
+							LogService.log('GCM Error: ' + e.msg);
 							break;
 
 						default:
-							console.log('GCM unknown event');
-							alert('GCM unknown event');
+							LogService.log('GCM unknown event');
 							break;
 					}
 				}
 
 				// Do PushPlugin Register here
 				if (ionic.Platform.isAndroid()) {
-					console.log('Push GCM Register Sent');
+					LogService.log('Push GCM Register Sent');
 					pushNotification.register(
 						successHandler,
 						errorHandler, {
@@ -732,7 +803,7 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 							'ecb': 'onNotificationGCM'
 						});
 				} else {
-					console.log('Push iOS Register Sent');
+					LogService.log('Push iOS Register Sent');
 					pushNotification.register(
 						tokenHandler,
 						errorHandler, {

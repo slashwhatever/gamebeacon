@@ -137,13 +137,17 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 
 		// watches
 
-		$scope.$watch('beacons', function() {
-			$scope.myBeacon = UtilsService.findMyBeacon($scope.beacons);
+		$scope.$watch('beacons', function(newVal, oldVal) {
+			if ( newVal ) {
+				$scope.myBeacon = UtilsService.findMyBeacon($scope.beacons);
+			}
 		});
 
 		// when myBeacon changes, update the currentUser being held on $rootScope
-		$scope.$watch('myBeacon', function() {
-			$rootScope.currentUser.myBeacon = $scope.myBeacon;
+		$scope.$watch('myBeacon', function(newVal, oldVal) {
+			if ( newVal ) {
+				$rootScope.currentUser.myBeacon = $scope.myBeacon;
+			}
 		});
 
 	}
