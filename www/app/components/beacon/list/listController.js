@@ -14,6 +14,8 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 
 	return function() {
 
+		$ionicLoading.show({template: 'loading resources'});
+
 		var missions = Mission.list(),
 			levels = Level.list(),
 			checkpoints = CheckPoint.list(),
@@ -22,7 +24,7 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 			mics = Mic.list();
 
 		return $q.all([missions, levels, checkpoints, platforms, regions, mics]).then(function(results) {
-
+			$ionicLoading.hide();
 			return {
 				missions: results[0].results,
 				levels: results[1].results,
