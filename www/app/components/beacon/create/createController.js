@@ -38,12 +38,12 @@ angular.module('gamebeacon.beacon.create.controllers', ['gamebeacon.services'])
 
 				// if the beacon was created, create a scheduled push that will go to all subscribers of the beacon channel
 				PushService.sendPush({
-					channels: [response.objectId],
-					//where: '{"puser":{"__type":"Pointer","className":"pusers","objectId":"' + $rootScope.currentUser.puserId + '"}}',
-					push_time : new Date(new Date().getTime() + (15 * 60000)).toISOString(),
-					expiration_time : new Date(new Date().getTime() + (30 * 60000)).toISOString(),
+					channels: ['OWNER' + response.objectId],
+					push_time: new Date(new Date().getTime() + (15 * 60000)).toISOString(),
+					expiration_time: new Date(new Date().getTime() + (30 * 60000)).toISOString(),
 					alert: MsgService.msg('createBeacon')
 				});
+
 				$state.go('app.beacons', null, {
 					reload: true,
 					notify: true
@@ -52,21 +52,21 @@ angular.module('gamebeacon.beacon.create.controllers', ['gamebeacon.services'])
 		};
 
 		$scope.$watch('levels', function(newVal, oldVal) {
-			if ( newVal ) {
+			if (newVal) {
 				$ionicSlideBoxDelegate.$getByHandle('level-selector').slide(0, 100);
 				$ionicSlideBoxDelegate.$getByHandle('level-selector').update();
 			}
 		});
 
 		$scope.$watch('checkpoints', function(newVal, oldVal) {
-			if ( newVal ) {
+			if (newVal) {
 				$ionicSlideBoxDelegate.$getByHandle('checkpoint-selector').slide(0, 100);
 				$ionicSlideBoxDelegate.$getByHandle('checkpoint-selector').update();
 			}
 		});
 
 		$scope.$watch('maxFireteam', function(newVal, oldVal) {
-			if ( newVal ) {
+			if (newVal) {
 				$ionicSlideBoxDelegate.$getByHandle('fireteam-selector').slide(0, 100);
 				$ionicSlideBoxDelegate.$getByHandle('fireteam-selector').update();
 			}

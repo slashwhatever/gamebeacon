@@ -34,7 +34,7 @@ var GameBeacon = angular.module('gamebeacon', [
 	'ng-mfb'
 ])
 
-.run(function($ionicPlatform, $ionicAnalytics) {
+.run(function($ionicPlatform, $ionicAnalytics, appConfig) {
 	$ionicPlatform.ready(function() {
 
 		$ionicAnalytics.register();
@@ -46,14 +46,13 @@ var GameBeacon = angular.module('gamebeacon', [
 			cordova.plugins.Keyboard.disableScroll(true);
 		}
 		if (window.StatusBar) {
-			StatusBar.styleLightContent();
+			StatusBar.styleDefault();
 		}
 
 	});
 
 	// Initialize Parse
-	Parse.initialize("G6y5BCESWE0d9IP0034FRuSXtBIOCUO5vdMUfhm1", "DK9nUcIYyHQRMYg1toAX784gci4j9u23aNRacZiP");
-
+	Parse.initialize(appConfig.parseAppKey, appConfig.parseJSKey);
 
 })
 
@@ -62,7 +61,9 @@ var GameBeacon = angular.module('gamebeacon', [
 	if (appConfig.productionMode) {
 		$compileProvider.debugInfoEnabled(false);
 		$logProvider.debugEnabled(false);
+		$ionicConfigProvider.scrolling.jsScrolling(false);
 	}
+
 
 	$ionicAppProvider.identify({
 		app_id: '9a8d7d97',
@@ -70,8 +71,6 @@ var GameBeacon = angular.module('gamebeacon', [
 		dev_push: true,
 		gcm_key: "1038280762685"
 	});
-
-	$ionicConfigProvider.scrolling.jsScrolling(false);
 
 	// Ionic uses AngularUI Router which uses the concept of states
 	// Learn more here: https://github.com/angular-ui/ui-router

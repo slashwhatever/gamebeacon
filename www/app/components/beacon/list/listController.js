@@ -1,24 +1,28 @@
 angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'gamebeacon.config'])
 
-.factory('listControllerInitialData', ['ObjectService', '$q', function(ObjectService, $q) {
+.factory('listControllerInitialData', [
+	'Mission',
+	'Level',
+	'CheckPoint',
+	'Platform',
+	'Region',
+	'Mic',
+	'ObjectService',
+	'$q',
+	'$ionicLoading',
+	function(Mission, Level, CheckPoint, Platform, Region, Mic, ObjectService, $q, $ionicLoading) {
+
 	return function() {
-		var missions = ObjectService.list('missions', {
-				params: {
-					'order': 'order',
-					'include': 'levels,checkpoints'
-				}
-			}),
-			levels = ObjectService.list('levels'),
-			checkpoints = ObjectService.list('checkpoints', {
-				params: {
-					'order': 'order'
-				}
-			}),
-			platforms = ObjectService.list('platforms'),
-			regions = ObjectService.list('regions'),
-			mics = ObjectService.list('mics');
+
+		var missions = Mission.list(),
+			levels = Level.list(),
+			checkpoints = CheckPoint.list(),
+			platforms = Platform.list(),
+			regions = Region.list(),
+			mics = Mic.list();
 
 		return $q.all([missions, levels, checkpoints, platforms, regions, mics]).then(function(results) {
+
 			return {
 				missions: results[0].results,
 				levels: results[1].results,
@@ -32,7 +36,14 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 }])
 
 .controller('ListController', [
-	'$scope', '$rootScope', '$state', '$ionicPopup', 'Beacon', 'UtilsService', 'initialData', 'appConfig',
+	'$scope',
+	'$rootScope',
+	'$state',
+	'$ionicPopup',
+	'Beacon',
+	'UtilsService',
+	'initialData',
+	'appConfig',
 	function($scope, $rootScope, $state, $ionicPopup, Beacon, UtilsService, initialData, appConfig) {
 
 		$scope.myBeacon = null;
@@ -138,14 +149,14 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 		// watches
 
 		$scope.$watch('beacons', function(newVal, oldVal) {
-			if ( newVal ) {
+			if (newVal) {
 				$scope.myBeacon = UtilsService.findMyBeacon($scope.beacons);
 			}
 		});
 
 		// when myBeacon changes, update the currentUser being held on $rootScope
 		$scope.$watch('myBeacon', function(newVal, oldVal) {
-			if ( newVal ) {
+			if (newVal) {
 				$rootScope.currentUser.myBeacon = $scope.myBeacon;
 			}
 		});

@@ -27,6 +27,7 @@ angular.module('gamebeacon.user.login.controllers', ['gamebeacon.services'])
 				if (window.plugins) PushService.registerPush(response.puserId)
 
 				$state.go('app.beacons');
+
 			}, function(error) {
 				UIService.showAlert({
 					title: 'Oops!',
