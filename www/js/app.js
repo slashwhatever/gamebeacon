@@ -34,7 +34,7 @@ var GameBeacon = angular.module('gamebeacon', [
 	'ng-mfb'
 ])
 
-.run(function($ionicPlatform, $ionicAnalytics, appConfig) {
+.run(function($state, $ionicPlatform, $ionicAnalytics, appConfig) {
 	$ionicPlatform.ready(function() {
 
 		$ionicAnalytics.register();
@@ -48,6 +48,12 @@ var GameBeacon = angular.module('gamebeacon', [
 		if (window.StatusBar) {
 			StatusBar.styleDefault();
 		}
+
+		$ionicPlatform.on('resume', function() {
+			$state.go($state.current, {}, {
+				reload: true
+			});
+		});
 
 	});
 
@@ -64,6 +70,11 @@ var GameBeacon = angular.module('gamebeacon', [
 		$ionicConfigProvider.scrolling.jsScrolling(false);
 	}
 
+	// no text on back nav buttons
+	$ionicConfigProvider.backButton.previousTitleText(false).text('&emsp;&emsp;');
+
+	// disable swipe to go back
+	$ionicConfigProvider.views.swipeBackEnabled(false);
 
 	$ionicAppProvider.identify({
 		app_id: '9a8d7d97',
@@ -132,7 +143,12 @@ var GameBeacon = angular.module('gamebeacon', [
 	.state('beacon-create', {
 		url: '/beacon-create',
 		templateUrl: 'app/components/beacon/create/createView.html',
-		controller: 'CreateController'
+		controller: 'CreateController',
+		resolve: {
+			initialData: function(listControllerInitialData) {
+				return listControllerInitialData()
+			}
+		}
 	})
 
 	.state('app.profile', {
@@ -140,7 +156,12 @@ var GameBeacon = angular.module('gamebeacon', [
 		views: {
 			'main-view': {
 				templateUrl: 'app/components/user/profile/profileView.html',
-				controller: 'ProfileController'
+				controller: 'ProfileController',
+				resolve: {
+					initialData: function(listControllerInitialData) {
+						return listControllerInitialData()
+					}
+				}
 			}
 		}
 	})

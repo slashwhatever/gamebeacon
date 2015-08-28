@@ -4,13 +4,14 @@ angular.module('gamebeacon.beacon.create.controllers', ['gamebeacon.services'])
 	'$scope',
 	'$rootScope',
 	'$state',
+	'initialData',
 	'Beacon',
 	'UtilsService',
 	'PushService',
 	'MsgService',
 	'$ionicSlideBoxDelegate',
 	'$timeout',
-	function($scope, $rootScope, $state, Beacon, UtilsService, PushService, MsgService, $ionicSlideBoxDelegate, $timeout) {
+	function($scope, $rootScope, $state, initialData, Beacon, UtilsService, PushService, MsgService, $ionicSlideBoxDelegate, $timeout) {
 
 		// Called when the form is submitted
 		$scope.createBeacon = function() {
@@ -23,17 +24,17 @@ angular.module('gamebeacon.beacon.create.controllers', ['gamebeacon.services'])
 				'mic': UtilsService.getObjectAsPointer('mics', $scope.mics[$ionicSlideBoxDelegate.$getByHandle('mic-selector').currentIndex()].objectId),
 				'level': hasLevel ? UtilsService.getObjectAsPointer('levels', $scope.levels[$ionicSlideBoxDelegate.$getByHandle('level-selector').currentIndex()].objectId) : null,
 				'fireteamRequired': $ionicSlideBoxDelegate.$getByHandle('fireteam-selector').currentIndex() + 1,
-				'fireteamOnboard': [UtilsService.getObjectAsPointer('pusers', $rootScope.currentUser.puserId)],
+				'fireteamOnboard': [UtilsService.getObjectAsPointer('pusers', UtilsService.getCurrentUser().puserId)],
 				'platform': UtilsService.getObjectAsPointer('platforms', $scope.platforms[$ionicSlideBoxDelegate.$getByHandle('platform-selector').currentIndex()].objectId),
 				'region': UtilsService.getObjectAsPointer('regions', $scope.regions[$ionicSlideBoxDelegate.$getByHandle('region-selector').currentIndex()].objectId),
-				'creator': UtilsService.getObjectAsPointer('pusers', $rootScope.currentUser.puserId),
+				'creator': UtilsService.getObjectAsPointer('pusers', UtilsService.getCurrentUser().puserId),
 				'active': true
 			}).then(function(response) {
 
 				// subscribe the user to a channel for this beacon
 				PushService.subscribe({
 					channel: 'OWNER' + response.objectId,
-					puserId: $rootScope.currentUser.puserId
+					puserId: UtilsService.getCurrentUser().puserId
 				});
 
 				// if the beacon was created, create a scheduled push that will go to all subscribers of the beacon channel
@@ -86,23 +87,24 @@ angular.module('gamebeacon.beacon.create.controllers', ['gamebeacon.services'])
 		}
 
 		// define all the starting variables for the view
-		$scope.missions = $rootScope.missions;
-		$scope.platforms = $rootScope.platforms;
-		$scope.regions = $rootScope.regions;
-		$scope.checkpoints = $rootScope.missions[0].checkpoints ? $rootScope.missions[0].checkpoints : null;
-		$scope.mics = $rootScope.mics;
-		$scope.levels = $rootScope.missions[0].levels ? $rootScope.missions[0].levels : null;
-		$scope.maxFireteam = $scope.getMaxFireTeam($rootScope.missions[0]);
+		$scope.missions = initialData.missions;
+		$scope.platforms = initialData.platforms;
+		$scope.regions = initialData.regions;
+		$scope.checkpoints = initialData.missions[0].checkpoints ? initialData.missions[0].checkpoints : null;
+		$scope.mics = initialData.mics;
+		$scope.levels = initialData.missions[0].levels ? initialData.missions[0].levels : null;
+		$scope.maxFireteam = $scope.getMaxFireTeam(initialData.missions[0]);
+		$scope.currentUser = UtilsService.getCurrentUser();
 
 		// set the starting slides for the mic, platform and region
 		$scope.defaultMic = _.findIndex($scope.mics, {
-			objectId: $rootScope.currentUser.mic.objectId
+			objectId: $scope.currentUser.mic.objectId
 		})
 		$scope.defaultPlatform = _.findIndex($scope.platforms, {
-			objectId: $rootScope.currentUser.platform.objectId
+			objectId: $scope.currentUser.platform.objectId
 		})
 		$scope.defaultRegion = _.findIndex($scope.regions, {
-			objectId: $rootScope.currentUser.region.objectId
+			objectId: $scope.currentUser.region.objectId
 		})
 
 		$ionicSlideBoxDelegate.update();

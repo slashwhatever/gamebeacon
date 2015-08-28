@@ -5,10 +5,11 @@ angular.module('gamebeacon.user.login.controllers', ['gamebeacon.services'])
 	'$scope',
 	'$state',
 	'$ionicUser',
+	'UtilsService',
 	'UIService',
 	'AuthService',
 	'PushService',
-	function($rootScope, $scope, $state, $ionicUser, UIService, AuthService, PushService) {
+	function($rootScope, $scope, $state, $ionicUser, UtilsService, UIService, AuthService, PushService) {
 
 		$scope.user = {
 			username: '',
@@ -19,12 +20,21 @@ angular.module('gamebeacon.user.login.controllers', ['gamebeacon.services'])
 
 			AuthService.login($scope.user).then(function(response) {
 
-				$ionicUser.identify({
+				var user = $ionicUser.get();
+
+				if (!user.installationId) {
+					user.installationId = $ionicUser.generateGUID();
+				}
+
+				_.extend(user, {
+					gamertag: response.gamertag,
 					user_id: response.puserId,
 					username: response.username
 				});
 
-				if (window.plugins) PushService.registerPush(response.puserId)
+				$ionicUser.identify(user);
+
+				if (window.plugins) PushService.registerPush(user)
 
 				$state.go('app.beacons');
 

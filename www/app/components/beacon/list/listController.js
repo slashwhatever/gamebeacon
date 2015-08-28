@@ -12,30 +12,33 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 	'$ionicLoading',
 	function(Mission, Level, CheckPoint, Platform, Region, Mic, ObjectService, $q, $ionicLoading) {
 
-	return function() {
+		return function() {
 
-		$ionicLoading.show({template: 'loading resources'});
+			$ionicLoading.show({
+				template: 'loading resources'
+			});
 
-		var missions = Mission.list(),
-			levels = Level.list(),
-			checkpoints = CheckPoint.list(),
-			platforms = Platform.list(),
-			regions = Region.list(),
-			mics = Mic.list();
+			var missions = Mission.list(),
+				levels = Level.list(),
+				checkpoints = CheckPoint.list(),
+				platforms = Platform.list(),
+				regions = Region.list(),
+				mics = Mic.list();
 
-		return $q.all([missions, levels, checkpoints, platforms, regions, mics]).then(function(results) {
-			$ionicLoading.hide();
-			return {
-				missions: results[0].results,
-				levels: results[1].results,
-				checkpoints: results[2].results,
-				platforms: results[3].results,
-				regions: results[4].results,
-				mics: results[5].results
-			};
-		});
+			return $q.all([missions, levels, checkpoints, platforms, regions, mics]).then(function(results) {
+				$ionicLoading.hide();
+				return {
+					missions: results[0].results,
+					levels: results[1].results,
+					checkpoints: results[2].results,
+					platforms: results[3].results,
+					regions: results[4].results,
+					mics: results[5].results
+				};
+			});
+		}
 	}
-}])
+])
 
 .controller('ListController', [
 	'$scope',
@@ -57,14 +60,6 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 			label: $scope.myBeacon ? 'Create beacon' : 'My beacon',
 			icon: $scope.myBeacon ? 'ion-compose' : 'ion-radio-waves',
 		}
-
-		// these should now be available everywhere
-		$rootScope.missions = initialData.missions;
-		$rootScope.platforms = initialData.platforms;
-		$rootScope.regions = initialData.regions;
-		$rootScope.checkpoints = initialData.checkpoints;
-		$rootScope.levels = initialData.levels;
-		$rootScope.mics = initialData.mics;
 
 		// go grab 20 beacons from the server
 		$scope.getBeaconChunk = function() {
@@ -159,7 +154,7 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 		// when myBeacon changes, update the currentUser being held on $rootScope
 		$scope.$watch('myBeacon', function(newVal, oldVal) {
 			if (newVal) {
-				$rootScope.currentUser.myBeacon = $scope.myBeacon;
+				UtilsService.getCurrentUser().myBeacon = $scope.myBeacon;
 			}
 		});
 

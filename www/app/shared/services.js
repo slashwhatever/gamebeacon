@@ -846,9 +846,9 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 						//alert('iOS register failure = ' + data + ' Status ' + status);
 					});
 			},
-			registerPush: function(puserId) {
+			registerPush: function(user) {
 
-				LogService.log('Push Register as Tester: ' + puserId);
+				LogService.log('Push Register as Tester: ' + user.user_id);
 
 				var pushNotification;
 				pushNotification = window.plugins.pushNotification;
@@ -872,8 +872,8 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 						data: {
 							'deviceType': 'ios',
 							'deviceToken': result,
-							'installationId': Parse._getInstallationId(),
-							'puser': UtilsService.getObjectAsPointer('pusers', puserId)
+							'installationId': user.installationId,
+							'puser': UtilsService.getObjectAsPointer('pusers', user.user_id)
 						},
 						headers: {
 							'X-Parse-Application-Id': appConfig.parseAppKey,
@@ -924,17 +924,15 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 					switch (e.event) {
 						case 'registered':
 							if (e.regid.length > 0) {
-								//alert('GCM registered event regid = ' + e.regid);
-								//alert('Parse InstallationId = ' + CommonService.parseInstallationId);
 								// Rest call to Parse to Insert/Update the Installation record for this Device
 								$http({
 									url: 'https://api.parse.com/1/installations',
 									method: 'POST',
 									data: {
 										'deviceType': 'android',
-										'installationId': Parse._getInstallationId(),
+										'installationId': user.installationId,
 										'gcmRegId': e.regid,
-										'puser': UtilsService.getObjectAsPointer('puser', puserId)
+										'puser': UtilsService.getObjectAsPointer('puser', user.user_id)
 									},
 									headers: {
 										'X-Parse-Application-Id': appConfig.parseAppKey,
@@ -943,7 +941,7 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 									}
 								}).success(function(data, status, headers, config) {
 									LogService.log('GCM RegID: ' + e.regid);
-									LogService.log('GCM Parse InstallationID: ' + Parse._getInstallationId());
+									LogService.log('GCM Parse InstallationID: ' + user.installationId);
 									//alert('GCM registered success = ' + data + ' Status ' + status);
 								}).error(function(data, status, headers, config) {
 									//alert('GCM registered failure = ' + data + ' Status ' + status);

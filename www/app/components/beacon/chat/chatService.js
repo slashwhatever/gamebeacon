@@ -53,7 +53,7 @@ angular.module('gamebeacon.chat.services', ['ngResource', 'gamebeacon.config'])
 			Chat.save({
 				message: message,
 				beacon: UtilsService.getObjectAsPointer('beacons', beaconId),
-				from: UtilsService.getObjectAsPointer('pusers', $rootScope.currentUser.puserId)
+				from: UtilsService.getObjectAsPointer('pusers', UtilsService.getCurrentUser().puserId)
 			}, function(response) {
 				d.resolve(response);
 			}, function(error){

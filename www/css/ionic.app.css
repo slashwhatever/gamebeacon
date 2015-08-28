@@ -3183,29 +3183,29 @@ a.subdued {
     z-index: 1;
     padding: 0 8px;
     min-width: initial;
-    min-height: 31px;
+    min-height: 19px;
     font-weight: 400;
     font-size: 13px;
-    line-height: 32px; }
+    line-height: 20px; }
     .bar .button.button-icon:before, .bar .button .icon:before, .bar .button.icon:before, .bar .button.icon-left:before, .bar .button.icon-right:before {
       padding-right: 2px;
       padding-left: 2px;
       font-size: 20px;
-      line-height: 32px; }
+      line-height: 20px; }
     .bar .button.button-icon {
       font-size: 17px; }
       .bar .button.button-icon .icon:before, .bar .button.button-icon:before, .bar .button.button-icon.icon-left:before, .bar .button.button-icon.icon-right:before {
         vertical-align: top;
-        font-size: 32px;
-        line-height: 32px; }
+        font-size: 20px;
+        line-height: 20px; }
     .bar .button.button-clear {
       padding-right: 2px;
       padding-left: 2px;
       font-weight: 300;
       font-size: 17px; }
       .bar .button.button-clear .icon:before, .bar .button.button-clear.icon:before, .bar .button.button-clear.icon-left:before, .bar .button.button-clear.icon-right:before {
-        font-size: 32px;
-        line-height: 32px; }
+        font-size: 20px;
+        line-height: 20px; }
     .bar .button.back-button {
       display: block;
       margin-right: 5px;
@@ -3215,8 +3215,8 @@ a.subdued {
     .bar .button.back-button.active, .bar .button.back-button.activated {
       opacity: 0.2; }
   .bar .button-bar > .button, .bar .buttons > .button {
-    min-height: 31px;
-    line-height: 32px; }
+    min-height: 19px;
+    line-height: 20px; }
   .bar .button-bar + .button, .bar .button + .button-bar {
     margin-left: 5px; }
   .bar .buttons, .bar .buttons.primary-buttons, .bar .buttons.secondary-buttons {
@@ -6854,7 +6854,7 @@ progress {
   line-height: 53px; }
   .button-large .icon:before, .button-large.icon:before, .button-large.icon-left:before, .button-large.icon-right:before {
     padding-bottom: 2px;
-    font-size: 32px;
+    font-size: 20px;
     line-height: 51px; }
 
 .button-icon {
@@ -6870,7 +6870,7 @@ progress {
     box-shadow: none;
     opacity: 0.3; }
   .button-icon .icon:before, .button-icon.icon:before {
-    font-size: 32px; }
+    font-size: 20px; }
 
 .button-clear {
   -webkit-transition: opacity .1s;
@@ -7955,6 +7955,15 @@ button {
 .item-icon-top .icon {
   height: 100%;
   font-size: 32px; }
+
+.bar-header, .bar .title {
+  height: 30px; }
+
+.bar-header .title {
+  line-height: 30px; }
+
+.has-header {
+  top: 30px; }
 
 body {
   font-family: "SofiaProLight", "Helvetica Neue", Roboto, sans-serif;
