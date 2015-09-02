@@ -11,10 +11,11 @@ angular.module('gamebeacon.beacon.create.controllers', ['gamebeacon.services'])
 	'MsgService',
 	'$ionicSlideBoxDelegate',
 	'$timeout',
-	function($scope, $rootScope, $state, initialData, Beacon, UtilsService, PushService, MsgService, $ionicSlideBoxDelegate, $timeout) {
+	'$ionicScrollDelegate',
+	function($scope, $rootScope, $state, initialData, Beacon, UtilsService, PushService, MsgService, $ionicSlideBoxDelegate, $timeout, $ionicScrollDelegate) {
 
 		// Called when the form is submitted
-		$scope.createBeacon = function() {
+		$scope.createBeacon = function(startTime) {
 			var hasLevel = $scope.levels ? $scope.levels.length > 0 : false,
 				hasCheckpoint = $scope.checkpoints ? $scope.checkpoints.length > 0 : false;
 
@@ -28,6 +29,10 @@ angular.module('gamebeacon.beacon.create.controllers', ['gamebeacon.services'])
 				'platform': UtilsService.getObjectAsPointer('platforms', $scope.platforms[$ionicSlideBoxDelegate.$getByHandle('platform-selector').currentIndex()].objectId),
 				'region': UtilsService.getObjectAsPointer('regions', $scope.regions[$ionicSlideBoxDelegate.$getByHandle('region-selector').currentIndex()].objectId),
 				'creator': UtilsService.getObjectAsPointer('pusers', UtilsService.getCurrentUser().puserId),
+				'startDate': {
+            "__type": "Date",
+            "iso": startTime
+        },
 				'active': true
 			}).then(function(response) {
 
@@ -38,6 +43,7 @@ angular.module('gamebeacon.beacon.create.controllers', ['gamebeacon.services'])
 				});
 
 				// if the beacon was created, create a scheduled push that will go to all subscribers of the beacon channel
+				// // TODO: make sure the push and expiry times are based on the scheduled start time of the beacon
 				PushService.sendPush({
 					channels: ['OWNER' + response.objectId],
 					push_time: new Date(new Date().getTime() + (15 * 60000)).toISOString(),
@@ -86,6 +92,11 @@ angular.module('gamebeacon.beacon.create.controllers', ['gamebeacon.services'])
 			return _.range(1, mission.maxFireteam)
 		}
 
+		var minsToStartTime = new Date().getMinutes() + 40,
+		hoursToStartTime = new Date().getHours(),
+		minsRounded = (((minsToStartTime + 5) / 10 | 0) * 10) % 60,
+		hoursRounded = ((((minsToStartTime / 105) + .5) | 0) + hoursToStartTime) % 24;
+
 		// define all the starting variables for the view
 		$scope.missions = initialData.missions;
 		$scope.platforms = initialData.platforms;
@@ -95,19 +106,26 @@ angular.module('gamebeacon.beacon.create.controllers', ['gamebeacon.services'])
 		$scope.levels = initialData.missions[0].levels ? initialData.missions[0].levels : null;
 		$scope.maxFireteam = $scope.getMaxFireTeam(initialData.missions[0]);
 		$scope.currentUser = UtilsService.getCurrentUser();
+		//$scope.startTime = new Date().getTime();
 
 		// set the starting slides for the mic, platform and region
 		$scope.defaultMic = _.findIndex($scope.mics, {
 			objectId: $scope.currentUser.mic.objectId
-		})
+		});
+
 		$scope.defaultPlatform = _.findIndex($scope.platforms, {
 			objectId: $scope.currentUser.platform.objectId
-		})
+		});
+
 		$scope.defaultRegion = _.findIndex($scope.regions, {
 			objectId: $scope.currentUser.region.objectId
-		})
+		});
 
 		$ionicSlideBoxDelegate.update();
+
+		$timeout(function() {
+			$ionicScrollDelegate.scrollTop();
+		}, 50);
 
 	}
 ])

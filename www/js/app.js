@@ -28,6 +28,7 @@ var GameBeacon = angular.module('gamebeacon', [
 	'gamebeacon.chat.services',
 	'gamebeacon.shared.directives',
 	'gamebeacon.fireteam.directives',
+	'gamebeacon.beacon.scheduler.directives',
 	'gamebeacon.beacon.register.directives',
 	'templates',
 	'angularMoment',

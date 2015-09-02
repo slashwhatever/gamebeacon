@@ -1,0 +1,32 @@
+<div class="scheduler-container">
+	<p class="byline scheduler-byline">schedule</p>
+	<div class="row">
+		<div class="col text-center">
+			<div class="swiper-date swiper-container">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide" ng-repeat="date in dates track by $index">
+						<h2>{{date.dateText}}</h2></div>
+				</div>
+			</div>
+		</div>
+		<div class="col col-20 text-right">
+			<div class="swiper-time-hours swiper-container">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide" ng-repeat="hour in hours track by $index">
+						<h2>{{hour.hoursText}}</h2></div>
+				</div>
+			</div>
+		</div>
+		<div class="col col-5 text-center">
+			<h2 class="time-separator">:</h2>
+		</div>
+		<div class="col col-20">
+			<div class="swiper-time-mins swiper-container">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide" ng-repeat="minute in minutes track by $index">
+						<h2>{{minute.minutesText}}</h2></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

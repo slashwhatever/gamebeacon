@@ -32,11 +32,34 @@ angular.module('gamebeacon.beacon.timer.directives', [])
 				updateTimer = function() {
 					// update the scope variables to update the timer display
 					if (scope.beacon.timeLeft > 0) {
+
+						// get total seconds between the times
+						var delta = Math.abs(scope.beacon.timeLeft) / 1000;
+
+						// calculate (and subtract) whole days
+						var days = Math.floor(delta / 86400);
+						delta -= days * 86400;
+
+						// calculate (and subtract) whole hours
+						var hours = Math.floor(delta / 3600) % 24;
+						delta -= hours * 3600;
+
+						// calculate (and subtract) whole minutes
+						var minutes = Math.floor(delta / 60) % 60;
+						delta -= minutes * 60;
+
+						// what's left is seconds
+						var seconds = Math.floor(delta % 60);  // in theory the modulus is not required
+
 						if (scope.beacon) {
-							scope.minutes = pad(Math.floor(Math.max(0, scope.beacon.timeLeft) / 60));
-							scope.seconds = pad(scope.beacon.timeLeft - (scope.minutes * 60));
+							scope.days = pad(days);
+							scope.hours = pad(hours);
+							scope.minutes = pad(minutes);
+							scope.seconds = pad(seconds);
 						}
 					} else {
+						scope.days = 0;
+						scope.hours = 0;
 						scope.minutes = 0;
 						scope.seconds = 0;
 					}
@@ -49,7 +72,7 @@ angular.module('gamebeacon.beacon.timer.directives', [])
 
 				},
 				checkExpired = function() {
-					if (parseInt(scope.minutes) <= 0 && parseInt(scope.seconds) <= 0) {
+					if (parseInt(scope.days) <= 0 && parseInt(scope.hours) <= 0 && parseInt(scope.minutes) <= 0 && parseInt(scope.seconds) <= 0) {
 						stopTimer();
 						scope.expired = true;
 						Beacon.expire(scope.beacon);

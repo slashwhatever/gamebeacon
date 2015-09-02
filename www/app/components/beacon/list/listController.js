@@ -66,7 +66,7 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 			Beacon.list({
 				limit: $scope.limit,
 				skip: $scope.skip,
-				'where': '{"active":true,"createdAt":{"$gte":{ "__type": "Date", "iso": "' + new Date(new Date().getTime() - (appConfig.maxBeaconAge * 60000)).toISOString() + '" }}}' // only get beacons that are less than 30 mins old
+				'where': '{"active":true,"startDate":{"$gte":{ "__type": "Date", "iso": "' + new Date(new Date().getTime()).toISOString() + '" }}}' // only get beacons that are less than 30 mins old
 			}).then(function(response) {
 
 				// if we have results, there may be more...
@@ -92,7 +92,7 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 			Beacon.list({
 				limit: $scope.limit,
 				skip: $scope.skip,
-				'where': '{"active":true, "createdAt":{"$gte":{ "__type": "Date", "iso": "' + new Date(new Date().getTime() - (appConfig.maxBeaconAge * 60000)).toISOString() + '" }}}' // only get beacons that are less than 30 mins old
+				'where': '{"active":true,"startDate":{"$gte":{ "__type": "Date", "iso": "' + new Date(new Date().getTime()).toISOString() + '" }}}'
 			}).then(function(response) {
 
 				$scope.beacons = response.results.length > 0 ? response.results : null;

@@ -1,341 +1,414 @@
 body {
-    font-family: $core-font-family;
-    color: #fff;
-    background-image: -webkit-linear-gradient(137deg, #8FDCDC 0%, #2961C3 50%, #15132A 91%);
-    background-image: -o-linear-gradient(137deg, #8FDCDC 0%, #2961C3 50%, #15132A 91%);
-    background-image: linear-gradient(137deg, #8FDCDC 0%, #2961C3 50%, #15132A 91%);
+		font-family: $core-font-family;
+		color: #fff;
+		background-image: -webkit-linear-gradient(137deg, #8FDCDC 0%, #2961C3 50%, #15132A 91%);
+		background-image: -o-linear-gradient(137deg, #8FDCDC 0%, #2961C3 50%, #15132A 91%);
+		background-image: linear-gradient(137deg, #8FDCDC 0%, #2961C3 50%, #15132A 91%);
 }
-h1, h2, h3 {
-    text-transform: none;
-}
-h1, .item h1 {
-    color: $grey;
-}
-h2, .item h2 {
-    color: $grey;
-}
+
+h1,
+h2,
 h3 {
-    color: $grey;
+		text-transform: none;
 }
-h2, h3 {
-    font-family: $core-font-family;
+
+h1,
+.item h1 {
+		color: $grey;
+}
+
+h2,
+.item h2 {
+		color: $grey;
+}
+
+h3 {
+		color: $grey;
+}
+
+h2,
+h3 {
+		font-family: $core-font-family;
 }
 
 a {
-	color: $grey;
+		color: $grey;
 }
 
 .tutorial-screenshot {
-	width: 90%;
-	border: 1px solid $grey;
+		width: 90%;
+		border: 1px solid $grey;
 }
+
 .app-title {
-  font-family: $core-font-family;
-  font-size: 50px;
-  text-align: center;
-  padding-bottom: 20px;
+		font-family: $core-font-family;
+		font-size: 50px;
+		text-align: center;
+		padding-bottom: 20px;
 }
 
 .app-byline {
-	font-family: $core-font-family;
-	font-size: 18px;
-	text-align: center;
+		font-family: $core-font-family;
+		font-size: 18px;
+		text-align: center;
 }
+
 .text-center {
-    text-align: center;
+		text-align: center;
 }
 
-
-input[type=color], input[type=date], input[type=datetime-local], input[type=datetime], input[type=email], input[type=month], input[type=number], input[type=password], input[type=search], input[type=tel], input[type=text], input[type=time], input[type=url], input[type=week], textarea {
-    color: $grey;
+.text-right {
+		text-align: right;
 }
+
+input[type=color],
+input[type=date],
+input[type=datetime-local],
+input[type=datetime],
+input[type=email],
+input[type=month],
+input[type=number],
+input[type=password],
+input[type=search],
+input[type=tel],
+input[type=text],
+input[type=time],
+input[type=url],
+input[type=week],
+textarea {
+		color: $grey;
+}
+
 .label {
-    font-weight: 700;
+		font-weight: 700;
 }
+
 .bar-footer {
-    background: $mid-grey;
+		background: $mid-grey;
 }
 
 .tab-item {
-    color: #fff;
+		color: #fff;
 }
 
 .list-inset {
-    background-color: transparent;
+		background-color: transparent;
 }
 
 
 /* Empty. Add your own CSS if you like */
 
 #logo {
-    margin: 30px 0px;
+		margin: 30px 0px;
 }
+
 #list {
-    width: 170px;
-    margin: 30px auto;
-    font-size: 20px;
+		width: 170px;
+		margin: 30px auto;
+		font-size: 20px;
 }
+
 #list ol {
-    margin-top: 30px;
+		margin-top: 30px;
 }
+
 #list ol li {
-    text-align: left;
-    list-style: decimal;
-    margin: 10px 0px;
+		text-align: left;
+		list-style: decimal;
+		margin: 10px 0px;
 }
+
 label.new-message {
-    background: transparent;
-    border-bottom: 1px solid $grey;
-    @include border-radius(0);
+		background: transparent;
+		border-bottom: 1px solid $grey;
+		@include border-radius(0);
 }
+
 label.new-message input {
-    background: transparent;
-    width: 100%;
+		background: transparent;
+		width: 100%;
 }
+
+
 /* This parent can be any width and height */
 
 .slide-wrapper {
-    text-align: center;
+		text-align: center;
 }
+
+
 /* The ghost, nudged to maintain perfect centering */
 
 .slide-wrapper:before {
-    content: '';
-    display: inline-block;
-    height: 100%;
-    vertical-align: middle;
-    margin-right: -0.25em;
-    /* Adjusts for spacing */
+		content: '';
+		display: inline-block;
+		height: 100%;
+		vertical-align: middle;
+		margin-right: -0.25em;
+		/* Adjusts for spacing */
 }
 
 .slider-slide {
-    padding-top: 80px;
-    color: #fff;
-    text-align: center;
-    font-family: $core-font-family;
-    font-weight: 300;
-    background-color: #2A3035;
-    box-shadow: inset 0 10px 20px rgba(0, 0, 0, 0.1);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 10px 0;
+		padding-top: 80px;
+		color: #fff;
+		text-align: center;
+		font-family: $core-font-family;
+		font-weight: 300;
+		background-color: #2A3035;
+		box-shadow: inset 0 10px 20px rgba(0, 0, 0, 0.1);
+		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+		padding: 10px 0;
 }
 
 .help-slider {
 		position: absolute !important;
-	  top: 0 ;
-	  bottom: 0;
-	  left: 0;
-	  right: 0;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
 }
 
 .help-slider.has-header {
-	  top: 44px;
+		top: 44px;
 }
 
-.help-slider .slider-pager {
+.help-slider .slider-pager {}
 
-}
 .create-beacon-slide {
-    font-size: 32px;
-    height: 110px;
+		font-size: 32px;
+		height: 110px;
 }
 
 .create-beacon-slide h2 {
-	font-size: 24px;
-	margin-top: 10px;
-}
-.missions-slide {
-    border-bottom-width: 0;
-    height: 170px;
-}
-.create-beacon-slide .slide-wrapper {
-    height: 100%;
+		font-size: 24px;
+		margin-top: 10px;
 }
 
-.missions-slide, .create-beacon-slide {
-    @include blue-grad();
+.missions-slide {
+		border-bottom-width: 0;
+		height: 170px;
+}
+
+.create-beacon-slide .slide-wrapper {
+		height: 100%;
+}
+
+.missions-slide,
+.create-beacon-slide {
+		@include blue-grad();
 }
 
 li.mission-level {
-    display: inline;
-    border: 1px solid #ddd;
-    @include border-radius(5px);
-    padding: 10px;
-    margin: 0 10px;
-    vertical-align: middle;
+		display: inline;
+		border: 1px solid #ddd;
+		@include border-radius(5px);
+		padding: 10px;
+		margin: 0 10px;
+		vertical-align: middle;
 }
+
+
 /* The element to be centered, can
 also be of any width and height */
 
 .slide-inner {
-    display: inline-block;
-    vertical-align: middle;
+		display: inline-block;
+		vertical-align: middle;
 }
+
 .slide-inner h2 {
-    margin-bottom: 0;
+		margin-bottom: 0;
 }
+
 .mission-time {
-    color: $green;
+		color: $green;
 }
+
+
 /*************** icons *******************/
 
 .icon {}
+
 .icon-s {
-    height: 50px;
-    width: 50px;
+		height: 50px;
+		width: 50px;
 }
+
 .icon-m {
-    height: 150px;
-    width: 150px;
+		height: 150px;
+		width: 150px;
 }
+
 .icon-l {
-    height: 250px;
-    width: 250px;
+		height: 250px;
+		width: 250px;
 }
+
 .icon.mission-icon {}
+
+
 /**************** BOF - taken from bootstrap ****************/
 
 .message {
-    margin-top: 15px
+		margin-top: 15px
 }
+
 .message:first-child {
-    margin-top: 0
+		margin-top: 0
 }
-.message, .message-body {
-    zoom: 1;
-}
-.message-object {
-    display: block
-}
-.message-body, .message-left, .message-right {
-    display: table-cell;
-    vertical-align: top
-}
+
+.message,
 .message-body {
-    width: 10000px;
-    vertical-align: middle;
-    padding: 10px 10px;
-    @include border-radius(5px 0 0 5px);
-    background: $mid-grey;
+		zoom: 1;
 }
+
+.message-object {
+		display: block
+}
+
+.message-body,
+.message-left,
+.message-right {
+		display: table-cell;
+		vertical-align: top
+}
+
+.message-body {
+		width: 10000px;
+		vertical-align: middle;
+		padding: 10px 10px;
+		@include border-radius(5px 0 0 5px);
+		background: $mid-grey;
+}
+
 .message-username {
-	font-weight: 700;
+		font-weight: 700;
 }
+
 .their-msg .message-body {
-	@include border-radius(0 5px 5px 0);
+		@include border-radius(0 5px 5px 0);
 }
 
 .message-timestamp.your-msg-timestamp {
-	text-align: right;
+		text-align: right;
 }
-
 
 .message-middle {
-    vertical-align: middle
+		vertical-align: middle
 }
+
 .message-bottom {
-    vertical-align: bottom
+		vertical-align: bottom
 }
+
 .message-heading {
-    margin-top: 0;
-    margin-bottom: 5px
+		margin-top: 0;
+		margin-bottom: 5px
 }
+
 .message-list {
-    padding-left: 0;
-    list-style: none
+		padding-left: 0;
+		list-style: none
 }
+
+
 /**************** EOF - taken from bootstrap ****************/
+
+
 /***************** beacon cards ****************/
 
 .beacon-card {
-    background-color: lighten($dark-blue, 5%);
-    overflow: hidden;
-    border-bottom: 1px solid lighten($dark-blue, 10%);
+		background-color: lighten($dark-blue, 5%);
+		overflow: hidden;
+		border-bottom: 1px solid lighten($dark-blue, 10%);
 }
 
 .beacon-card.my-beacon:after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    border-color: transparent $yellow transparent transparent;
-    border-style: solid;
-    border-width: 0 25px 25px 0;
-  }
+		content: '';
+		position: absolute;
+		top: 0;
+		right: 0;
+		border-color: transparent $yellow transparent transparent;
+		border-style: solid;
+		border-width: 0 25px 25px 0;
+}
 
 .beacon-list-empty {
-    text-align: center;
+		text-align: center;
 }
+
 .item h2.mission-name {
-    font-family: "SixCaps", "Helvetica Neue", Roboto, sans-serif;
-    font-size : 40px;
+		font-family: "SixCaps", "Helvetica Neue", Roboto, sans-serif;
+		font-size: 40px;
 }
 
 .beacon-timer {
-  position: relative;
-  white-space: nowrap;
-  vertical-align: middle;
-  text-align: center;
+		position: relative;
+		white-space: nowrap;
+		vertical-align: middle;
+		text-align: center;
 }
 
 .timer-icon {
-	font-size: 130px;
-	opacity: 0.1;
-	position: absolute;
-	top: -62px;
-	right: -29px;
-	transform: rotate(571deg) scaleX(-1);
+		font-size: 130px;
+		opacity: 0.1;
+		position: absolute;
+		top: -62px;
+		right: -29px;
+		transform: rotate(571deg) scaleX(-1);
 }
 
 .beacon-countdown {
-	padding-top: 0;
-	font-size: 24px;
-	font-family: "ExoBold", "SofiaProLight", "Helvetica Neue", Roboto, sans-serif;
+		margin-top: 8px;
+		font-size: 20px;
+		font-family: "ExoBold", "SofiaProLight", "Helvetica Neue", Roboto, sans-serif;
 }
 
 .mission-time {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  max-width: 40px;
-  max-height: 40px;
-  width: 100%;
-  height: 100%;
-  @include border-radius(50px);
+		position: absolute;
+		top: 16px;
+		right: 16px;
+		max-width: 40px;
+		max-height: 40px;
+		width: 100%;
+		height: 100%;
+		@include border-radius(50px);
 }
 
 button.fireteam-button {
-    @include border-radius(50px);
-    font-size: 20px;
-    z-index: 9999;
-    border-width: 0;
-    vertical-align: middle;
-    color: $mid-grey;
-    background-color: $blue;
-    text-transform: lowercase;
-    padding: 10px;
-    margin-bottom: 10px;
+		@include border-radius(50px);
+		font-size: 20px;
+		z-index: 9999;
+		border-width: 0;
+		vertical-align: middle;
+		color: $mid-grey;
+		background-color: $blue;
+		text-transform: lowercase;
+		padding: 10px;
+		margin-bottom: 10px;
 }
 
 button.fireteam-leader {
-    background: $yellow;
-    color: $mid-grey;
+		background: $yellow;
+		color: $mid-grey;
 }
-
 
 button.join-fireteam-button {
-    border: 1px dashed $light-grey;
-    background: transparent;
-    width: auto;
-    padding: 0 10px;
+		border: 1px dashed $light-grey;
+		background: transparent;
+		width: auto;
+		padding: 0 10px;
 }
+
+
 /* chat window  */
 
-
 div.message {
-    position: relative;
-    @include border-radius(5px);
+		position: relative;
+		@include border-radius(5px);
 }
+
+
 /*
 div.message:before {
     content: "";
@@ -375,6 +448,7 @@ div.message.your-msg:after {
 }
 */
 
+
 /*
 .message-body {
 	margin-left: 10px;
@@ -386,265 +460,341 @@ div.message.your-msg:after {
 */
 
 .message-icon {
-    box-shadow: inset 45px 0 0 #E2E7ED;
-    @include border-radius(5px 0 0 5px);
-    height: 100%;
-    vertical-align: middle;
+		box-shadow: inset 45px 0 0 #E2E7ED;
+		@include border-radius(5px 0 0 5px);
+		height: 100%;
+		vertical-align: middle;
 }
+
 .message-icon:before {
-    font-size: 28px;
-    padding: 7px 10px;
-    color: $mid-grey;
+		font-size: 28px;
+		padding: 7px 10px;
+		color: $mid-grey;
 }
+
 .message-right.message-icon {
-  @include border-radius(0 5px 5px 0);
-  box-shadow: inset 45px 0 0 $pink;
+		@include border-radius(0 5px 5px 0);
+		box-shadow: inset 45px 0 0 $pink;
 }
+
 
 /* beacon detail */
 
 ion-view[name=beacon-detail] .bar-subheader {
-    height: auto;
-    background: transparent;
-    margin: 0;
-    padding: 0;
-    border-color: transparent;
+		height: auto;
+		background: transparent;
+		margin: 0;
+		padding: 0;
+		border-color: transparent;
 }
+
 ion-view[name=beacon-detail] .bar-subheader .list:last-child.card {
-    margin-bottom: 0;
+		margin-bottom: 0;
 }
+
 ion-view[name=beacon-detail] .has-subheader {
-    top: 200px;
+		top: 200px;
 }
+
+
 /****************** FLOAT BUTTON *************************/
 
 .float-button-wrapper {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
+		position: fixed;
+		bottom: 20px;
+		right: 20px;
 }
-.float-button {
-    @include border-radius(50px);
-    padding: 28px;
-    font-size: 24px;
-    background-color: $pink;
-    z-index: 9999;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
-}
-.float-button .height_fix {
-    margin-top: 100%;
-}
-.float-button .content {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    height: 100%;
-    width: 100%;
-    text-align: center;
-    margin-top: -12px;
-    /* Note, this must be half the font size */
 
-    color: $grey;
+.float-button {
+		@include border-radius(50px);
+		padding: 28px;
+		font-size: 24px;
+		background-color: $pink;
+		z-index: 9999;
+		box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
 }
+
+.float-button .height_fix {
+		margin-top: 100%;
+}
+
+.float-button .content {
+		position: absolute;
+		left: 0;
+		top: 50%;
+		height: 100%;
+		width: 100%;
+		text-align: center;
+		margin-top: -12px;
+		/* Note, this must be half the font size */
+		color: $grey;
+}
+
+
 /************* slidebox beacon create *****************/
 
 .byline {
-    color: $grey;
-    font-size: 18px;
-    text-transform: lowercase;
-    margin-top: 5px;
+		color: $grey;
+		font-size: 18px;
+		text-transform: lowercase;
+		margin-top: 5px;
 }
+
+
 /************* Logo *************/
 
 .logo-wrapper {
-    text-align: center;
-    width: 100%;
-    padding: 50px 50px 10px;
+		text-align: center;
+		width: 100%;
+		padding: 50px 50px 10px;
 }
+
+
 /************ alignment tweaks ******************/
 
 
 /**************** beacon card **************/
 
 .action-toolbar {
-  margin-top: 20px;
+		margin-top: 20px;
 }
 
-.beacon-left, .beacon-right {
-    display: inline-block;
+.beacon-left,
+.beacon-right {
+		display: inline-block;
 }
 
 .beacon-right {
-    max-width : 150px;
+		max-width: 150px;
 }
 
 .beacon-left .meta-details {
-    text-align: center;
-    margin: 10px auto 0 auto;
-    background: transparent;
-    color: $grey;
-    position: relative;
+		text-align: center;
+		margin: 10px auto 0 auto;
+		background: transparent;
+		color: $grey;
+		position: relative;
 }
 
 .beacon-left .icon {
-  display: block;
-  font-size: 50px;
-  color: rgba(255,255,255, 0.2);
+		display: block;
+		font-size: 50px;
+		color: rgba(255, 255, 255, 0.2);
 }
 
 .beacon-left .meta-label {
-  font-family: 'SixCaps';
-  font-size: 32px;
-  position: absolute;
-  top: 20px;
-  left: 0;
-  right: 0;
-  bottom: 0;
+		font-family: 'SixCaps';
+		font-size: 32px;
+		position: absolute;
+		top: 20px;
+		left: 0;
+		right: 0;
+		bottom: 0;
 }
 
 .list.beacon .col.beacon-right {
-  padding: 16px;
+		padding: 16px;
 }
+
+
 /**************** beacon detail ************/
 
 .fireteamOnboard {
-    background-color: #ccc;
-    @include border-radius(10px);
-    display: inline-block;
-    vertical-align: middle;
-    padding: 10px;
-    width: 100%;
-    text-align: center;
+		background-color: #ccc;
+		@include border-radius(10px);
+		display: inline-block;
+		vertical-align: middle;
+		padding: 10px;
+		width: 100%;
+		text-align: center;
 }
+
 .fireteamOnboard.team-leader {
-    background-color: pink;
+		background-color: pink;
 }
+
+
 /****************** platform ****************/
 
-.platform-icon, .mic-icon {
-    font-size: 20px;
+.platform-icon,
+.mic-icon {
+		font-size: 20px;
 }
+
+
 /*
 .ion-playstation.ps3 {color: blue}
 .ion-playstation.ps4 {color: yellow}
 .ion-xbox.one {color: green}
 .ion-xbox.360 {color: white}
 */
+
+
 /**************** meta blocks *******************/
 
 .meta-details {
-    background: $grey;
-    display: inline-block;
-    @include border-radius(20px);
-    padding: 5px 9px;
-    margin-right: 5px;
-    color: rgb(59, 66, 74);
-    vertical-align: middle;
-    margin-top: 10px;
+		background: $grey;
+		display: inline-block;
+		@include border-radius(20px);
+		padding: 5px 9px;
+		margin-right: 5px;
+		color: rgb(59, 66, 74);
+		vertical-align: middle;
+		margin-top: 10px;
 }
+
 .meta-details h3 {
-    display: inline-block;
+		display: inline-block;
 }
-.meta-details i, .meta-details span.ion-icon {
-    display: inline-block;
-    vertical-align: baseline;
+
+.meta-details i,
+.meta-details span.ion-icon {
+		display: inline-block;
+		vertical-align: baseline;
 }
+
 .meta-details span.ion-icon:before {
-    margin-right: 5px;
+		margin-right: 5px;
 }
+
 .text-lower {
-    text-transform: lowercase;
+		text-transform: lowercase;
 }
+
 .meta-details.small {
-    font-size: 0.9em;
+		font-size: 0.9em;
 }
 
 .meta-details.no-spaces {
-    background-color: $pink;
+		background-color: $pink;
 }
 
 
 /* beacon details tabs */
 
 ul.nav.nav-tabs {
-	@include flexbox-container();
+		@include flexbox-container();
 }
 
 ul.nav.nav-tabs li {
-    text-align: center;
-    color: white;
-    border-bottom: 2px solid darken($positive, 20%);
-    margin: 0 5px;
-    @include flexbox-child();
-    padding: 10px;
+		text-align: center;
+		color: white;
+		border-bottom: 2px solid darken($positive, 20%);
+		margin: 0 5px;
+		@include flexbox-child();
+		padding: 10px;
 }
 
 ul.nav.nav-tabs li a {
-	text-decoration: none;
-	color: $light-grey;
-	display: block;
-	width : 100%;
+		text-decoration: none;
+		color: $light-grey;
+		display: block;
+		width: 100%;
 }
+
 ul.nav.nav-tabs li.active {
-	border-bottom-color: $positive;
+		border-bottom-color: $positive;
 }
+
 ul.nav.nav-tabs li.active a {
-	color: white;
+		color: white;
 }
+
 
 /* profile pic */
 
-.ion-profile-picture{
-  border-radius: 50%;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  width: 8rem;
-  height: 8rem;
-  margin: 0.5rem auto 1rem auto;
-  background-color: #F8F8F8;
-  text-align: center;
-  color: #ccc;
-  position: relative;
-  background-position: center center;
-  background-size: auto 100%;
+.ion-profile-picture {
+		border-radius: 50%;
+		-webkit-border-radius: 50%;
+		-moz-border-radius: 50%;
+		width: 8rem;
+		height: 8rem;
+		margin: 0.5rem auto 1rem auto;
+		background-color: #F8F8F8;
+		text-align: center;
+		color: #ccc;
+		position: relative;
+		background-position: center center;
+		background-size: auto 100%;
 }
 
-.ion-profile-picture.no-picture:before{
-  content: "\f118";
-  font-family: "Ionicons";
-  font-size: 3rem;
-  line-height: 8rem;
-  text-align: center;
+.ion-profile-picture.no-picture:before {
+		content: "\f118";
+		font-family: "Ionicons";
+		font-size: 3rem;
+		line-height: 8rem;
+		text-align: center;
 }
 
-.ion-profile-picture input[type=file]{
-  display: none;
+.ion-profile-picture input[type=file] {
+		display: none;
 }
 
 
 /* form validation */
 
 form i.icon.error {
-  color: $pink; }
+		color: $pink;
+}
 
+form input + i.icon.error,
+form select + i.icon.error {
+		display: none;
+		margin-left: 8px;
+}
 
-form input + i.icon.error, form select + i.icon.error {
-  display: none;
-  margin-left: 8px; }
-
-form.ng-submitted input.ng-invalid + i.icon.error, form.ng-submitted select.ng-invalid + i.icon.error {
-  display: block; }
+form.ng-submitted input.ng-invalid + i.icon.error,
+form.ng-submitted select.ng-invalid + i.icon.error {
+		display: block;
+}
 
 form .has-error {
-  border-left: 5px solid #cc2511; }
+		border-left: 5px solid #cc2511;
+}
 
 form .has-success {
-  border-left: 5px solid #3d8b3d; }
+		border-left: 5px solid #3d8b3d;
+}
 
-form.ng-submitted input.ng-valid + i.icon.error, form.ng-submitted select.ng-valid + i.icon.error {
-  display: none; }
-
+form.ng-submitted input.ng-valid + i.icon.error,
+form.ng-submitted select.ng-valid + i.icon.error {
+		display: none;
+}
 
 .item-input .icon {
-    min-width: 24px;
+		min-width: 24px;
+}
+
+
+/* scheduler */
+
+.scheduler-container {
+		@include blue-grad();
+		position: relative;
+		height: 150px;
+		background-color: #2A3035;
+		box-shadow: inset 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.scheduler-byline {
+		padding-top: 30px;
+		text-align: center;
+		margin-top: 0;
+		margin-bottom: 0;
+}
+
+.swiper-date.swiper-container {
+		text-align: right;
+}
+
+.scheduler-container h2.time-separator {
+		margin-top: -3px;
+}
+
+.swiper-container {
+		margin-top: 10px;
+		text-align: center;
+		display: inline-block;
+		height: 80px;
+		@include fade-grad();
 }

@@ -360,11 +360,8 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 		var timeLeft = function(date) {
 			var d = new Date(date).getTime();
 			var n = new Date().getTime();
-			var diff = n - d;
-			var halfHour = (30 * 60 * 1000);
-
-			return (diff > halfHour) ? 0 : Math.round((halfHour - diff) / 1000);
-
+			var diff = d - n;
+			return diff;
 		}
 
 		var prepareBeaconData = function(beacon) {
@@ -384,7 +381,7 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 
 			beacon.platformIcon = UtilsService.getPlatformIcon(beacon.platform.name);
 			beacon.fireteamSpaces = beacon.fireteamRequired - (beacon.fireteamOnboard ? beacon.fireteamOnboard.length - 1 : 0);
-			beacon.timeLeft = timeLeft(beacon.createdAt);
+			beacon.timeLeft = timeLeft(beacon.startDate.iso);
 		}
 
 		return {

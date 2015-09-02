@@ -298,3 +298,17 @@ $button-gap-multiplier : 55px;
 .bar .button.button-clear .icon:before, .bar .button.button-clear.icon:before, .bar .button.button-clear.icon-left:before, .bar .button.button-clear.icon-right:before {
     font-size: 32px;
     line-height: 20px;
+  }
+
+
+  /* additional col width */
+
+  .col-5 {
+      -webkit-box-flex: 0;
+      -webkit-flex: 0 0 10%;
+      -moz-box-flex: 0;
+      -moz-flex: 0 0 10%;
+      -ms-flex: 0 0 10%;
+      flex: 0 0 5%;
+      max-width: 10%;
+  }
