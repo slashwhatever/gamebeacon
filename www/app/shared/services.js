@@ -361,7 +361,7 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 			var d = new Date(date).getTime();
 			var n = new Date().getTime();
 			var diff = d - n;
-			return diff;
+			return diff / 1000;		// we want seconds, not ms
 		}
 
 		var prepareBeaconData = function(beacon) {

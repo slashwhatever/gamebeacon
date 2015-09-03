@@ -34,7 +34,7 @@ angular.module('gamebeacon.beacon.timer.directives', [])
 					if (scope.beacon.timeLeft > 0) {
 
 						// get total seconds between the times
-						var delta = Math.abs(scope.beacon.timeLeft) / 1000;
+						var delta = Math.abs(scope.beacon.timeLeft);
 
 						// calculate (and subtract) whole days
 						var days = Math.floor(delta / 86400);
