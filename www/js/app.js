@@ -141,6 +141,21 @@ var GameBeacon = angular.module('gamebeacon', [
 		}
 	})
 
+	.state('app.dashboard', {
+		url: '/dashboard/:userId',
+		views: {
+			'main-view': {
+				templateUrl: 'app/components/user/dashboard/dashboardView.html',
+				controller: 'DashboardController',
+				resolve: {
+					beacons: function($stateParams, Beacon) {
+						return Beacon.getMine()
+					}
+				}
+			}
+		}
+	})
+
 	.state('beacon-create', {
 		url: '/beacon-create',
 		templateUrl: 'app/components/beacon/create/createView.html',

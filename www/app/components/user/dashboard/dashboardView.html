@@ -1,0 +1,29 @@
+<ion-view name="beacon-list" title="Dashboard" cache-view="false">
+
+	<ion-nav-bar align-title="right" class="bar-positive nav-title-slide-ios7">
+	  <ion-nav-back-button class="button-clear"><i class="icon ion-arrow-left-b"></i></ion-nav-back-button>
+	</ion-nav-bar>
+
+	<ion-content scroll="true">
+		<ion-refresher pulling-text="pull to refresh" pulling-icon="ion-android-arrow-down" on-refresh="refreshBeaconList()">
+			<ion-spinner icon="crescent"></ion-spinner>
+		</ion-refresher>
+
+		<!-- beacon card -->
+		<div class="beacon-card" ng-class="{'my-beacon' : beacon.userIsCreator }" ng-repeat="beacon in beacons track by beacon.objectId">
+			<beacon-header></beacon-header>
+			<beacon-meta></beacon-meta>
+			<beacon-actions></beacon-actions>
+		</div>
+		<!-- no beacons -->
+		<div ng-hide="beacons" class="row">
+			<div class="col col-80 col-offset-10">
+				<div class="beacon-list-empty padding">
+					<h1>No beacons!</h1>
+					<p ui-sref="beacon-create">You have no beacons right now - tap here to create one</p>
+				</div>
+			</div>
+		</div>
+		<ion-infinite-scroll ng-if="moreBeacons" on-infinite="getBeaconChunk()"></ion-infinite-scroll>
+	</ion-content>
+</ion-view>

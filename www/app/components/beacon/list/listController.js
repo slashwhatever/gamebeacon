@@ -57,8 +57,8 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 		$scope.limit = 20;
 		$scope.moreBeacons = false;
 		$scope.floatButton = {
-			label: $scope.myBeacon ? 'Create beacon' : 'My beacon',
-			icon: $scope.myBeacon ? 'ion-compose' : 'ion-radio-waves',
+			label: $scope.myBeacons.length > 0 ? 'Create beacon' : 'My beacon',
+			icon: $scope.myBeacons.length > 0 ? 'ion-compose' : 'ion-radio-waves',
 		}
 
 		// go grab 20 beacons from the server
