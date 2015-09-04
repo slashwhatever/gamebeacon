@@ -12,6 +12,7 @@ var GameBeacon = angular.module('gamebeacon', [
 	'gamebeacon.user.login.controllers',
 	'gamebeacon.user.profile.controllers',
 	'gamebeacon.user.reset.controllers',
+	'gamebeacon.user.dashboard.controllers',
 	'gamebeacon.beacon.list.controllers',
 	'gamebeacon.beacon.detail.controllers',
 	'gamebeacon.beacon.create.controllers',
@@ -142,16 +143,11 @@ var GameBeacon = angular.module('gamebeacon', [
 	})
 
 	.state('app.dashboard', {
-		url: '/dashboard/:userId',
+		url: '/dashboard/:puserId',
 		views: {
 			'main-view': {
 				templateUrl: 'app/components/user/dashboard/dashboardView.html',
-				controller: 'DashboardController',
-				resolve: {
-					beacons: function($stateParams, Beacon) {
-						return Beacon.getMine()
-					}
-				}
+				controller: 'DashboardController'
 			}
 		}
 	})

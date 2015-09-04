@@ -74,9 +74,6 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 				"objectId": objectId
 			}
 		},
-		getMyBeacon: function() {
-			return $rootScope.currentUser.myBeacon
-		},
 		getCurrentUser: function() {
 			return $rootScope.currentUser
 		},
@@ -392,12 +389,12 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 
 					_.each(response.results, prepareBeaconData);
 
-					// move the active users beacon to the top of the list (if they have one)
+/*					// move the active users beacon to the top of the list (if they have one)
 					var userBeaconIdx = _.findIndex(response.results, function(i) {
 						return i.userIsCreator == true
 					});
 					if (userBeaconIdx > -1) _.move(response.results, userBeaconIdx, 0);
-
+*/
 					d.resolve(response);
 				}, function(error) {
 					d.reject(error);

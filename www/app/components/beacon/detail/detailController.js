@@ -36,7 +36,7 @@ angular.module('gamebeacon.beacon.detail.controllers', ['gamebeacon.services'])
 
 	$scope.joinBeacon = function(beacon) {
 		Beacon.updateFireteam(beacon, 'join').then(function() {
-			$scope.myBeacon = beacon.objectId;
+			$scope.myBeacons.push(beacon.objectId);
 			$state.go($state.current, {
 				beaconId: beacon.objectId
 			}, {
@@ -54,7 +54,7 @@ angular.module('gamebeacon.beacon.detail.controllers', ['gamebeacon.services'])
 		confirmDel.then(function(res) {
 			if (res) {
 				Beacon.delete(beacon).then(function() {
-					$scope.myBeacon = null;
+					$scope.myBeacons = _.without($scope.myBeacons, beacon.beaconId);			// this should remove the beacon from the array
 					$state.go('app.beacons', {}, {
 						reload: true,
 						notify: true
@@ -76,7 +76,7 @@ angular.module('gamebeacon.beacon.detail.controllers', ['gamebeacon.services'])
 
 	$scope.leaveBeacon = function(beacon) {
 		Beacon.updateFireteam(beacon, 'leave').then(function() {
-			$scope.myBeacon = null;
+			$scope.myBeacons = _.without($scope.myBeacons, beacon.beaconId);			// this should remove the beacon from the array
 			$state.go('app.beacons', {}, {
 				reload: true,
 				notify: true

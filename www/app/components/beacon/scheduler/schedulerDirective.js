@@ -122,7 +122,7 @@ angular.module('gamebeacon.beacon.scheduler.directives', [])
 				hoursRounded = ((((minsToStartTime / 105) + .5) | 0) + hoursToStartTime) % 24;
 
 				// now we need to set the starting time to be the next available hour/minute slice after now
-				dateSwiper.slideTo(daysBetween(new Date(), new Date(ngModel.$viewValue)), 0);
+				if ( ngModel.$viewValue ) dateSwiper.slideTo(daysBetween(new Date(), new Date(ngModel.$viewValue)), 0);
 				hoursSwiper.slideTo(hoursArr.indexOf('' + hoursRounded), 0);
 				minsSwiper.slideTo(minsArr.indexOf('' + minsRounded), 0);
 

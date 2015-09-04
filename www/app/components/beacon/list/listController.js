@@ -51,22 +51,30 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 	'appConfig',
 	function($scope, $rootScope, $state, $ionicPopup, Beacon, UtilsService, initialData, appConfig) {
 
-		$scope.myBeacon = null;
+		$scope.myBeacons = [];
 		$scope.beacons = [];
 		$scope.skip = 0;
 		$scope.limit = 20;
 		$scope.moreBeacons = false;
-		$scope.floatButton = {
-			label: $scope.myBeacons.length > 0 ? 'Create beacon' : 'My beacon',
-			icon: $scope.myBeacons.length > 0 ? 'ion-compose' : 'ion-radio-waves',
-		}
+		$scope.puserId = UtilsService.getCurrentUser().puserId
+
+// build the basic query out
+		var where = {
+			'active': true,
+			'startDate': {
+				'$gte': {
+					'__type': "Date",
+					'iso': new Date(new Date().getTime()).toISOString()
+				}
+			}
+		};
 
 		// go grab 20 beacons from the server
 		$scope.getBeaconChunk = function() {
 			Beacon.list({
 				limit: $scope.limit,
 				skip: $scope.skip,
-				'where': '{"active":true,"startDate":{"$gte":{ "__type": "Date", "iso": "' + new Date(new Date().getTime()).toISOString() + '" }}}' // only get beacons that are less than 30 mins old
+				'where': JSON.stringify(where)
 			}).then(function(response) {
 
 				// if we have results, there may be more...
@@ -92,7 +100,7 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 			Beacon.list({
 				limit: $scope.limit,
 				skip: $scope.skip,
-				'where': '{"active":true,"startDate":{"$gte":{ "__type": "Date", "iso": "' + new Date(new Date().getTime()).toISOString() + '" }}}'
+				'where': JSON.stringify(where)
 			}).then(function(response) {
 
 				$scope.beacons = response.results.length > 0 ? response.results : null;
@@ -103,7 +111,7 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 
 		$scope.joinBeacon = function(beacon) {
 			Beacon.updateFireteam(beacon, 'join').then(function() {
-				$scope.myBeacon = beacon.objectId;
+				$scope.myBeacons.push(beacon.objectId);
 				$state.go('app.beacon', {
 					beaconId: beacon.objectId
 				}, {
@@ -121,7 +129,7 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 			confirmDel.then(function(res) {
 				if (res) {
 					Beacon.delete(beacon).then(function() {
-						$scope.myBeacon = null;
+						$scope.myBeacons = _.without($scope.myBeacons, beacon.beaconId);			// this should remove the beacon from the array
 						$state.go('app.beacons', null, {
 							reload: true,
 							notify: true
@@ -133,7 +141,7 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 
 		$scope.leaveBeacon = function(beacon) {
 			Beacon.updateFireteam(beacon, 'leave').then(function() {
-				$scope.myBeacon = null;
+				$scope.myBeacons = _.without($scope.myBeacons, beacon.beaconId);			// this should remove the beacon from the array
 				$state.go('app.beacons', null, {
 					reload: true,
 					notify: true
@@ -146,15 +154,15 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 		// watches
 
 		$scope.$watch('beacons', function(newVal, oldVal) {
-			if (newVal) {
-				$scope.myBeacon = UtilsService.findMyBeacon($scope.beacons);
+			if (newVal && $scope.beacons.length > 0 ) {
+				$scope.myBeacons.push(UtilsService.findMyBeacon($scope.beacons).objectId);
 			}
 		});
 
-		// when myBeacon changes, update the currentUser being held on $rootScope
-		$scope.$watch('myBeacon', function(newVal, oldVal) {
-			if (newVal) {
-				UtilsService.getCurrentUser().myBeacon = $scope.myBeacon;
+		// when myBeacons changes, update the currentUser
+		$scope.$watch('myBeacons', function(newVal, oldVal) {
+			if (newVal && $scope.beacons.length > 0 ) {
+				UtilsService.getCurrentUser().myBeacons.push(UtilsService.findMyBeacon($scope.beacons).objectId);
 			}
 		});
 
