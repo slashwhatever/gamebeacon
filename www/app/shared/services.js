@@ -74,6 +74,12 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 				"objectId": objectId
 			}
 		},
+		getObjectAsFile: function(fileName) {
+			return {
+				"__type": "File",
+				"name": fileName
+			}
+		},
 		getCurrentUser: function() {
 			return $rootScope.currentUser
 		},
@@ -697,6 +703,7 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 								fullUser.gamertag = pUserRes.gamertag;
 								fullUser.buddySince = userRes.createdAt;
 								fullUser.platform = pUserRes.platform;
+								fullUser.picture = pUserRes.picture;
 								fullUser.region = pUserRes.region;
 								fullUser.mic = pUserRes.mic;
 								fullUser.sessionToken = userRes.sessionToken;

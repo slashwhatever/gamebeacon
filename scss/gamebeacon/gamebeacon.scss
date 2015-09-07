@@ -320,7 +320,11 @@ also be of any width and height */
 .beacon-card {
 		background-color: lighten($dark-blue, 5%);
 		overflow: hidden;
-		border-bottom: 1px solid lighten($dark-blue, 10%);
+		border-top: 1px solid lighten($dark-blue, 10%);
+}
+
+.beacon-card:first-of-type {
+		border-top-color: transparent;
 }
 
 .beacon-card.my-beacon:after {
@@ -362,6 +366,7 @@ also be of any width and height */
 		margin-top: 8px;
 		font-size: 20px;
 		font-family: "ExoBold", "SofiaProLight", "Helvetica Neue", Roboto, sans-serif;
+		color: $white;
 }
 
 .mission-time {
@@ -703,7 +708,7 @@ ul.nav.nav-tabs li.active a {
 
 /* profile pic */
 
-.ion-profile-picture {
+.ion-profile-picture, .dummy-profile-picture {
 		border-radius: 50%;
 		-webkit-border-radius: 50%;
 		-moz-border-radius: 50%;
@@ -718,7 +723,7 @@ ul.nav.nav-tabs li.active a {
 		background-size: auto 100%;
 }
 
-.ion-profile-picture.no-picture:before {
+.ion-profile-picture.no-picture:before, .dummy-profile-picture.no-picture:before,  {
 		content: "\f118";
 		font-family: "Ionicons";
 		font-size: 3rem;

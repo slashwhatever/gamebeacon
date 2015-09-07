@@ -4,12 +4,13 @@ angular.module('gamebeacon.user.profile.controllers', ['gamebeacon.services'])
 	'$rootScope',
 	'$scope',
 	'$state',
+	'$cordovaImagePicker',
 	'initialData',
 	'UtilsService',
 	'AuthService',
 	'PUserService',
 	'UIService',
-	function($rootScope, $scope, $state, initialData, UtilsService, AuthService, PUserService, UIService) {
+	function($rootScope, $scope, $state, $cordovaImagePicker, initialData, UtilsService, AuthService, PUserService, UIService) {
 
 		// these should now be available everywhere
 		$scope.platforms = initialData.platforms;
@@ -21,6 +22,7 @@ angular.module('gamebeacon.user.profile.controllers', ['gamebeacon.services'])
 			'gamertag': $scope.currentUser.gamertag,
 			'platform': $scope.currentUser.platform,
 			'region': $scope.currentUser.region,
+			'picture': $scope.currentUser.picture,
 			'mic': $scope.currentUser.mic.description == 'Mic required'
 		}
 
@@ -50,6 +52,7 @@ angular.module('gamebeacon.user.profile.controllers', ['gamebeacon.services'])
 			PUserService.update({
 				id: $scope.currentUser.puserId
 			}, {
+				picture: UtilsService.getObjectAsFile($scope.profile.picture),
 				gamertag: $scope.profile.gamertag,
 				platform: UtilsService.getObjectAsPointer('platforms', $scope.profile.platform.objectId),
 				region: UtilsService.getObjectAsPointer('regions', $scope.profile.region.objectId),
@@ -77,7 +80,6 @@ angular.module('gamebeacon.user.profile.controllers', ['gamebeacon.services'])
 				})
 			})
 		};
-
 
 	}
 ])

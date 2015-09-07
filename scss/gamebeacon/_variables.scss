@@ -24,3 +24,7 @@ $header-bar-height: 30px;
 
 $button-large-icon-size: 20px;
 $button-bar-button-height: 20px;
+
+
+$item-default-active-bg:          $green-blue !default;
+$button-light-active-border:      lighten($item-default-active-bg, 20%) !default;

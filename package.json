@@ -26,7 +26,8 @@
       "locator": "https://github.com/phonegap-build/PushPlugin.git",
       "id": "com.phonegap.plugins.PushPlugin"
     },
-    "ionic-plugin-deploy"
+    "ionic-plugin-deploy",
+    "org.apache.cordova.camera"
   ],
   "cordovaPlatforms": [
     "ios",

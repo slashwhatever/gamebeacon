@@ -56,7 +56,7 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 		$scope.skip = 0;
 		$scope.limit = 20;
 		$scope.moreBeacons = false;
-		$scope.puserId = UtilsService.getCurrentUser().puserId
+		$scope.puserId = UtilsService.getCurrentUser().puserId;
 
 // build the basic query out
 		var where = {

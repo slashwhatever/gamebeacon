@@ -17,6 +17,7 @@ angular.module('gamebeacon.user.dashboard.controllers', ['gamebeacon.services'])
 		$scope.skip = 0;
 		$scope.limit = 20;
 		$scope.moreBeacons = false;
+		$scope.currentUser = UtilsService.getCurrentUser()
 
 		$scope.$on('$ionicView.beforeEnter', function(){
 		  $scope.getBeaconChunk();
