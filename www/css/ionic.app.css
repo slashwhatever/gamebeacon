@@ -7980,7 +7980,7 @@ button {
   max-width: 10%; }
 
 .item-complex .item-content {
-  padding: 5px;
+  padding: 0;
   background-color: transparent; }
 
 body {
