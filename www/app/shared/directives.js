@@ -148,17 +148,22 @@ angular.module('gamebeacon.shared.directives', [])
 ])
 
 .directive('beaconProfilePicture', [
+	'$cordovaFileTransfer',
 	'$cordovaCamera',
 	'$q',
 	'$timeout',
 	'$rootScope',
 	'$ionicGesture',
 	'$ionicActionSheet',
-	function($cordovaCamera, $q, $timeout, $rootScope, $ionicGesture, $ionicActionSheet) {
+	'PUserService',
+	'UtilsService',
+	'UIService',
+	'appConfig',
+	function($cordovaFileTransfer, $cordovaCamera, $q, $timeout, $rootScope, $ionicGesture, $ionicActionSheet, PUserService, UtilsService, UIService, appConfig) {
 		return {
 			require: '?ngModel',
 			restrict: 'E',
-			template: '<div class="ion-profile-picture no-picture"><input type="file" accept="image/*" /></div>',
+			template: '<div class="ion-profile-picture no-picture"><input type="file" name="profile-picture" accept="image/*" /></div>',
 			replace: true,
 			link: function(scope, element, attrs, ngModel) {
 				var $input = angular.element(element.find('input'));
@@ -170,51 +175,88 @@ angular.module('gamebeacon.shared.directives', [])
 				}
 
 				var options = {
-					destinationType: Camera.DestinationType.FILE_URI,
-					encodingType: Camera.EncodingType.JPEG,
-					allowEdit: true,
-					cameraDirection: 1,
-					saveToPhotoAlbum: true,
-					width: 500,
-					height: 500,
-					quality: 80
-				};
+						destinationType: Camera.DestinationType.FILE_URI,
+						encodingType: Camera.EncodingType.JPEG,
+						allowEdit: true,
+						cameraDirection: 1,
+						width: 250,
+						height: 250,
+						quality: 80
+					},
+					uploadOptions = {},
+					jsonResponse = {},
+					picImageSrc = function() {
 
-				picImageSrc = function() {
+						// Show the action sheet
+						var hideSheet = $ionicActionSheet.show({
+							buttons: [{
+								text: 'Camera'
+							}, {
+								text: 'Photo Library'
+							}],
+							titleText: 'Where from?',
+							cancelText: 'Cancel',
+							cancel: function() {
+								// add cancel code..
+							},
+							buttonClicked: function(index) {
+								switch (index) {
+									case 0:
+										options.sourceType = Camera.PictureSourceType.CAMERA
+										break;
+									case 1:
+										options.sourceType = Camera.PictureSourceType.PHOTOLIBRARY
+										break;
+								};
 
-					// Show the action sheet
-					var hideSheet = $ionicActionSheet.show({
-						buttons: [{
-							text: 'Camera'
-						}, {
-							text: 'Photo Library'
-						}],
-						titleText: 'Where from?',
-						cancelText: 'Cancel',
-						cancel: function() {
-							// add cancel code..
-						},
-						buttonClicked: function(index) {
-							switch (index) {
-								case 0:
-									options.sourceType = Camera.PictureSourceType.CAMERA
-									break;
-								case 1:
-									options.sourceType = Camera.PictureSourceType.PHOTOLIBRARY
-									break;
+								$cordovaCamera.getPicture(options).then(function(imageUri) {
+
+									uploadOptions = {
+										fileName: imageUri.replace(/^.*[\\\/]/, ''),
+										chunkedMode: false,
+										mimeType: 'image/png',
+										headers: _.extend({
+											'Content-Type': 'image/jpeg'
+										}, appConfig.parseHttpsHeaders),
+									};
+
+									$cordovaFileTransfer.upload(appConfig.parseRestBaseUrl + 'files/' + imageUri.replace(/^.*[\\\/]/, ''), imageUri, uploadOptions)
+										.then(function(result) {
+											if ( result.responseCode == 201 ) {
+												try {
+													jsonResponse = JSON.parse(result.response);
+ 												} catch (e) {
+ 													UIService.showAlert({
+ 														title: 'Oops!',
+ 														template: e
+ 													})
+ 												}
+											}
+											// Success!
+											PUserService.update({
+												id: UtilsService.getCurrentUser().puserId
+											}, {
+												picture: UtilsService.getObjectAsFile(jsonResponse.name)
+											}).then(function(response) {
+												// set the view value
+												ngModel.$setViewValue(jsonResponse.url);
+												ngModel.$render();
+											});
+										}, function(err) {
+											UIService.showAlert({
+												title: 'Oops!',
+												template: 'There was a problem uploading your image. Is it under 10MB?'
+											})
+										}, function(progress) {
+											// constant progress updates
+										});
+								}, function(uploadErrResponse) {
+									// error
+								});
+								return true
 							}
-
-							$cordovaCamera.getPicture(options).then(function(imageUri) {
-								ngModel.$setViewValue(imageUri);
-								ngModel.$render();
-							}, function(err) {
-								// error
-							});
-
-							return true
-						}
-					});
-				}
+						});
+					}
 
 				ngModel.$formatters.unshift(function(modelValue) {
 					if (!modelValue) return '';

@@ -139,11 +139,11 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 			},
 			get: function(objectId) {
 				var dfd = $q.defer()
-	      this.missions.forEach(function(mission) {
-	        if (mission.objectId === objectId) dfd.resolve(mission)
-	      })
+				this.missions.forEach(function(mission) {
+					if (mission.objectId === objectId) dfd.resolve(mission)
+				})
 
-	      return dfd.promise;
+				return dfd.promise;
 			}
 		}
 	}
@@ -169,11 +169,51 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 			},
 			get: function(objectId) {
 				var dfd = $q.defer()
-	      this.levels.forEach(function(level) {
-	        if (level.objectId === objectId) dfd.resolve(level)
-	      })
+				this.levels.forEach(function(level) {
+					if (level.objectId === objectId) dfd.resolve(level)
+				})
 
-	      return dfd.promise;
+				return dfd.promise;
+			}
+		}
+	}
+])
+
+.service('Image', [
+	'$resource',
+	'$q',
+	'appConfig',
+	function($resource, $q, appConfig) {
+
+		var me = this,
+			Image = $resource(appConfig.parseRestBaseUrl + 'files/:fileName', {
+				fileName: '@fileName'
+			}, {
+				upload: {
+					method: 'POST',
+					params: {
+						image: '@image'
+					},
+					headers: _.extend({
+						'Content-Type': 'image/jpeg'
+					}, appConfig.parseHttpsHeaders)
+				}
+			});
+
+		return {
+			upload: function(image) {
+
+				var d = $q.defer(),
+					image = Image.upload({
+						fileName: image.replace(/^.*[\\\/]/, ''),
+						image: image
+					}, function(response) {
+						d.resolve(response);
+					}, function(error) {
+						d.reject(error);
+					});
+
+				return d.promise;
 			}
 		}
 	}
@@ -202,11 +242,11 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 			},
 			get: function(objectId) {
 				var dfd = $q.defer()
-	      this.checkpoints.forEach(function(checkpoint) {
-	        if (checkpoint.objectId === objectId) dfd.resolve(checkpoint)
-	      })
+				this.checkpoints.forEach(function(checkpoint) {
+					if (checkpoint.objectId === objectId) dfd.resolve(checkpoint)
+				})
 
-	      return dfd.promise;
+				return dfd.promise;
 			}
 		}
 	}
@@ -232,11 +272,11 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 			},
 			get: function(objectId) {
 				var dfd = $q.defer()
-	      this.platforms.forEach(function(platform) {
-	        if (platform.objectId === objectId) dfd.resolve(platform)
-	      })
+				this.platforms.forEach(function(platform) {
+					if (platform.objectId === objectId) dfd.resolve(platform)
+				})
 
-	      return dfd.promise;
+				return dfd.promise;
 			}
 		}
 	}
@@ -262,11 +302,11 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 			},
 			get: function(objectId) {
 				var dfd = $q.defer()
-	      this.regions.forEach(function(region) {
-	        if (region.objectId === objectId) dfd.resolve(region)
-	      })
+				this.regions.forEach(function(region) {
+					if (region.objectId === objectId) dfd.resolve(region)
+				})
 
-	      return dfd.promise;
+				return dfd.promise;
 			}
 		}
 	}
@@ -292,11 +332,11 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 			},
 			get: function(objectId) {
 				var dfd = $q.defer()
-	      this.mics.forEach(function(mic) {
-	        if (mic.objectId === objectId) dfd.resolve(mic)
-	      })
+				this.mics.forEach(function(mic) {
+					if (mic.objectId === objectId) dfd.resolve(mic)
+				})
 
-	      return dfd.promise;
+				return dfd.promise;
 			}
 		}
 	}
@@ -364,7 +404,7 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 			var d = new Date(date).getTime();
 			var n = new Date().getTime();
 			var diff = d - n;
-			return diff / 1000;		// we want seconds, not ms
+			return diff / 1000; // we want seconds, not ms
 		}
 
 		var prepareBeaconData = function(beacon) {
@@ -395,12 +435,12 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 
 					_.each(response.results, prepareBeaconData);
 
-/*					// move the active users beacon to the top of the list (if they have one)
-					var userBeaconIdx = _.findIndex(response.results, function(i) {
-						return i.userIsCreator == true
-					});
-					if (userBeaconIdx > -1) _.move(response.results, userBeaconIdx, 0);
-*/
+					/*					// move the active users beacon to the top of the list (if they have one)
+										var userBeaconIdx = _.findIndex(response.results, function(i) {
+											return i.userIsCreator == true
+										});
+										if (userBeaconIdx > -1) _.move(response.results, userBeaconIdx, 0);
+					*/
 					d.resolve(response);
 				}, function(error) {
 					d.reject(error);

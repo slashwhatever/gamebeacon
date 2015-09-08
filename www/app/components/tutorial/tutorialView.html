@@ -1,71 +1,70 @@
 <ion-view>
-		<ion-nav-bar class="bar-positive">
-
-				<ion-nav-buttons side="left">
-						<button class="button button-clear no-animation" ng-click="previous()" ng-show="slideIndex > 0">
-								<i class="icon ion-arrow-left-b"></i>
-						</button>
-				</ion-nav-buttons>
-				<ion-nav-buttons side="right">
-						<button class="button button-clear no-animation" ng-click="next()" ng-show="slideIndex != 4">
-								<i class="icon ion-arrow-right-b"></i>
-						</button>
-						<button class="button button-clear no-animation" ng-click="quitTutorial()" ng-show="slideIndex == 4">
-								<i class="icon ion-close"></i>
-						</button>
-				</ion-nav-buttons>
-		</ion-nav-bar>
-		<ion-slide-box class="has-header help-slider" on-slide-changed="slideChanged(index)">
-				<ion-slide>
-						<div class="padding">
-							<img class="logo" ng-src="img/logo.png">
-							<h3>Thank you for helping to test gamebeacon for Destiny!</h3>
-							<p>The app is designed to help you find a group of like-minded guardians for raids, crucible action or general missions, all from your mobile device.</p>
-							<p>The app is still in it's Alpha phase.</p>
-							<p>This means you <b>will</b> find bugs.</p>
-							<p>Please tell us about them by <a href="mailto:gamebeacon@slashwhatever.com?Subject=App%20Feedback" target="_top">emailing us.</a></p>
-						</div>
-				</ion-slide>
-				<ion-slide>
-						<div class="padding">
-							<h3>Getting Started</h3>
-							<p>When you login you should see a list of active Beacons</p>
-							<p>Each Beacon Card in the list has a set of icons to give you a quick heads up about the type of game people want to play.</p>
-							<div class="">
-									<img class="tutorial-screenshot" ng-src="img/beacon-card.png">
-							</div>
-							<p>In the Beacon Card above you can see the region, platform, level, number of Guardians still needed and whether a mic is required.</p>
-							<p>The little yellow flash in the top right corner signifies this is <i>your</i> Beacon - one you created.</p>
-						</div>
-				</ion-slide>
-				<ion-slide>
-						<div class="padding">
-							<h3>Beacon Detail</h3>
-							<p>When you tap through to view a Beacon, you'll be able to join, chat with other users and see the users who've already joined.</p>
-							<div class="">
-									<img class="tutorial-screenshot" ng-src="img/beacon-detail.png">
-							</div>
-							<p>If you created the Beacon, you have the power to delete it or to kick Guardians from the Beacon (click their user name to see the action menu).</p>
-						</div>
-				</ion-slide>
-				<ion-slide>
-						<div class="padding">
-							<h3>Other Stuff</h3>
-							<p>If there are no Beacons you like the look of, create your own.</p>
-							<p>The action button will help you do this.</p>
-							<div class="">
-									<img class="" ng-src="img/action-button.png">
-							</div>
-							<p>You can only join one Beacon or create one Beacon of your own at any given time.</p>
-							<p>Beacons auto-expire after 30 minutes.</p>
-							<p>If you created the Beacon, you have the power to delete it or to kick Guardians from the Beacon (click their user name to see the action menu).</p>
-						</div>
-				</ion-slide>
-				<ion-slide>
-						<div class="padding">
-							<h3>That's It!</h3>
-							<p>That's really all there is to it. Go create a Beacon!</p>
-						</div>
-				</ion-slide>
-		</ion-slide-box>
+	<ion-nav-bar class="bar-positive">
+		<ion-nav-buttons side="left">
+			<button class="button button-clear no-animation" ng-click="previous()" ng-show="slideIndex > 0">
+				<i class="icon ion-arrow-left-b"></i>
+			</button>
+		</ion-nav-buttons>
+		<ion-nav-buttons side="right">
+			<button class="button button-clear no-animation" ng-click="next()" ng-show="slideIndex != 4">
+				<i class="icon ion-arrow-right-b"></i>
+			</button>
+			<button class="button button-clear no-animation" ng-click="quitTutorial()" ng-show="slideIndex == 4">
+				<i class="icon ion-close"></i>
+			</button>
+		</ion-nav-buttons>
+	</ion-nav-bar>
+	<ion-slide-box class="has-header help-slider" on-slide-changed="slideChanged(index)">
+		<ion-slide>
+			<div class="padding">
+				<img class="logo" ng-src="img/logo.png">
+				<h3>Thank you for helping to test gamebeacon for Destiny!</h3>
+				<p>The app is designed to help you find a group of like-minded guardians for raids, crucible action or general missions, all from your mobile device.</p>
+				<p>The app is still in it's Alpha phase.</p>
+				<p>This means you <b>will</b> find bugs.</p>
+				<p>Please tell us about them by <a href="mailto:gamebeacon@slashwhatever.com?Subject=App%20Feedback" target="_top">emailing us.</a></p>
+			</div>
+		</ion-slide>
+		<ion-slide>
+			<div class="padding">
+				<h3>Getting Started</h3>
+				<p>When you login you should see a list of active Beacons</p>
+				<p>Each Beacon Card in the list has a set of icons to give you a quick heads up about the type of game people want to play.</p>
+				<div class="">
+					<img class="tutorial-screenshot" ng-src="img/beacon-card.png">
+				</div>
+				<p>In the Beacon Card above you can see the region, platform, level, number of Guardians still needed and whether a mic is required.</p>
+				<p>The little yellow flash in the top right corner signifies this is <i>your</i> Beacon - one you created.</p>
+			</div>
+		</ion-slide>
+		<ion-slide>
+			<div class="padding">
+				<h3>Beacon Detail</h3>
+				<p>When you tap through to view a Beacon, you'll be able to join, chat with other users and see the users who've already joined.</p>
+				<div class="">
+					<img class="tutorial-screenshot" ng-src="img/beacon-detail.png">
+				</div>
+				<p>If you created the Beacon, you have the power to delete it or to kick Guardians from the Beacon (click their user name to see the action menu).</p>
+			</div>
+		</ion-slide>
+		<ion-slide>
+			<div class="padding">
+				<h3>Other Stuff</h3>
+				<p>If there are no Beacons you like the look of, create your own.</p>
+				<p>The action button will help you do this.</p>
+				<div class="">
+					<img class="" ng-src="img/action-button.png">
+				</div>
+				<p>You can only join one Beacon or create one Beacon of your own at any given time.</p>
+				<p>Beacons auto-expire after 30 minutes.</p>
+				<p>If you created the Beacon, you have the power to delete it or to kick Guardians from the Beacon (click their user name to see the action menu).</p>
+			</div>
+		</ion-slide>
+		<ion-slide>
+			<div class="padding">
+				<h3>That's It!</h3>
+				<p>That's really all there is to it. Go create a Beacon!</p>
+			</div>
+		</ion-slide>
+	</ion-slide-box>
 </ion-view>
