@@ -29,8 +29,5 @@
     "ionic-plugin-deploy",
     "org.apache.cordova.camera"
   ],
-  "cordovaPlatforms": [
-    "ios",
-    "android"
-  ]
+  "cordovaPlatforms": []
 }

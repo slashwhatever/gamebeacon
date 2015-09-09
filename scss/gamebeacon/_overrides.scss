@@ -270,9 +270,6 @@ $button-gap-multiplier : 55px;
     color: $white;
 }
 
-
-
-
 .item.item-icon-top * {
   display: block;
   text-align: center;
@@ -283,17 +280,6 @@ $button-gap-multiplier : 55px;
   font-size: 32px;
 }
 
-// header bars
-//
-.bar-header, .bar .title {
-   height: $header-bar-height;
-}
-.bar-header .title {
-   line-height: $header-bar-height;
-}
-.has-header {
-   top: $header-bar-height;
-}
 
 .bar .button.button-clear .icon:before, .bar .button.button-clear.icon:before, .bar .button.button-clear.icon-left:before, .bar .button.button-clear.icon-right:before {
     font-size: 32px;

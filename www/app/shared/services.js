@@ -1,5 +1,22 @@
 angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 
+.factory('$localStorage', ['$window', function($window) {
+  return {
+    set: function(key, value) {
+      $window.localStorage[key] = value;
+    },
+    get: function(key, defaultValue) {
+      return $window.localStorage[key] || defaultValue;
+    },
+    setObject: function(key, value) {
+      $window.localStorage[key] = JSON.stringify(value);
+    },
+    getObject: function(key) {
+      return JSON.parse($window.localStorage[key] || '{}');
+    }
+  }
+}])
+
 .factory('MsgService', [function() {
 
 	return {
@@ -658,7 +675,7 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 
 }])
 
-.factory('AuthService', ['$resource', '$rootScope', '$ionicLoading', '$q', 'appConfig', 'PUserService', 'UIService', 'UtilsService', '$cordovaToast', function($resource, $rootScope, $ionicLoading, $q, appConfig, PUserService, UIService, UtilsService, $cordovaToast) {
+.factory('AuthService', ['$resource', '$rootScope', '$ionicLoading', '$localStorage', '$q', 'appConfig', 'PUserService', 'UIService', 'UtilsService', '$cordovaToast', function($resource, $rootScope, $ionicLoading, $localStorage, $q, appConfig, PUserService, UIService, UtilsService, $cordovaToast) {
 
 	var User = function(customHeaders) {
 		return $resource(appConfig.parseRestBaseUrl + 'login/', {
@@ -748,6 +765,8 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 								fullUser.mic = pUserRes.mic;
 								fullUser.sessionToken = userRes.sessionToken;
 
+								$localStorage.set('sessionToken', userRes.sessionToken)
+
 								$rootScope.currentUser = fullUser
 
 								d.resolve(fullUser);
@@ -800,20 +819,41 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 
 			return d.promise
 		},
-		getCurrentUser: function() {
+		getCurrentUser: function(sessionToken) {
 			var d = $q.defer();
 
-			User({
-				'X-Parse-Session-Token': $rootScope.currentUser.sessionToken
-			}).getCurrentUser({}, function(response) {
-				if (response) {
-					d.resolve(response);
+			User({'X-Parse-Session-Token': sessionToken}).getCurrentUser({}, function(userRes) {
+				if (userRes && userRes.$resolved) {
+					if (userRes.emailVerified) {
+						User().getPUser({
+							puserId: userRes.puser.objectId
+						}, function(pUserRes) {
+							if (pUserRes && pUserRes.$resolved) {
+
+								var fullUser = {};
+								fullUser.userId = userRes.objectId;
+								fullUser.puserId = pUserRes.objectId;
+								fullUser.username = userRes.username;
+								fullUser.gamertag = pUserRes.gamertag;
+								fullUser.buddySince = userRes.createdAt;
+								fullUser.platform = pUserRes.platform;
+								fullUser.picture = pUserRes.picture;
+								fullUser.region = pUserRes.region;
+								fullUser.mic = pUserRes.mic;
+								fullUser.sessionToken = userRes.sessionToken;
+								$localStorage.set('sessionToken', userRes.sessionToken)
+
+								$rootScope.currentUser = fullUser;
+
+								d.resolve(fullUser);
+							}
+						})
+					} else {
+						d.reject('We need you to verify your email address by clicking the link in the email we sent you');
+					}
 				}
 			}, function(response) {
-				UIService.showAlert({
-					title: 'Oops!',
-					template: response.data.error
-				})
+				d.reject('Could not log you in: ' + response.data.error);
 			});
 
 			return d.promise
