@@ -1,6 +1,7 @@
 angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'gamebeacon.config'])
 
 .factory('listControllerInitialData', [
+	'$q',
 	'Mission',
 	'Level',
 	'CheckPoint',
@@ -8,14 +9,13 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 	'Region',
 	'Mic',
 	'ObjectService',
-	'$q',
-	'$ionicLoading',
-	function(Mission, Level, CheckPoint, Platform, Region, Mic, ObjectService, $q, $ionicLoading) {
+	'UIService',
+	function($q, Mission, Level, CheckPoint, Platform, Region, Mic, ObjectService, UIService) {
 
 		return function() {
 
-			$ionicLoading.show({
-				template: 'loading resources'
+			UIService.showToast({
+				msg: 'loading resources'
 			});
 
 			var missions = Mission.list(),
@@ -26,7 +26,7 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 				mics = Mic.list();
 
 			return $q.all([missions, levels, checkpoints, platforms, regions, mics]).then(function(results) {
-				$ionicLoading.hide();
+				UIService.hideToast();
 				return {
 					missions: results[0].results,
 					levels: results[1].results,
@@ -47,9 +47,9 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 	'$ionicPopup',
 	'Beacon',
 	'UtilsService',
-	'initialData',
 	'appConfig',
-	function($scope, $rootScope, $state, $ionicPopup, Beacon, UtilsService, initialData, appConfig) {
+	'listControllerInitialData',
+	function($scope, $rootScope, $state, $ionicPopup, Beacon, UtilsService, appConfig, listControllerInitialData) {
 
 		$scope.myBeacons = [];
 		$scope.beacons = [];
@@ -57,6 +57,10 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 		$scope.limit = 20;
 		$scope.moreBeacons = false;
 		$scope.puserId = UtilsService.getCurrentUser().puserId;
+
+		$scope.$on('$ionicView.beforeEnter', function () {
+			listControllerInitialData();
+		});
 
 // build the basic query out
 		var where = {

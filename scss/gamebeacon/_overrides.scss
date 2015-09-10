@@ -270,22 +270,19 @@ $button-gap-multiplier : 55px;
     color: $white;
 }
 
+
 .item.item-icon-top * {
   display: block;
-  text-align: center;
-}
+  text-align: center; }
 
 .item-icon-top .icon {
   height: 100%;
-  font-size: 32px;
 }
 
 
-.bar .button.button-clear .icon:before, .bar .button.button-clear.icon:before, .bar .button.button-clear.icon-left:before, .bar .button.button-clear.icon-right:before {
-    font-size: 32px;
-    line-height: 20px;
-  }
-
+.icon.l {
+	font-size: 32px;
+}
 
   /* additional col width */
 
@@ -300,6 +297,5 @@ $button-gap-multiplier : 55px;
   }
 
   .item-complex .item-content {
-  	padding: 0;
   	background-color: transparent;
   }

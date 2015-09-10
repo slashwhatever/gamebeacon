@@ -3,6 +3,7 @@ angular.module('gamebeacon.beacon.timer.directives', [])
 .directive('beaconTimer', ['$interval', 'Beacon', function($interval, Beacon) {
 	return {
 		restrict: 'E',
+		replace: true,
 		scope: {
 			beacon: '=',
 		},

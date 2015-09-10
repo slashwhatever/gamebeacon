@@ -7957,12 +7957,10 @@ button {
   text-align: center; }
 
 .item-icon-top .icon {
-  height: 100%;
-  font-size: 32px; }
+  height: 100%; }
 
-.bar .button.button-clear .icon:before, .bar .button.button-clear.icon:before, .bar .button.button-clear.icon-left:before, .bar .button.button-clear.icon-right:before {
-  font-size: 32px;
-  line-height: 20px; }
+.icon.l {
+  font-size: 32px; }
 
 /* additional col width */
 .col-5 {
@@ -7975,7 +7973,6 @@ button {
   max-width: 10%; }
 
 .item-complex .item-content {
-  padding: 0;
   background-color: transparent; }
 
 body {
@@ -8232,8 +8229,7 @@ also be of any width and height */
 .beacon-timer {
   position: relative;
   white-space: nowrap;
-  vertical-align: middle;
-  text-align: center; }
+  vertical-align: middle; }
 
 .timer-icon {
   font-size: 130px;
@@ -8248,6 +8244,9 @@ also be of any width and height */
   font-size: 20px;
   font-family: "ExoBold", "SofiaProLight", "Helvetica Neue", Roboto, sans-serif;
   color: #fff; }
+
+.beacon-countdown:before {
+  margin-right: 10px; }
 
 .mission-time {
   position: absolute;
@@ -8475,7 +8474,6 @@ ion-view[name=beacon-detail] .has-subheader {
   -webkit-border-radius: 20px;
   border-radius: 20px;
   padding: 5px 9px;
-  margin-right: 5px;
   color: #3b424a;
   vertical-align: middle;
   margin-top: 10px; }
@@ -8618,3 +8616,11 @@ form.ng-submitted input.ng-valid + i.icon.error, form.ng-submitted select.ng-val
   height: 80px;
   -webkit-mask-image: -webkit-linear-gradient(transparent, black 5%, black 40%, black, black 60%, transparent 85%, transparent);
   mask-image: linear-gradient(transparent, black 5%, black 40%, black, black 60%, transparent 85%, transparent); }
+
+/**************** loading ****************/
+.loading-spinner {
+  text-align: center;
+  color: #96A6AD; }
+
+.loading-spinner span {
+  display: block; }

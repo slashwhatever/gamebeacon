@@ -350,7 +350,6 @@ also be of any width and height */
 		position: relative;
 		white-space: nowrap;
 		vertical-align: middle;
-		text-align: center;
 }
 
 .timer-icon {
@@ -367,6 +366,10 @@ also be of any width and height */
 		font-size: 20px;
 		font-family: "ExoBold", "SofiaProLight", "Helvetica Neue", Roboto, sans-serif;
 		color: $white;
+}
+
+.beacon-countdown:before {
+	margin-right: 10px;
 }
 
 .mission-time {
@@ -642,7 +645,6 @@ ion-view[name=beacon-detail] .has-subheader {
 		display: inline-block;
 		@include border-radius(20px);
 		padding: 5px 9px;
-		margin-right: 5px;
 		color: rgb(59, 66, 74);
 		vertical-align: middle;
 		margin-top: 10px;
@@ -802,4 +804,14 @@ form.ng-submitted select.ng-valid + i.icon.error {
 		display: inline-block;
 		height: 80px;
 		@include fade-grad();
+}
+
+/**************** loading ****************/
+.loading-spinner {
+	text-align: center;
+	color: $light-grey;
+}
+.loading-spinner span {
+	display: block;
+
 }

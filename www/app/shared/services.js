@@ -124,10 +124,32 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 	return funcs
 }])
 
-.factory('UIService', ['appConfig', '$ionicPopup', '$rootScope', function(appConfig, $ionicPopup, $rootScope) {
+.factory('UIService', [
+	'appConfig',
+	'$ionicPopup',
+	'$rootScope',
+	'$ionicLoading',
+	function(appConfig, $ionicPopup, $rootScope, $ionicLoading) {
 	return {
 		showAlert: function(opts, cb) {
 			$ionicPopup.alert(opts).then(cb);
+		},
+		showToast: function(opts) {
+			var defs = {
+				template: '<div class="loading-spinner"><ion-spinner icon="{{spinner}}"></ion-spinner><span>{{msg}}</span></div>',
+				spinner: 'spiral',
+				msg : 'loading...'
+			};
+
+			_.extend(defs, opts);
+
+			defs.template = defs.template.replace('{{spinner}}', defs.spinner);
+			defs.template = defs.template.replace('{{msg}}', defs.msg);
+
+			$ionicLoading.show(defs);
+		},
+		hideToast: function() {
+			$ionicLoading.hide()
 		}
 	}
 }])

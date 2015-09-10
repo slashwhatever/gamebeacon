@@ -210,7 +210,7 @@ var GameBeacon = angular.module('gamebeacon', [
 		controller: 'ResetController'
 	})
 
-	.state('app.donate', {
+/*	.state('app.donate', {
 		url: '/donate',
 		views: {
 			'main-view': {
@@ -218,7 +218,7 @@ var GameBeacon = angular.module('gamebeacon', [
 			}
 		}
 	})
-
+*/
 	.state('tutorial', {
 		url: '/',
 		templateUrl: 'app/components/tutorial/tutorialView.html',

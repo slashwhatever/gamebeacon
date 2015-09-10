@@ -40,24 +40,57 @@ angular.module('gamebeacon.user.login.controllers', ['gamebeacon.services'])
 
 	  // Update app code with new release from Ionic Deploy
 	  $scope.doUpdate = function() {
-	    $ionicDeploy.update().then(function(res) {
-	      console.log('Ionic Deploy: Update Success! ', res);
-	    }, function(err) {
-	      console.log('Ionic Deploy: Update error! ', err);
-	    }, function(prog) {
-	      console.log('Ionic Deploy: Progress... ', prog);
-	    });
+	  	// Download the updates
+	  	$ionicDeploy.download().then(function() {
+	  	  // Extract the updates
+	  	  $ionicDeploy.extract().then(function() {
+	  	    // Load the updated version
+	  	    $ionicDeploy.load();
+	  	  }, function(error) {
+	  	    UIService.showAlert({
+	  	    	title: 'Oops!',
+	  	    	template: 'Error extracting update. Please try again.'
+	  	    })
+	  	  }, function(progress) {
+	  	    // Do something with the zip extraction progress
+	  	    console.log(progress);
+	  	  });
+	  	}, function(error) {
+	  	  UIService.showAlert({
+	  	  	title: 'Oops!',
+	  	  	template: 'Error downloading update. Please try again.'
+	  	  })
+	  	}, function(progress) {
+	  	  // Do something with the download progress
+	  	  console.log(progress);
+	  	});
 	  };
 
 	  // Check Ionic Deploy for new code
 	  $scope.checkForUpdates = function() {
-	    console.log('Ionic Deploy: Checking for updates');
-	    $ionicDeploy.check().then(function(hasUpdate) {
-	      console.log('Ionic Deploy: Update available: ' + hasUpdate);
-	      $scope.hasUpdate = hasUpdate;
-	    }, function(err) {
-	      console.error('Ionic Deploy: Unable to check for updates', err);
-	    });
+
+	  	UIService.showToast({
+	  		msg: 'checking for updates'
+	  	});
+
+	  	// Check for updates
+	  	$ionicDeploy.check().then(function(response) {
+	  		UIService.hideToast();
+	  	  // response will be true/false
+	  	  if (response) {
+	  	  	var confirmUpdate = $ionicPopup.confirm({
+	  	  		title: 'Update available',
+	  	  		template: 'Would you like to download and install the latest version of gamebeacon?'
+	  	  	});
+	  	  	confirmUpdate.then(function(res) {
+	  	  		if (res) {
+	  	  			$scope.doUpdate()
+						}
+					})
+	  	  }
+	  	}, function(error) {
+	  	  UIService.hideToast();
+	  	});
 	  }
 
 		$scope.login = function(form) {
