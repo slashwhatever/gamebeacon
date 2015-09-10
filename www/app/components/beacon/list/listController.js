@@ -60,6 +60,7 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 
 		$scope.$on('$ionicView.beforeEnter', function () {
 			listControllerInitialData();
+			$scope.getBeaconChunk();
 		});
 
 // build the basic query out
@@ -152,8 +153,6 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 				});
 			});
 		}
-
-		$scope.getBeaconChunk();
 
 		// watches
 

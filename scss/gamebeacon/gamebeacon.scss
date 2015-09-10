@@ -337,6 +337,9 @@ also be of any width and height */
 		border-width: 0 25px 25px 0;
 }
 
+.beacon-footer {
+	background-color: lighten($dark-blue, 8%);
+}
 .beacon-list-empty {
 		text-align: center;
 }

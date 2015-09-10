@@ -8219,6 +8219,9 @@ also be of any width and height */
   border-style: solid;
   border-width: 0 25px 25px 0; }
 
+.beacon-footer {
+  background-color: #38444e; }
+
 .beacon-list-empty {
   text-align: center; }
 
