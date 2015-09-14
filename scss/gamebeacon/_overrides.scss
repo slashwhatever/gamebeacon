@@ -296,6 +296,10 @@ $button-gap-multiplier : 55px;
       max-width: 10%;
   }
 
+.card {
+	background-color: lighten($dark-blue, 5%);
+
+}
   .item-complex .item-content {
-  	background-color: transparent;
+  	background-color: lighten($dark-blue, 5%);
   }

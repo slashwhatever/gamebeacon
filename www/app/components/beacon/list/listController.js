@@ -57,13 +57,16 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 		$scope.limit = 20;
 		$scope.moreBeacons = false;
 		$scope.puserId = UtilsService.getCurrentUser().puserId;
+		$scope.noBeacons = null;
+		$scope.loadingBeacons = null;
 
-		$scope.$on('$ionicView.beforeEnter', function () {
+
+		$scope.$on('$ionicView.beforeEnter', function() {
 			listControllerInitialData();
 			$scope.getBeaconChunk();
 		});
 
-// build the basic query out
+		// build the basic query out
 		var where = {
 			'active': true,
 			'startDate': {
@@ -75,12 +78,15 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 		};
 
 		// go grab 20 beacons from the server
-		$scope.getBeaconChunk = function() {
+		$scope.getBeaconChunk = function(cb) {
+			$scope.loadingBeacons = true;
 			Beacon.list({
 				limit: $scope.limit,
 				skip: $scope.skip,
 				'where': JSON.stringify(where)
 			}).then(function(response) {
+
+				$scope.loadingBeacons = false;
 
 				// if we have results, there may be more...
 				$scope.moreBeacons = (response.results.length > $scope.limit)
@@ -89,11 +95,17 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 				$scope.skip += Math.min(response.results.length, $scope.limit);
 
 				// add the results to the scope
-				if (response.results.length > 0) $scope.beacons = $scope.beacons.concat(response.results);
-				else $scope.beacons = null;
+				if (response.results.length > 0) {
+					$scope.beacons = $scope.beacons.concat(response.results);
+					$scope.noBeacons = false;
+				} else {
+					$scope.noBeacons = true;
+					$scope.beacons = null;
+				}
 
-				// call a stop to the infinite scroll
 				$scope.$broadcast('scroll.infiniteScrollComplete');
+
+				if (cb && typeof cb === 'function') cb.call();
 
 			});
 		}
@@ -101,17 +113,12 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 		$scope.refreshBeaconList = function() {
 			// we need to reset the skip here as we're resetting the list
 			$scope.skip = 0;
+			$scope.beacons = [];
 
-			Beacon.list({
-				limit: $scope.limit,
-				skip: $scope.skip,
-				'where': JSON.stringify(where)
-			}).then(function(response) {
-
-				$scope.beacons = response.results.length > 0 ? response.results : null;
-
+			$scope.getBeaconChunk(function() {
 				$scope.$broadcast('scroll.refreshComplete');
 			});
+
 		}
 
 		$scope.joinBeacon = function(beacon) {
@@ -134,7 +141,7 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 			confirmDel.then(function(res) {
 				if (res) {
 					Beacon.delete(beacon).then(function() {
-						$scope.myBeacons = _.without($scope.myBeacons, beacon.beaconId);			// this should remove the beacon from the array
+						$scope.myBeacons = _.without($scope.myBeacons, beacon.beaconId); // this should remove the beacon from the array
 						$state.go('app.beacons', null, {
 							reload: true,
 							notify: true
@@ -146,7 +153,7 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 
 		$scope.leaveBeacon = function(beacon) {
 			Beacon.updateFireteam(beacon, 'leave').then(function() {
-				$scope.myBeacons = _.without($scope.myBeacons, beacon.beaconId);			// this should remove the beacon from the array
+				$scope.myBeacons = _.without($scope.myBeacons, beacon.beaconId); // this should remove the beacon from the array
 				$state.go('app.beacons', null, {
 					reload: true,
 					notify: true
@@ -157,14 +164,14 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 		// watches
 
 		$scope.$watch('beacons', function(newVal, oldVal) {
-			if (newVal && $scope.beacons.length > 0 ) {
+			if (newVal && $scope.beacons.length > 0) {
 				$scope.myBeacons.push(UtilsService.findMyBeacon($scope.beacons).objectId);
 			}
 		});
 
 		// when myBeacons changes, update the currentUser
 		$scope.$watch('myBeacons', function(newVal, oldVal) {
-			if (newVal && $scope.beacons.length > 0 ) {
+			if (newVal && $scope.beacons.length > 0) {
 				UtilsService.getCurrentUser().myBeacons.push(UtilsService.findMyBeacon($scope.beacons).objectId);
 			}
 		});

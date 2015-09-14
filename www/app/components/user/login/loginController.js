@@ -20,19 +20,25 @@ angular.module('gamebeacon.user.login.controllers', ['gamebeacon.services'])
 
 		$scope.$on('$ionicView.beforeEnter', function () {
 			$scope.checkForUpdates();
-			$scope.checkSession();
 		});
 
 		$scope.checkSession = function() {
+
+			UIService.showToast({
+				msg: 'attempting auto login'
+			});
+
 			var sessionToken = $localStorage.get('sessionToken');
 			if ( sessionToken ){
 
 				AuthService.getCurrentUser(sessionToken)
 				.then(function(response) {
+					UIService.hideToast();
 					// user has valid session token - proceed
 					$state.go('app.beacons');
 				},
 					function(error) {
+						UIService.hideToast();
 						// user needs to login
 				})
 			}
@@ -87,6 +93,8 @@ angular.module('gamebeacon.user.login.controllers', ['gamebeacon.services'])
 	  	  			$scope.doUpdate()
 						}
 					})
+	  	  } else {
+	  	  	$scope.checkSession();
 	  	  }
 	  	}, function(error) {
 	  	  UIService.hideToast();

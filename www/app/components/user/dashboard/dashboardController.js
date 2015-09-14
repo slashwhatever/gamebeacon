@@ -17,7 +17,9 @@ angular.module('gamebeacon.user.dashboard.controllers', ['gamebeacon.services'])
 		$scope.skip = 0;
 		$scope.limit = 20;
 		$scope.moreBeacons = false;
-		$scope.currentUser = UtilsService.getCurrentUser()
+		$scope.currentUser = UtilsService.getCurrentUser();
+		$scope.noBeacons = null;
+		$scope.loadingBeacons = null;
 
 		$scope.$on('$ionicView.beforeEnter', function(){
 		  $scope.getBeaconChunk();
@@ -36,12 +38,15 @@ angular.module('gamebeacon.user.dashboard.controllers', ['gamebeacon.services'])
 		};
 
 		// go grab 20 beacons from the server
-		$scope.getBeaconChunk = function() {
+		$scope.getBeaconChunk = function(cb) {
+			$scope.loadingBeacons = true;
 			Beacon.list({
 				limit: $scope.limit,
 				skip: $scope.skip,
 				'where': JSON.stringify(where)
 			}).then(function(response) {
+
+				$scope.loadingBeacons = false;
 
 				// if we have results, there may be more...
 				$scope.moreBeacons = (response.results.length > $scope.limit)
@@ -50,11 +55,17 @@ angular.module('gamebeacon.user.dashboard.controllers', ['gamebeacon.services'])
 				$scope.skip += Math.min(response.results.length, $scope.limit);
 
 				// add the results to the scope
-				if (response.results.length > 0) $scope.beacons = $scope.beacons.concat(response.results);
-				else $scope.beacons = null;
+				if (response.results.length > 0) {
+					$scope.beacons = $scope.beacons.concat(response.results);
+					$scope.noBeacons = false;
+				} else {
+					$scope.noBeacons = true;
+					$scope.beacons = null;
+				}
 
-				// call a stop to the infinite scroll
 				$scope.$broadcast('scroll.infiniteScrollComplete');
+
+				if (cb && typeof cb === 'function') cb.call();
 
 			});
 		}
@@ -62,17 +73,12 @@ angular.module('gamebeacon.user.dashboard.controllers', ['gamebeacon.services'])
 		$scope.refreshBeaconList = function() {
 			// we need to reset the skip here as we're resetting the list
 			$scope.skip = 0;
+			$scope.beacons = [];
 
-			Beacon.list({
-				limit: $scope.limit,
-				skip: $scope.skip,
-				'where': JSON.stringify(where)
-			}).then(function(response) {
-
-				$scope.beacons = response.results.length > 0 ? response.results : null;
-
+			$scope.getBeaconChunk(function() {
 				$scope.$broadcast('scroll.refreshComplete');
 			});
+
 		}
 
 	}

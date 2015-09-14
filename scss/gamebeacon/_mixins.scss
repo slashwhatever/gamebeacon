@@ -40,8 +40,7 @@
   @include linear-gradient(64deg, $purple 5%, #927AB8 100%);
 }
 
-
 @mixin fade-grad() {
-	-webkit-mask-image: -webkit-linear-gradient(transparent, black 5%, black 40%, black, black 60%, transparent 85%, transparent);
-	mask-image: linear-gradient(transparent, black 5%, black 40%, black, black 60%, transparent 85%, transparent);
+	-webkit-mask-image: -webkit-linear-gradient(transparent, transparent 1%, black 40%, black, black 60%, transparent 99%, transparent);
+	mask-image: linear-gradient(transparent, transparent 1%, black 40%, black, black 60%, transparent 99%, transparent);
 }

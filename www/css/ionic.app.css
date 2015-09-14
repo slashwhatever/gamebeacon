@@ -4242,6 +4242,12 @@ ion-tabs.tabs-color-active-dark .tab-item {
   cursor: default;
   pointer-events: none; }
 
+.nav-bar-tabs-top.hide ~ .view-container .tabs-top .tabs {
+  top: 0; }
+
+.pane[hide-nav-bar="true"] .has-tabs-top {
+  top: 49px; }
+
 /**
  * Menus
  * --------------------------------------------------
@@ -4268,7 +4274,8 @@ ion-tabs.tabs-color-active-dark .tab-item {
   box-shadow: -1px 0px 2px rgba(0, 0, 0, 0.2), 1px 0px 2px rgba(0, 0, 0, 0.2); }
 
 .menu-open .menu-content .pane, .menu-open .menu-content .scroll-content {
-  pointer-events: none; }
+  pointer-events: none;
+  overflow: hidden; }
 
 .grade-b .menu-content, .grade-c .menu-content {
   -webkit-box-sizing: content-box;
@@ -6453,7 +6460,7 @@ input[type="radio"][disabled], input[type="checkbox"][disabled], input[type="rad
     top: 0;
     bottom: 0;
     right: 0;
-    padding: 14px 48px 16px 16px;
+    padding: 0 48px 0 16px;
     max-width: 65%;
     border: none;
     background: #fff;
@@ -7972,8 +7979,11 @@ button {
   flex: 0 0 5%;
   max-width: 10%; }
 
+.card {
+  background-color: #323c45; }
+
 .item-complex .item-content {
-  background-color: transparent; }
+  background-color: #323c45; }
 
 body {
   font-family: "SofiaProLight", "Helvetica Neue", Roboto, sans-serif;
@@ -8610,15 +8620,18 @@ form.ng-submitted input.ng-valid + i.icon.error, form.ng-submitted select.ng-val
   text-align: right; }
 
 .scheduler-container h2.time-separator {
-  margin-top: -3px; }
+  margin-top: 17px; }
 
 .swiper-container {
   margin-top: 10px;
   text-align: center;
   display: inline-block;
   height: 80px;
-  -webkit-mask-image: -webkit-linear-gradient(transparent, black 5%, black 40%, black, black 60%, transparent 85%, transparent);
-  mask-image: linear-gradient(transparent, black 5%, black 40%, black, black 60%, transparent 85%, transparent); }
+  -webkit-mask-image: -webkit-linear-gradient(transparent, transparent 1%, black 40%, black, black 60%, transparent 99%, transparent);
+  mask-image: linear-gradient(transparent, transparent 1%, black 40%, black, black 60%, transparent 99%, transparent); }
+
+.swiper-slide h2 {
+  margin-bottom: 0; }
 
 /**************** loading ****************/
 .loading-spinner {

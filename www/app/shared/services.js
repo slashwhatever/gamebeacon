@@ -136,8 +136,9 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 		},
 		showToast: function(opts) {
 			var defs = {
-				template: '<div class="loading-spinner"><ion-spinner icon="{{spinner}}"></ion-spinner><span>{{msg}}</span></div>',
-				spinner: 'spiral',
+				template: '<div class="loading-spinner"><ion-spinner class="{{cls}}" icon="{{spinner}}"></ion-spinner><span>{{msg}}</span></div>',
+				spinner: 'crescent',
+				cls: 'spinner-energized',
 				msg : 'loading...'
 			};
 
@@ -145,6 +146,7 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 
 			defs.template = defs.template.replace('{{spinner}}', defs.spinner);
 			defs.template = defs.template.replace('{{msg}}', defs.msg);
+			defs.template = defs.template.replace('{{cls}}', defs.cls);
 
 			$ionicLoading.show(defs);
 		},

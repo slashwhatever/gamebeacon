@@ -14,7 +14,15 @@ angular.module('gamebeacon.beacon.scheduler.directives', [])
 			var today = new Date(),
 				minsArr = ["00", "10", "20", "30", "40", "50"],
 				hoursArr = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"],
-				dateSwiper, hoursSwiper, minsSwiper;
+				dateSwiper, hoursSwiper, minsSwiper,
+				dateLoop = 2, // this will be used to deal with looping swipers and how it affects getting the date value
+				swiperOpts = {
+					direction: 'vertical',
+					slidesPerView: dateLoop,
+					centeredSlides: true,
+					loop: true,
+					onSlideChangeEnd: updateModel
+				}
 
 			function addDays(date, days) {
 				var result = new Date(date);
@@ -36,32 +44,36 @@ angular.module('gamebeacon.beacon.scheduler.directives', [])
 
 			function daysBetween(first, second) {
 
-			    // Copy date parts of the timestamps, discarding the time parts.
-			    var one = new Date(first.getFullYear(), first.getMonth(), first.getDate());
-			    var two = new Date(second.getFullYear(), second.getMonth(), second.getDate());
+				// Copy date parts of the timestamps, discarding the time parts.
+				var one = new Date(first.getFullYear(), first.getMonth(), first.getDate());
+				var two = new Date(second.getFullYear(), second.getMonth(), second.getDate());
 
-			    // Do the math.
-			    var millisecondsPerDay = 1000 * 60 * 60 * 24;
-			    var millisBetween = two.getTime() - one.getTime();
-			    var days = millisBetween / millisecondsPerDay;
+				// Do the math.
+				var millisecondsPerDay = 1000 * 60 * 60 * 24;
+				var millisBetween = two.getTime() - one.getTime();
+				var days = millisBetween / millisecondsPerDay;
 
-			    // Round down.
-			    return Math.floor(days);
+				// Round down.
+				return Math.floor(days);
 			}
 
 			// update the model
 			function updateModel() {
 
-				var today = new Date();
+				var today = new Date(),
+					days, hours, mins;
 
-				// call $parsers pipeline then update $modelValue
-				ngModel.$setViewValue(
-					new Date(
-						Date.parse(
-							addDays(today, dateSwiper.activeIndex - 1).toDateString() + ' ' + hoursArr[hoursSwiper.activeIndex] + ":" + minsArr[minsSwiper.activeIndex]
-						)
-					).toISOString()
-				);
+				if (dateSwiper && hoursSwiper && minsSwiper) {
+
+					days = addDays(today, dateSwiper.activeIndex - 1).toDateString();
+					hours = Math.min(hoursSwiper.activeIndex, hoursArr.length - 1)
+					mins = Math.min(minsSwiper.activeIndex, minsArr.length - 1)
+
+					// call $parsers pipeline then update $modelValue
+					ngModel.$setViewValue(
+						new Date(Date.parse(days + ' ' + hours + ":" + mins)).toISOString()
+					);
+				}
 			}
 
 			scope.dates = [];
@@ -96,33 +108,18 @@ angular.module('gamebeacon.beacon.scheduler.directives', [])
 			}
 
 			$timeout(function() {
-				dateSwiper = new Swiper('.swiper-container.swiper-date', {
-					direction: 'vertical',
-					slidesPerView: 3,
-					spaceBetween: 35,
-					onSlideChangeEnd: updateModel
-				});
-				hoursSwiper = new Swiper('.swiper-container.swiper-time-hours', {
-					direction: 'vertical',
-					slidesPerView: 3,
-					spaceBetween: 35,
-					onSlideChangeEnd: updateModel
-				});
-				minsSwiper = new Swiper('.swiper-container.swiper-time-mins', {
-					direction: 'vertical',
-					slidesPerView: 3,
-					spaceBetween: 35,
-					onSlideChangeEnd: updateModel
-				});
+				dateSwiper = new Swiper('.swiper-container.swiper-date', swiperOpts);
+				hoursSwiper = new Swiper('.swiper-container.swiper-time-hours', swiperOpts);
+				minsSwiper = new Swiper('.swiper-container.swiper-time-mins', swiperOpts);
 
 				// set the default init state of the controls to be 30 mins from now
 				var minsToStartTime = new Date(ngModel.$viewValue).getMinutes() + 40,
-				hoursToStartTime = new Date(ngModel.$viewValue).getHours(),
-				minsRounded = (((minsToStartTime + 5) / 10 | 0) * 10) % 60,
-				hoursRounded = ((((minsToStartTime / 105) + .5) | 0) + hoursToStartTime) % 24;
+					hoursToStartTime = new Date(ngModel.$viewValue).getHours(),
+					minsRounded = (((minsToStartTime + 5) / 10 | 0) * 10) % 60,
+					hoursRounded = ((((minsToStartTime / 105) + .5) | 0) + hoursToStartTime) % 24;
 
 				// now we need to set the starting time to be the next available hour/minute slice after now
-				if ( ngModel.$viewValue ) dateSwiper.slideTo(daysBetween(new Date(), new Date(ngModel.$viewValue)), 0);
+				if (ngModel.$viewValue) dateSwiper.slideTo(daysBetween(new Date(), new Date(ngModel.$viewValue)), 0);
 				hoursSwiper.slideTo(hoursArr.indexOf('' + hoursRounded), 0);
 				minsSwiper.slideTo(minsArr.indexOf('' + minsRounded), 0);
 
