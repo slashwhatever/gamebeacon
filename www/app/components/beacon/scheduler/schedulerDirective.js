@@ -12,6 +12,7 @@ angular.module('gamebeacon.beacon.scheduler.directives', [])
 			if (!ngModel) return; // do nothing if no ng-model
 
 			var today = new Date(),
+				minsToStartTime, hoursToStartTime, minsRounded, hoursRounded,
 				minsArr = ["00", "10", "20", "30", "40", "50"],
 				hoursArr = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"],
 				dateSwiper, hoursSwiper, minsSwiper,
@@ -65,9 +66,9 @@ angular.module('gamebeacon.beacon.scheduler.directives', [])
 
 				if (dateSwiper && hoursSwiper && minsSwiper) {
 
-					days = addDays(today, dateSwiper.activeIndex - 1).toDateString();
-					hours = Math.min(hoursSwiper.activeIndex, hoursArr.length - 1)
-					mins = Math.min(minsSwiper.activeIndex, minsArr.length - 1)
+					days = addDays(today, dateSwiper.activeIndex - dateLoop).toDateString();
+					hours = hoursArr[hoursSwiper.activeIndex - dateLoop];
+					mins = minsArr[minsSwiper.activeIndex - dateLoop]
 
 					// call $parsers pipeline then update $modelValue
 					ngModel.$setViewValue(
@@ -107,22 +108,59 @@ angular.module('gamebeacon.beacon.scheduler.directives', [])
 				});
 			}
 
-			$timeout(function() {
-				dateSwiper = new Swiper('.swiper-container.swiper-date', swiperOpts);
-				hoursSwiper = new Swiper('.swiper-container.swiper-time-hours', swiperOpts);
-				minsSwiper = new Swiper('.swiper-container.swiper-time-mins', swiperOpts);
+			ngModel.$render = function() {
 
+				var initTime = new Date(new Date().getTime() + 30*60000);
 				// set the default init state of the controls to be 30 mins from now
-				var minsToStartTime = new Date(ngModel.$viewValue).getMinutes() + 40,
-					hoursToStartTime = new Date(ngModel.$viewValue).getHours(),
-					minsRounded = (((minsToStartTime + 5) / 10 | 0) * 10) % 60,
-					hoursRounded = ((((minsToStartTime / 105) + .5) | 0) + hoursToStartTime) % 24;
+				minsToStartTime = initTime.getMinutes();
+				hoursToStartTime = initTime.getHours();
+				minsRounded = (((minsToStartTime + 5) / 10 | 0) * 10) % 60;
+				hoursRounded = ((((minsToStartTime / 105) + .5) | 0) + hoursToStartTime) % 24;
 
-				// now we need to set the starting time to be the next available hour/minute slice after now
-				if (ngModel.$viewValue) dateSwiper.slideTo(daysBetween(new Date(), new Date(ngModel.$viewValue)), 0);
-				hoursSwiper.slideTo(hoursArr.indexOf('' + hoursRounded), 0);
-				minsSwiper.slideTo(minsArr.indexOf('' + minsRounded), 0);
 
+					// commented out for now but will need this when we implement edit
+
+/*				var value = ngModel.$viewValue,
+					slideToIdx = 0,
+					slideToDuration = 0,
+					slideToCb = false;
+
+				if (dateSwiper && hoursSwiper && minsSwiper) {
+					if (!value) {
+						dateSwiper.slideTo(slideToIdx, slideToDuration, slideToCb);
+						hoursSwiper.slideTo(slideToIdx, slideToDuration, slideToCb);
+						minsSwiper.slideTo(slideToIdx, slideToDuration, slideToCb);
+					} else {
+						// set the default init state of the controls to be 30 mins from now
+						var minsToStartTime = new Date(ngModel.$viewValue).getMinutes() + 40,
+							hoursToStartTime = new Date(ngModel.$viewValue).getHours(),
+							minsRounded = (((minsToStartTime + 5) / 10 | 0) * 10) % 60,
+							hoursRounded = ((((minsToStartTime / 105) + .5) | 0) + hoursToStartTime) % 24;
+
+						// now we need to set the starting time to be the next available hour/minute slice after now
+						dateSwiper.slideTo(daysBetween(new Date(), new Date(ngModel.$viewValue)), slideToDuration, slideToCb);
+						hoursSwiper.slideTo(hoursArr.indexOf('' + hoursRounded), slideToDuration, slideToCb);
+						minsSwiper.slideTo(minsArr.indexOf('' + minsRounded), slideToDuration, slideToCb);
+					}
+				}
+*/
+			}
+
+			$timeout(function() {
+
+				dateSwiper = new Swiper('.swiper-container.swiper-date', _.extend({
+					initialSlide: 0
+				}, swiperOpts));
+
+				hoursSwiper = new Swiper('.swiper-container.swiper-time-hours', _.extend({
+					initialSlide: hoursArr.indexOf('' + hoursRounded)
+				}, swiperOpts));
+
+				minsSwiper = new Swiper('.swiper-container.swiper-time-mins', _.extend({
+					initialSlide: minsArr.indexOf('' + minsRounded)
+				}, swiperOpts));
+
+				updateModel();
 
 			});
 		}
