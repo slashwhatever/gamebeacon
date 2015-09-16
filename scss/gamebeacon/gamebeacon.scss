@@ -335,6 +335,7 @@ also be of any width and height */
 		border-color: transparent $yellow transparent transparent;
 		border-style: solid;
 		border-width: 0 25px 25px 0;
+		z-index: 2;
 }
 
 .beacon-footer {

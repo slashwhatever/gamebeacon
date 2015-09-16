@@ -1,15 +1,34 @@
 angular.module('gamebeacon.fireteam.directives', [])
 
-.directive('fireteamMembers', ['UtilsService', function(UtilsService) {
+.directive('fireteamMembers', ['UtilsService', '$ionicActionSheet', function(UtilsService, $ionicActionSheet) {
 	return {
 		restrict: 'E',
 		replace: true,
+		templateUrl: 'app/components/beacon/fireteam/fireteam.html',
 		scope: {
 			fireteam: '=',
 			beacon: '=',
 			action: '&'
 		},
 		link: function(scope, elem, attrs) {
+
+
+			scope.guardianAction = function(opts) {
+
+				// Show the action sheet
+				var hideSheet = $ionicActionSheet.show({
+					destructiveText: 'Kick guardian',
+					cancelText: 'Cancel',
+					cancel: function() {
+						hideSheet();
+					},
+					destructiveButtonClicked: function() {
+						Beacon.updateFireteam(opts.beacon, 'kick', opts.objectId)
+						return true;
+					}
+				});
+
+			};
 
 			var userIsCreator = scope.beacon.userIsCreator,
 			userOnboard = UtilsService.userOnboard(scope.beacon),
@@ -18,8 +37,7 @@ angular.module('gamebeacon.fireteam.directives', [])
 
 			scope.allowJoin = beaconActive && hasSpaces && (!userIsCreator && !userOnboard)
 
-		},
-		templateUrl: 'app/components/beacon/fireteam/fireteam.html'
+		}
 	}
 
 }])

@@ -392,7 +392,8 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 	'$ionicLoading',
 	'UtilsService',
 	'PushService',
-	function($resource, $q, appConfig, $rootScope, $ionicLoading, UtilsService, PushService) {
+	'MsgService',
+	function($resource, $q, appConfig, $rootScope, $ionicLoading, UtilsService, PushService, MsgService) {
 
 		var me = this,
 			Beacon = $resource(appConfig.parseRestBaseUrl + 'classes/beacons/:objectId', {
@@ -544,7 +545,7 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 
 				return d.promise
 			},
-			updateFireteam: function(beacon, operation) {
+			updateFireteam: function(beacon, operation, puserId) {
 
 				var d = $q.defer(),
 					opObj = {
@@ -574,7 +575,7 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 
 				Beacon.updateFireteam({
 						objectId: beacon.objectId,
-						fireteamOnboard: JSON.parse('{"__op":"' + opObj[operation].action + '","objects":[' + JSON.stringify(UtilsService.getObjectAsPointer('pusers', $rootScope.currentUser.puserId)) + ']}')
+						fireteamOnboard: JSON.parse('{"__op":"' + opObj[operation].action + '","objects":[' + JSON.stringify(UtilsService.getObjectAsPointer('pusers', puserId)) + ']}')
 					},
 					function(response) {
 
@@ -582,29 +583,22 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 							case 'join':
 								PushService.subscribe({
 									channel: 'MEMBER' + beacon.objectId,
-									puserId: $rootScope.currentUser.puserId
+									puserId: puserId
 								});
 								break;
 							case 'leave':
 								PushService.unsubscribe({
 									channel: 'MEMBER' + beacon.objectId,
-									puserId: $rootScope.currentUser.puserId
+									puserId: puserId
 								});
 								break;
 							case 'kick':
 								PushService.unsubscribe({
 									channel: 'MEMBER' + beacon.objectId,
-									puserId: $rootScope.currentUser.puserId // TODO: make sure this is the id of the person being kicked
+									puserId: puserId
 								});
 								break;
 						}
-
-						PushService.sendPush({
-							channels: ['MEMBER' + response.objectId],
-							push_time: new Date(new Date().getTime() + (15 * 60000)).toISOString(),
-							expiration_time: new Date(new Date().getTime() + (30 * 60000)).toISOString(),
-							alert: MsgService.msg('joinedBeacon')
-						});
 
 						$ionicLoading.hide();
 						d.resolve(response);

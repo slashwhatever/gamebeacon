@@ -18,7 +18,7 @@ angular.module('gamebeacon.beacon.detail.controllers', ['gamebeacon.services'])
 
 	$scope.beacon = beacon;
 	$scope.messages = messages.results;
-	$scope.currentUser = UtilsService.getCurrentUser();
+	$scope.puserId = UtilsService.getCurrentUser().puserId;
 
 	var refreshMessages = function() {
 		ChatService.list($scope.beacon.objectId).then(function(response) {
@@ -28,14 +28,14 @@ angular.module('gamebeacon.beacon.detail.controllers', ['gamebeacon.services'])
 
 	var timer = $interval(refreshMessages, 1500000);
 
-	$scope.$on("$destroy", function() {
+	$scope.$on('$ionicView.beforeLeave', function(){
 		if (timer) {
 			$interval.cancel(timer);
 		}
 	});
 
 	$scope.joinBeacon = function(beacon) {
-		Beacon.updateFireteam(beacon, 'join').then(function() {
+		Beacon.updateFireteam(beacon, 'join', $scope.puserId).then(function() {
 			$scope.myBeacons.push(beacon.objectId);
 			$state.go($state.current, {
 				beaconId: beacon.objectId
@@ -75,7 +75,7 @@ angular.module('gamebeacon.beacon.detail.controllers', ['gamebeacon.services'])
 	}
 
 	$scope.leaveBeacon = function(beacon) {
-		Beacon.updateFireteam(beacon, 'leave').then(function() {
+		Beacon.updateFireteam(beacon, 'leave', $scope.puserId).then(function() {
 			$scope.myBeacons = _.without($scope.myBeacons, beacon.beaconId);			// this should remove the beacon from the array
 			$state.go('app.beacons', {}, {
 				reload: true,
@@ -84,21 +84,5 @@ angular.module('gamebeacon.beacon.detail.controllers', ['gamebeacon.services'])
 		});
 	}
 
-	$scope.guardianAction = function(object) {
-
-		// Show the action sheet
-		var hideSheet = $ionicActionSheet.show({
-			destructiveText: 'Kick guardian',
-			cancelText: 'Cancel',
-			cancel: function() {
-				hideSheet();
-			},
-			destructiveButtonClicked: function() {
-				Beacon.updateFireteam(object, 'kick')
-				return true;
-			}
-		});
-
-	};
 
 }])

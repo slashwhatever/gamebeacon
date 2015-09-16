@@ -8227,7 +8227,8 @@ also be of any width and height */
   right: 0;
   border-color: transparent #FFEC3A transparent transparent;
   border-style: solid;
-  border-width: 0 25px 25px 0; }
+  border-width: 0 25px 25px 0;
+  z-index: 2; }
 
 .beacon-footer {
   background-color: #38444e; }

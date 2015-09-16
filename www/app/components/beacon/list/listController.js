@@ -122,7 +122,7 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 		}
 
 		$scope.joinBeacon = function(beacon) {
-			Beacon.updateFireteam(beacon, 'join').then(function() {
+			Beacon.updateFireteam(beacon, 'join', $scope.puserId).then(function() {
 				$scope.myBeacons.push(beacon.objectId);
 				$state.go('app.beacon', {
 					beaconId: beacon.objectId

@@ -36,7 +36,7 @@ angular.module('gamebeacon.beacon.scheduler.directives', [])
 			}
 
 			function dayOfWeekAsString(dayIndex) {
-				return ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"][dayIndex];
+				return ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][dayIndex];
 			}
 
 			function monthAsString(monthIndex) {
@@ -58,6 +58,19 @@ angular.module('gamebeacon.beacon.scheduler.directives', [])
 				return Math.floor(days);
 			}
 
+			function translateArrayIndex(swiper, aLen) {
+
+				var start = swiper.activeIndex - dateLoop,
+					end = start;
+
+				while (end < 0) {
+					end = end+aLen
+				}
+
+				return end;
+
+			}
+
 			// update the model
 			function updateModel() {
 
@@ -66,9 +79,11 @@ angular.module('gamebeacon.beacon.scheduler.directives', [])
 
 				if (dateSwiper && hoursSwiper && minsSwiper) {
 
-					days = addDays(today, dateSwiper.activeIndex - dateLoop).toDateString();
-					hours = hoursArr[hoursSwiper.activeIndex - dateLoop];
-					mins = minsArr[minsSwiper.activeIndex - dateLoop]
+					//days = addDays(today, translateArrayIndex(dateSwiper, 15)).toDateString();
+					days = new Date(scope.dates[translateArrayIndex(dateSwiper, scope.dates.length)].dateValue).toDateString();
+
+					hours = hoursArr[translateArrayIndex(hoursSwiper, hoursArr.length)];
+					mins = minsArr[translateArrayIndex(minsSwiper, minsArr.length)];
 
 					// call $parsers pipeline then update $modelValue
 					ngModel.$setViewValue(
@@ -81,10 +96,21 @@ angular.module('gamebeacon.beacon.scheduler.directives', [])
 			scope.minutes = [];
 			scope.hours = [];
 
+
+			// the date field will be populated with 'Today' and then the next 13 days
+			// this is because right now, Parse push only lets you schedule messages up to 14 days in advance
 			scope.dates.push({
 				dateText: 'Today',
 				dateValue: new Date().getTime()
 			});
+
+			for (var d = 1; d < 14; d++) {
+				var dateToAdd = addDays(today, d);
+				scope.dates.push({
+					dateText: formatDay(dateToAdd),
+					dateValue: dateToAdd
+				});
+			}
 
 			scope.minutes = minsArr.map(function(m) {
 				var obj = {};
@@ -100,17 +126,9 @@ angular.module('gamebeacon.beacon.scheduler.directives', [])
 				return obj;
 			});
 
-			for (var d = 0; d < 14; d++) {
-				var dateToAdd = addDays(today, d);
-				scope.dates.push({
-					dateText: formatDay(dateToAdd),
-					dateValue: dateToAdd
-				});
-			}
-
 			ngModel.$render = function() {
 
-				var initTime = new Date(new Date().getTime() + 30*60000);
+				var initTime = new Date(new Date().getTime() + 30 * 60000);
 				// set the default init state of the controls to be 30 mins from now
 				minsToStartTime = initTime.getMinutes();
 				hoursToStartTime = initTime.getHours();
@@ -118,32 +136,32 @@ angular.module('gamebeacon.beacon.scheduler.directives', [])
 				hoursRounded = ((((minsToStartTime / 105) + .5) | 0) + hoursToStartTime) % 24;
 
 
-					// commented out for now but will need this when we implement edit
+				// commented out for now but will need this when we implement edit
 
-/*				var value = ngModel.$viewValue,
-					slideToIdx = 0,
-					slideToDuration = 0,
-					slideToCb = false;
+				/*				var value = ngModel.$viewValue,
+									slideToIdx = 0,
+									slideToDuration = 0,
+									slideToCb = false;
 
-				if (dateSwiper && hoursSwiper && minsSwiper) {
-					if (!value) {
-						dateSwiper.slideTo(slideToIdx, slideToDuration, slideToCb);
-						hoursSwiper.slideTo(slideToIdx, slideToDuration, slideToCb);
-						minsSwiper.slideTo(slideToIdx, slideToDuration, slideToCb);
-					} else {
-						// set the default init state of the controls to be 30 mins from now
-						var minsToStartTime = new Date(ngModel.$viewValue).getMinutes() + 40,
-							hoursToStartTime = new Date(ngModel.$viewValue).getHours(),
-							minsRounded = (((minsToStartTime + 5) / 10 | 0) * 10) % 60,
-							hoursRounded = ((((minsToStartTime / 105) + .5) | 0) + hoursToStartTime) % 24;
+								if (dateSwiper && hoursSwiper && minsSwiper) {
+									if (!value) {
+										dateSwiper.slideTo(slideToIdx, slideToDuration, slideToCb);
+										hoursSwiper.slideTo(slideToIdx, slideToDuration, slideToCb);
+										minsSwiper.slideTo(slideToIdx, slideToDuration, slideToCb);
+									} else {
+										// set the default init state of the controls to be 30 mins from now
+										var minsToStartTime = new Date(ngModel.$viewValue).getMinutes() + 40,
+											hoursToStartTime = new Date(ngModel.$viewValue).getHours(),
+											minsRounded = (((minsToStartTime + 5) / 10 | 0) * 10) % 60,
+											hoursRounded = ((((minsToStartTime / 105) + .5) | 0) + hoursToStartTime) % 24;
 
-						// now we need to set the starting time to be the next available hour/minute slice after now
-						dateSwiper.slideTo(daysBetween(new Date(), new Date(ngModel.$viewValue)), slideToDuration, slideToCb);
-						hoursSwiper.slideTo(hoursArr.indexOf('' + hoursRounded), slideToDuration, slideToCb);
-						minsSwiper.slideTo(minsArr.indexOf('' + minsRounded), slideToDuration, slideToCb);
-					}
-				}
-*/
+										// now we need to set the starting time to be the next available hour/minute slice after now
+										dateSwiper.slideTo(daysBetween(new Date(), new Date(ngModel.$viewValue)), slideToDuration, slideToCb);
+										hoursSwiper.slideTo(hoursArr.indexOf('' + hoursRounded), slideToDuration, slideToCb);
+										minsSwiper.slideTo(minsArr.indexOf('' + minsRounded), slideToDuration, slideToCb);
+									}
+								}
+				*/
 			}
 
 			$timeout(function() {

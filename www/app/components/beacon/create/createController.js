@@ -17,7 +17,11 @@ angular.module('gamebeacon.beacon.create.controllers', ['gamebeacon.services'])
 		// Called when the form is submitted
 		$scope.createBeacon = function(startTime) {
 			var hasLevel = $scope.levels ? $scope.levels.length > 0 : false,
-				hasCheckpoint = $scope.checkpoints ? $scope.checkpoints.length > 0 : false;
+				hasCheckpoint = $scope.checkpoints ? $scope.checkpoints.length > 0 : false,
+				startTimeDate = new Date(new Date(startTime).getTime(),
+					pushTime = startTimeDate - 15 * 60000),
+				pushExpirationTime = startTimeDate;
+
 
 			Beacon.save({
 				'mission': UtilsService.getObjectAsPointer('missions', $scope.missions[$ionicSlideBoxDelegate.$getByHandle('mission-selector').currentIndex()].objectId),
@@ -30,9 +34,9 @@ angular.module('gamebeacon.beacon.create.controllers', ['gamebeacon.services'])
 				'region': UtilsService.getObjectAsPointer('regions', $scope.regions[$ionicSlideBoxDelegate.$getByHandle('region-selector').currentIndex()].objectId),
 				'creator': UtilsService.getObjectAsPointer('pusers', UtilsService.getCurrentUser().puserId),
 				'startDate': {
-            "__type": "Date",
-            "iso": startTime
-        },
+					"__type": "Date",
+					"iso": startTime
+				},
 				'active': true
 			}).then(function(response) {
 
@@ -42,13 +46,20 @@ angular.module('gamebeacon.beacon.create.controllers', ['gamebeacon.services'])
 					puserId: UtilsService.getCurrentUser().puserId
 				});
 
-				// if the beacon was created, create a scheduled push that will go to all subscribers of the beacon channel
-				// // TODO: make sure the push and expiry times are based on the scheduled start time of the beacon
+				// if the beacon was created, create a scheduled push that will go to all subscribers of the OWNERxxx and MEMBERxxx channels
+				// by setting up the two pushes now, we can just sub and unsub people later to get the messages
 				PushService.sendPush({
 					channels: ['OWNER' + response.objectId],
-					push_time: new Date(new Date().getTime() + (15 * 60000)).toISOString(),
-					expiration_time: new Date(new Date().getTime() + (30 * 60000)).toISOString(),
+					push_time: pushTime,
+					expiration_time: pushExpirationTime,
 					alert: MsgService.msg('createBeacon')
+				});
+
+				PushService.sendPush({
+					channels: ['MEMBER' + response.objectId],
+					push_time: pushTime,
+					expiration_time: pushExpirationTime,
+					alert: MsgService.msg('joinedBeacon')
 				});
 
 				$state.go('app.beacons', null, {
@@ -91,11 +102,6 @@ angular.module('gamebeacon.beacon.create.controllers', ['gamebeacon.services'])
 		$scope.getMaxFireTeam = function(mission) {
 			return _.range(1, mission.maxFireteam)
 		}
-
-		var minsToStartTime = new Date().getMinutes() + 40,
-		hoursToStartTime = new Date().getHours(),
-		minsRounded = (((minsToStartTime + 5) / 10 | 0) * 10) % 60,
-		hoursRounded = ((((minsToStartTime / 105) + .5) | 0) + hoursToStartTime) % 24;
 
 		// define all the starting variables for the view
 		$scope.missions = initialData.missions;
