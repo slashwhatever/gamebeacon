@@ -1,15 +1,15 @@
 <ion-view>
 	<ion-nav-bar class="bar-positive">
 		<ion-nav-buttons side="left">
-			<button class="button button-clear no-animation" ng-click="previous()" ng-show="slideIndex > 0">
+			<button class="button button-clear no-animation" ng-click="previous()" ng-if="slideIndex > 0">
 				<i class="icon ion-arrow-left-b"></i>
 			</button>
 		</ion-nav-buttons>
 		<ion-nav-buttons side="right">
-			<button class="button button-clear no-animation" ng-click="next()" ng-show="slideIndex != 4">
+			<button class="button button-clear no-animation" ng-click="next()" ng-if="slideIndex != 4">
 				<i class="icon ion-arrow-right-b"></i>
 			</button>
-			<button class="button button-clear no-animation" ng-click="quitTutorial()" ng-show="slideIndex == 4">
+			<button class="button button-clear no-animation" ng-click="quitTutorial()" ng-if="slideIndex == 4">
 				<i class="icon ion-close"></i>
 			</button>
 		</ion-nav-buttons>
@@ -19,7 +19,7 @@
 			<div class="padding">
 				<img class="logo" ng-src="img/logo.png">
 				<h3>Thank you for using gamebeacon for Destiny!</h3>
-				<p>The app is designed to help you find a group of like-minded guardians for raids, crucible action or general missions, all from your mobile device.</p>
+				<p>The app is designed to help you find a group of like-minded guardians for raids, crucible action or general quests, all from your mobile device.</p>
 				<p>If you find any bugs or have some general feedback about your experience with the app, please tell us by <a href="mailto:gamebeacon@slashwhatever.com?Subject=App%20Feedback" target="_top">emailing.</a></p>
 			</div>
 		</ion-slide>

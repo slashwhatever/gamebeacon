@@ -6,7 +6,7 @@
 
 
 var GameBeacon = angular.module('gamebeacon', [
-	'ionic', 'ionic.service.core', 'ionic.service.analytics', 'ionic.service.deploy', 'ionic.service.push', 'ngCordova',
+	'ionic','ionic.service.core','ionic.service.deploy',  'ionic.service.analytics',  'ionic.service.push', 'ngCordova',
 	'gamebeacon.user.register.controllers',
 	'gamebeacon.user.reset.controllers',
 	'gamebeacon.user.login.controllers',

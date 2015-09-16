@@ -5,7 +5,7 @@ angular.module('gamebeacon.beacon.tabset.directives', [])
 		restrict: 'E',
 		transclude: true,
 		require: '^tabset',
-		template: '<div role="tabpanel" ng-show="active" ng-transclude class="padding"></div>',
+		template: '<div role="tabpanel" ng-if="active" ng-transclude class="padding"></div>',
 		scope: {
 			heading: '@'
 		},

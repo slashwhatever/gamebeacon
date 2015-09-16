@@ -24,12 +24,12 @@ angular.module('gamebeacon.user.login.controllers', ['gamebeacon.services'])
 
 		$scope.checkSession = function() {
 
-			UIService.showToast({
-				msg: 'attempting auto login'
-			});
 
 			var sessionToken = $localStorage.get('sessionToken');
 			if ( sessionToken ){
+				UIService.showToast({
+					msg: 'attempting auto login'
+				});
 
 				AuthService.getCurrentUser(sessionToken)
 				.then(function(response) {
@@ -98,6 +98,7 @@ angular.module('gamebeacon.user.login.controllers', ['gamebeacon.services'])
 	  	  }
 	  	}, function(error) {
 	  	  UIService.hideToast();
+	  	  $scope.checkSession();
 	  	});
 	  }
 

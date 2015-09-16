@@ -4,23 +4,23 @@
 		<ion-refresher class="spinner-energized" pulling-text="pull to refresh" pulling-icon="ion-android-arrow-down" spinner="none" on-refresh="refreshBeaconList()"></ion-refresher>
 
 		<!-- beacon card -->
-		<ion-list ng-show="beacons.length > 0" type="card" show-delete="false" show-reorder="false" can-swipe="true">
+		<ion-list ng-if="beacons.length > 0" type="card" show-delete="false" show-reorder="false" can-swipe="true">
 			<ion-item class="beacon-card" ui-sref="app.beacon({beaconId: beacon.objectId})" ng-class="{'my-beacon' : beacon.userIsCreator }" ng-repeat="beacon in beacons track by beacon.objectId">
 				<beacon-header></beacon-header>
 				<beacon-meta></beacon-meta>
 				<!-- <beacon-actions></beacon-actions> -->
 				<beacon-timer ng-if="beacon.active" beacon="beacon"></beacon-timer>
-				<ion-option-button ng-show="beacon.userIsCreator" class="button-assertive"><i class="icon ion-android-delete"></i>Delete</ion-option-button>
+				<ion-option-button ng-if="beacon.userIsCreator" class="button-assertive"><i class="icon ion-android-delete"></i>Delete</ion-option-button>
 			</ion-item>
 		</ion-list>
 
 		<!-- loading state -->
-		<div ng-show="loadingBeacons" class="text-center padding">
+		<div ng-if="loadingBeacons" class="text-center padding">
 			<ion-spinner icon="crescent" class="spinner-energized"></ion-spinner>
 		</div>
 
 		<!-- no beacons -->
-		<div ng-show="noBeacons" class="row">
+		<div ng-if="noBeacons" class="row">
 			<div class="col col-80 col-offset-10">
 				<div class="beacon-list-empty padding">
 					<h1>No beacons!</h1>
