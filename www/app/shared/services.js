@@ -132,7 +132,14 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 	function(appConfig, $ionicPopup, $rootScope, $ionicLoading) {
 		return {
 			showAlert: function(opts, cb) {
-				$ionicPopup.alert(opts).then(cb);
+				var options = {},
+					defs = {
+						cssClass: 'gb-popup'
+					};
+
+					options = _.extend(opts, defs);
+
+				$ionicPopup.alert(options).then(cb);
 			},
 			showToast: function(opts) {
 				var defs = {

@@ -85,6 +85,7 @@ angular.module('gamebeacon.user.login.controllers', ['gamebeacon.services'])
 	  	  // response will be true/false
 	  	  if (response) {
 	  	  	var confirmUpdate = $ionicPopup.confirm({
+	  	  		cssClass: 'gb-popup',
 	  	  		title: 'Update available',
 	  	  		template: 'Would you like to download and install the latest version of gamebeacon?'
 	  	  	});

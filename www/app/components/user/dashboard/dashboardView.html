@@ -1,5 +1,5 @@
 <ion-view name="beacon-list" title="Dashboard" cache-view="false">
-	<ion-nav-bar align-title="right" class="bar-positive nav-title-slide-ios7">
+	<ion-nav-bar align-title="right" class="bar nav-title-slide-ios7">
 		<ion-nav-back-button class="button-clear"><i class="icon ion-arrow-left-b"></i></ion-nav-back-button>
 	</ion-nav-bar>
 	<ion-content scroll="true">
@@ -35,7 +35,7 @@
 		</div>
 
 		<!-- beacon card -->
-		<ion-list ng-if="beacons.length > 0" type="card" show-delete="false" show-reorder="false" can-swipe="true">
+		<ion-list ng-if="beacons.length > 0" show-delete="false" show-reorder="false" can-swipe="true">
 			<ion-item class="beacon-card" ui-sref="app.beacon({beaconId: beacon.objectId})" ng-class="{'my-beacon' : beacon.userIsCreator }" ng-repeat="beacon in beacons track by beacon.objectId">
 				<beacon-header></beacon-header>
 				<beacon-meta></beacon-meta>

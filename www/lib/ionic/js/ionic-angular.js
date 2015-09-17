@@ -9985,7 +9985,7 @@ IonicModule
  *
  * @usage
  * ```html
- * <ion-header-bar align-title="left" class="bar-positive">
+ * <ion-header-bar align-title="left" class="bar">
  *   <div class="buttons">
  *     <button class="button" ng-click="doSomething()">Left Button</button>
  *   </div>
@@ -11172,7 +11172,7 @@ IonicModule
  * ```html
  * <body ng-app="starter">
  *   <!-- The nav bar that will be updated as we navigate -->
- *   <ion-nav-bar class="bar-positive">
+ *   <ion-nav-bar class="bar">
  *   </ion-nav-bar>
  *
  *   <!-- where the initial view template will be rendered -->

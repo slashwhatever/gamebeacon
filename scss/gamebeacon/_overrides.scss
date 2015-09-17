@@ -303,3 +303,32 @@ $button-gap-multiplier : 55px;
   .item-complex .item-content {
   	background-color: lighten($dark-blue, 5%);
   }
+
+  .list {
+  	padding-top: 0px;
+  }
+
+  ion-header-bar .title {
+  	font-family: $modern-font-family;
+  	color: $mid-grey;
+  }
+
+  .backdrop {
+      background-color: rgba(39, 47, 54, 0.8);
+  }
+
+  .popup-container .popup {
+  	width: 100%;
+  }
+
+  .popup-head {
+      padding: 20px;
+      border-bottom: 1px solid $yellow;
+      text-align: left;
+	}
+  .popup-body {
+      padding: 15px 20px;
+	}
+  .popup-buttons {
+      padding: 15px 20px;
+	}

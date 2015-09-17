@@ -53,19 +53,20 @@ angular.module('gamebeacon.beacon.timer.directives', [])
 						var seconds = Math.floor(delta % 60);  // in theory the modulus is not required
 
 						if (scope.beacon) {
-							scope.days = days > 0 && hours > 0 && minutes > 0 && seconds > 0 ? pad(days) : null;
-							scope.hours = hours > 0 && minutes > 0 && seconds > 0 ? pad(hours) : null;
-							scope.minutes = minutes > 0 && seconds > 0 ? pad(minutes) : null;
-							scope.seconds = seconds > 0 ? pad(seconds) : null;
 							scope.expired = null
+							scope.days = !scope.expired && days > 0 ? days : null;
+							scope.hours = !scope.expired && hours > 0 && minutes >= 0 && seconds >= 0 ? hours : null;
+							scope.minutes = !scope.expired && minutes > 0 && seconds >= 0 ? pad(minutes) : null;
+							scope.seconds = !scope.expired && seconds >= 0 ? pad(seconds) : null;
 						}
 					} else {
+						scope.expired = 'expired'
 						scope.days = null;
 						scope.hours = null;
 						scope.minutes = null;
 						scope.seconds = null;
-						scope.expired = 'expired'
 					}
+					scope.timeLeft = (scope.days ? scope.days + 'd ' : '') + (scope.hours ? scope.hours + 'h ' : '') + (scope.minutes ? scope.minutes + 'm ' : '') + (scope.seconds ? scope.seconds + 's' : '')
 				},
 				pad = function(num) {
 					// leading zeros for our timer

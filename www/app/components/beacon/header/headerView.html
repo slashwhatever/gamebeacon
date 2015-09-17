@@ -1,4 +1,4 @@
 <div class="beacon-header">
   <h3 class="mission-name">{{ ::beacon.mission.name }}</h3>
-  <p ng-if="{{::beacon.checkpoint}}" class="mission-byline">{{ ::beacon.checkpoint.description }}</p>
+  <p ng-show="{{::beacon.checkpoint}}" class="mission-byline">{{ ::beacon.checkpoint.description }}</p>
 </div>

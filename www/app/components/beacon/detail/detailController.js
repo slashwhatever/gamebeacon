@@ -48,6 +48,7 @@ angular.module('gamebeacon.beacon.detail.controllers', ['gamebeacon.services'])
 
 	$scope.deleteBeacon = function(beacon) {
 		var confirmDel = $ionicPopup.confirm({
+			cssClass: 'gb-popup',
 			title: 'Delete beacon',
 			template: 'Are you sure you want to delete your beacon?'
 		});
