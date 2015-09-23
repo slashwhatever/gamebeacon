@@ -132,6 +132,10 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 	function(appConfig, $ionicPopup, $rootScope, $ionicLoading) {
 		return {
 			showAlert: function(opts, cb) {
+
+				// hide any existing loading message first
+				$ionicLoading.hide();
+
 				var options = {},
 					defs = {
 						cssClass: 'gb-popup'
@@ -482,15 +486,7 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 				var d = $q.defer();
 
 				var beacons = Beacon.list(params, function(response) {
-
 					_.each(response.results, prepareBeaconData);
-
-					/*					// move the active users beacon to the top of the list (if they have one)
-										var userBeaconIdx = _.findIndex(response.results, function(i) {
-											return i.userIsCreator == true
-										});
-										if (userBeaconIdx > -1) _.move(response.results, userBeaconIdx, 0);
-					*/
 					d.resolve(response);
 				}, function(error) {
 					d.reject(error);

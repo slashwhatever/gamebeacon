@@ -44,3 +44,8 @@
 	-webkit-mask-image: -webkit-linear-gradient(transparent, transparent 1%, black 40%, black, black 60%, transparent 99%, transparent);
 	mask-image: linear-gradient(transparent, transparent 1%, black 40%, black, black 60%, transparent 99%, transparent);
 }
+
+@mixin fade-grad-horizontal() {
+	-webkit-mask-image: -webkit-linear-gradient(left, transparent, transparent 1%, black 40%, black, black 60%, transparent 99%, transparent);
+	mask-image: linear-gradient(left, transparent, transparent 1%, black 40%, black, black 60%, transparent 99%, transparent);
+}

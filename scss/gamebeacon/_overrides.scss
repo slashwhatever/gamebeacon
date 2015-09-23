@@ -91,6 +91,10 @@ button {
 	top: 8px;
 }
 /******************** material float button ********************/
+.mfb-component__button--main, .mfb-component__button--child {
+  background-color: $pink;
+}
+
 .mfb-component__list>li {
   right: 10px;
 }
@@ -331,4 +335,21 @@ $button-gap-multiplier : 55px;
 	}
   .popup-buttons {
       padding: 15px 20px;
+	}
+
+
+	.bar.bar-subheader {
+		border-bottom-color: transparent;
+	}
+
+	.bar-header.bar-large {
+	   height: 70px; /*just an example*/
+	}
+
+	.bar-header.bar-large .title {
+	   line-height: 70px;
+	}
+
+	.has-large-header {
+	   top: 70px;
 	}

@@ -19,16 +19,15 @@ angular.module('gamebeacon.user.login.controllers', ['gamebeacon.services'])
 		};
 
 		$scope.$on('$ionicView.beforeEnter', function () {
-			$scope.checkForUpdates();
+			$scope.checkSession();
 		});
 
 		$scope.checkSession = function() {
 
-
 			var sessionToken = $localStorage.get('sessionToken');
 			if ( sessionToken ){
 				UIService.showToast({
-					msg: 'attempting auto login'
+					msg: 'attempting auto login...'
 				});
 
 				AuthService.getCurrentUser(sessionToken)
@@ -43,65 +42,6 @@ angular.module('gamebeacon.user.login.controllers', ['gamebeacon.services'])
 				})
 			}
 		}
-
-	  // Update app code with new release from Ionic Deploy
-	  $scope.doUpdate = function() {
-	  	// Download the updates
-	  	$ionicDeploy.download().then(function() {
-	  	  // Extract the updates
-	  	  $ionicDeploy.extract().then(function() {
-	  	    // Load the updated version
-	  	    $ionicDeploy.load();
-	  	  }, function(error) {
-	  	    UIService.showAlert({
-	  	    	title: 'Oops!',
-	  	    	template: 'Error extracting update. Please try again.'
-	  	    })
-	  	  }, function(progress) {
-	  	    // Do something with the zip extraction progress
-	  	    console.log(progress);
-	  	  });
-	  	}, function(error) {
-	  	  UIService.showAlert({
-	  	  	title: 'Oops!',
-	  	  	template: 'Error downloading update. Please try again.'
-	  	  })
-	  	}, function(progress) {
-	  	  // Do something with the download progress
-	  	  console.log(progress);
-	  	});
-	  };
-
-	  // Check Ionic Deploy for new code
-	  $scope.checkForUpdates = function() {
-
-	  	UIService.showToast({
-	  		msg: 'checking for updates'
-	  	});
-
-	  	// Check for updates
-	  	$ionicDeploy.check().then(function(response) {
-	  		UIService.hideToast();
-	  	  // response will be true/false
-	  	  if (response) {
-	  	  	var confirmUpdate = $ionicPopup.confirm({
-	  	  		cssClass: 'gb-popup',
-	  	  		title: 'Update available',
-	  	  		template: 'Would you like to download and install the latest version of gamebeacon?'
-	  	  	});
-	  	  	confirmUpdate.then(function(res) {
-	  	  		if (res) {
-	  	  			$scope.doUpdate()
-						}
-					})
-	  	  } else {
-	  	  	$scope.checkSession();
-	  	  }
-	  	}, function(error) {
-	  	  UIService.hideToast();
-	  	  $scope.checkSession();
-	  	});
-	  }
 
 		$scope.login = function(form) {
 
@@ -128,7 +68,7 @@ angular.module('gamebeacon.user.login.controllers', ['gamebeacon.services'])
 			}, function(error) {
 				UIService.showAlert({
 					title: 'Oops!',
-					template: error
+					template: 'We had trouble logging you in. Please try again.'
 				})
 			})
 

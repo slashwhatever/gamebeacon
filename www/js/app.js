@@ -6,7 +6,7 @@
 
 
 var GameBeacon = angular.module('gamebeacon', [
-	'ionic','ionic.service.core','ionic.service.deploy',  'ionic.service.analytics',  'ionic.service.push', 'ngCordova',
+	'ionic', 'ionic.service.core', 'ionic.service.deploy', 'ionic.service.analytics', 'ionic.service.push', 'ngCordova',
 	'gamebeacon.user.register.controllers',
 	'gamebeacon.user.reset.controllers',
 	'gamebeacon.user.login.controllers',
@@ -16,6 +16,8 @@ var GameBeacon = angular.module('gamebeacon', [
 	'gamebeacon.beacon.list.controllers',
 	'gamebeacon.beacon.detail.controllers',
 	'gamebeacon.beacon.create.controllers',
+	'gamebeacon.beacon.list.calendar.directives',
+	'gamebeacon.beacon.card.list.directives',
 	'gamebeacon.beacon.tabset.directives',
 	'gamebeacon.beacon.header.directives',
 	'gamebeacon.beacon.timer.directives',
@@ -36,7 +38,7 @@ var GameBeacon = angular.module('gamebeacon', [
 	'ng-mfb'
 ])
 
-.run(function($state, $ionicPlatform, $ionicAnalytics, appConfig) {
+.run(function($state, $ionicPlatform, $ionicAnalytics, appConfig, $ionicPopup, $ionicDeploy, UIService) {
 	$ionicPlatform.ready(function() {
 
 		$ionicAnalytics.register();
@@ -57,7 +59,64 @@ var GameBeacon = angular.module('gamebeacon', [
 			});
 		});
 
+		// Update app code with new release from Ionic Deploy
+		var doUpdate = function() {
+			// Download the updates
+			$ionicDeploy.download().then(function() {
+				// Extract the updates
+				$ionicDeploy.extract().then(function() {
+					// Load the updated version
+					$ionicDeploy.load();
+				}, function(error) {
+					UIService.showAlert({
+						title: 'Oops!',
+						template: 'Error extracting update. Please try again.'
+					})
+				}, function(progress) {
+					// Do something with the zip extraction progress
+					console.log(progress);
+				});
+			}, function(error) {
+				UIService.showAlert({
+					title: 'Oops!',
+					template: 'Error downloading update. Please try again.'
+				})
+			}, function(progress) {
+				// Do something with the download progress
+				console.log(progress);
+			});
+		};
+
+		// Check Ionic Deploy for new code
+		var checkForUpdates = function() {
+
+			UIService.showToast({
+				msg: 'checking for updates...'
+			});
+
+			// Check for updates
+			$ionicDeploy.check().then(function(response) {
+				UIService.hideToast();
+				// response will be true/false
+				if (response) {
+					var confirmUpdate = $ionicPopup.confirm({
+						cssClass: 'gb-popup',
+						title: 'Update available',
+						template: 'Would you like to download and install the latest version of gamebeacon?'
+					});
+					confirmUpdate.then(function(res) {
+						if (res) {
+							doUpdate()
+						}
+					})
+				}
+			}, function(error) {
+				UIService.hideToast();
+			});
+		}
 	});
+
+	checkForUpdates();
 
 	// Initialize Parse
 	Parse.initialize(appConfig.parseAppKey, appConfig.parseJSKey);
@@ -210,15 +269,15 @@ var GameBeacon = angular.module('gamebeacon', [
 		controller: 'ResetController'
 	})
 
-/*	.state('app.donate', {
-		url: '/donate',
-		views: {
-			'main-view': {
-				templateUrl: 'app/components/donate/donateView.html'
+	/*	.state('app.donate', {
+			url: '/donate',
+			views: {
+				'main-view': {
+					templateUrl: 'app/components/donate/donateView.html'
+				}
 			}
-		}
-	})
-*/
+		})
+	*/
 	.state('tutorial', {
 		url: '/',
 		templateUrl: 'app/components/tutorial/tutorialView.html',

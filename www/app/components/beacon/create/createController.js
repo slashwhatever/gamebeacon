@@ -9,13 +9,19 @@ angular.module('gamebeacon.beacon.create.controllers', ['gamebeacon.services'])
 	'UtilsService',
 	'PushService',
 	'MsgService',
+	'UIService',
 	'$ionicSlideBoxDelegate',
 	'$timeout',
 	'$ionicScrollDelegate',
-	function($scope, $rootScope, $state, initialData, Beacon, UtilsService, PushService, MsgService, $ionicSlideBoxDelegate, $timeout, $ionicScrollDelegate) {
+	function($scope, $rootScope, $state, initialData, Beacon, UtilsService, PushService, MsgService, UIService, $ionicSlideBoxDelegate, $timeout, $ionicScrollDelegate) {
 
 		// Called when the form is submitted
 		$scope.createBeacon = function(startTime) {
+
+			UIService.showToast({
+				msg: 'saving beacon...'
+			});
+
 			var hasLevel = $scope.levels ? $scope.levels.length > 0 : false,
 				hasCheckpoint = $scope.checkpoints ? $scope.checkpoints.length > 0 : false,
 				startTimeDate = new Date(new Date(startTime).getTime(),
@@ -39,6 +45,7 @@ angular.module('gamebeacon.beacon.create.controllers', ['gamebeacon.services'])
 				},
 				'active': true
 			}).then(function(response) {
+				UIService.hideToast();
 
 				// subscribe the user to a channel for this beacon
 				PushService.subscribe({
@@ -66,6 +73,8 @@ angular.module('gamebeacon.beacon.create.controllers', ['gamebeacon.services'])
 					reload: true,
 					notify: true
 				});
+			}, function() {
+				UIService.hideToast();
 			})
 		};
 

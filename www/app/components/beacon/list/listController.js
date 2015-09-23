@@ -15,7 +15,7 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 		return function() {
 
 			UIService.showToast({
-				msg: 'loading resources'
+				msg: 'loading resources...'
 			});
 
 			var missions = Mission.list(),
@@ -45,11 +45,20 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 	'$rootScope',
 	'$state',
 	'$ionicPopup',
+	'UIService',
 	'Beacon',
 	'UtilsService',
 	'appConfig',
 	'listControllerInitialData',
-	function($scope, $rootScope, $state, $ionicPopup, Beacon, UtilsService, appConfig, listControllerInitialData) {
+	function($scope, $rootScope, $state, $ionicPopup, UIService, Beacon, UtilsService, appConfig, listControllerInitialData) {
+
+		var today = new Date(),
+			_fromDate = new Date(today.setDate(today.getDate())),
+			_toDate = new Date(today.setDate(today.getDate()));
+
+		_fromDate.setHours(0, 0, 0);			// midnight
+		_toDate.setHours(23, 59, 59);			// midnight
+
 
 		$scope.myBeacons = [];
 		$scope.beacons = [];
@@ -59,7 +68,51 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 		$scope.puserId = UtilsService.getCurrentUser().puserId;
 		$scope.noBeacons = null;
 		$scope.loadingBeacons = null;
+		$scope.fromDate = _fromDate.toISOString();
+		$scope.toDate = _toDate.toISOString();
+		$scope.where = {
+			'active': true,
+			'startDate': {
+				'$gte': {
+					'__type': "Date",
+					'iso': $scope.fromDate
+				}, '$lte': {
+					'__type': "Date",
+					'iso': $scope.toDate
+				}
+			}
+		};
 
+		$scope.$on('updateCalendar', function (event, data) {
+
+			$scope.skip = 0;
+			$scope.beacons = [];
+
+			var tmpDate = data.fromDate,
+				_fromDate = new Date(tmpDate.setDate(tmpDate.getDate())),
+				_toDate = new Date(tmpDate.setDate(tmpDate.getDate()));
+
+			_fromDate.setHours(0, 0, 0);			// midnight
+			_toDate.setHours(23, 59, 59);			// midnight
+
+			$scope.fromDate = _fromDate.toISOString();
+			$scope.toDate = _toDate.toISOString();
+
+			$scope.where = {
+				'active': true,
+				'startDate': {
+					'$gte': {
+						'__type': "Date",
+						'iso': $scope.fromDate
+					}, '$lte': {
+						'__type': "Date",
+						'iso': $scope.toDate
+					}
+				}
+			};
+
+			$scope.getBeaconChunk();
+		});
 
 		$scope.$on('$ionicView.beforeEnter', function() {
 			listControllerInitialData();
@@ -67,25 +120,21 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 		});
 
 		// build the basic query out
-		var where = {
-			'active': true,
-			'startDate': {
-				'$gte': {
-					'__type': "Date",
-					'iso': new Date(new Date().getTime()).toISOString()
-				}
-			}
-		};
+		// note that initially we're going to be querying for beacons starting today
 
 		// go grab 20 beacons from the server
 		$scope.getBeaconChunk = function(cb) {
+
+			UIService.showToast({
+				msg: 'retreiving beacons...'
+			});
+
 			$scope.loadingBeacons = true;
 			Beacon.list({
 				limit: $scope.limit,
 				skip: $scope.skip,
-				'where': JSON.stringify(where)
+				'where': JSON.stringify($scope.where)
 			}).then(function(response) {
-
 				$scope.loadingBeacons = false;
 
 				// if we have results, there may be more...
@@ -105,6 +154,7 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 
 				$scope.$broadcast('scroll.infiniteScrollComplete');
 
+				UIService.hideToast();
 				if (cb && typeof cb === 'function') cb.call();
 
 			});
@@ -122,7 +172,12 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 		}
 
 		$scope.joinBeacon = function(beacon) {
+			UIService.showToast({
+				msg: 'joining beacon...'
+			});
+
 			Beacon.updateFireteam(beacon, 'join', $scope.puserId).then(function() {
+				UIService.hideToast();
 				$scope.myBeacons.push(beacon.objectId);
 				$state.go('app.beacon', {
 					beaconId: beacon.objectId
@@ -135,12 +190,18 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 
 		$scope.deleteBeacon = function(beacon) {
 			var confirmDel = $ionicPopup.confirm({
+				cssClass: 'gb-popup',
 				title: 'Delete beacon',
 				template: 'Are you sure you want to delete your beacon?'
 			});
 			confirmDel.then(function(res) {
 				if (res) {
+					UIService.showToast({
+						msg: 'deleting beacon...'
+					});
+
 					Beacon.delete(beacon).then(function() {
+						UIService.hideToast();
 						$scope.myBeacons = _.without($scope.myBeacons, beacon.beaconId); // this should remove the beacon from the array
 						$state.go('app.beacons', null, {
 							reload: true,
@@ -152,7 +213,12 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 		}
 
 		$scope.leaveBeacon = function(beacon) {
+			UIService.showToast({
+				msg: 'leaving beacon...'
+			});
+
 			Beacon.updateFireteam(beacon, 'leave').then(function() {
+				UIService.hideToast();
 				$scope.myBeacons = _.without($scope.myBeacons, beacon.beaconId); // this should remove the beacon from the array
 				$state.go('app.beacons', null, {
 					reload: true,

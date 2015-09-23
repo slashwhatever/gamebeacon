@@ -1,18 +1,13 @@
 <ion-view name="beacon-list" title="Active Beacons" cache-view="false">
-	<ion-nav-bar align-title="right" class="bar nav-title-slide-ios7"></ion-nav-bar>
-	<ion-content scroll="true">
+	<ion-nav-bar align-title="right" class="bar nav-title-slide-ios7">
+	</ion-nav-bar>
+	<ion-header-bar class="bar bar-subheader">
+		<list-calendar></list-calendar>
+	</ion-header-bar>
+	<ion-content class="has-subheader" scroll="true">
 		<ion-refresher class="spinner-energized" pulling-text="pull to refresh" pulling-icon="ion-android-arrow-down" spinner="none" on-refresh="refreshBeaconList()"></ion-refresher>
 
-		<!-- beacon card -->
-		<ion-list ng-if="beacons.length > 0" show-delete="false" show-reorder="false" can-swipe="true">
-			<ion-item class="beacon-card" ui-sref="app.beacon({beaconId: beacon.objectId})" ng-class="{'my-beacon' : beacon.userIsCreator }" ng-repeat="beacon in beacons track by beacon.objectId">
-				<beacon-header></beacon-header>
-				<beacon-meta></beacon-meta>
-				<!-- <beacon-actions></beacon-actions> -->
-				<beacon-timer ng-if="beacon.active" beacon="beacon"></beacon-timer>
-				<ion-option-button ng-if="beacon.userIsCreator" class="button-assertive"><i class="icon ion-android-delete"></i>Delete</ion-option-button>
-			</ion-item>
-		</ion-list>
+		<beacon-card-list beacons="beacons"></beacon-card-list>
 
 		<!-- loading state -->
 		<div ng-if="loadingBeacons" class="text-center padding">
@@ -20,7 +15,7 @@
 		</div>
 
 		<!-- no beacons -->
-		<div ng-if="noBeacons" class="row">
+		<div ng-if="noBeacons" class="row" ng-cloak>
 			<div class="col col-80 col-offset-10">
 				<div class="beacon-list-empty padding">
 					<h1>No beacons!</h1>
@@ -31,8 +26,8 @@
 		<ion-infinite-scroll ng-if="moreBeacons" on-infinite="getBeaconChunk()"></ion-infinite-scroll>
 	</ion-content>
 	<nav mfb-menu position="br" effect="zoomin" active-icon="ion-chevron-down" resting-icon="ion-navicon-round" toggling-method="click">
-		<button mfb-button template-url="app/shared/floatButton/floatButton.html" bg="positive-bg" icon="ion-document-text" ng-if="$state.current.name === 'app.beacons'" label="All beacons" ui-sref="app.beacons"></button>
-		<button mfb-button template-url="app/shared/floatButton/floatButton.html" bg="energized-bg" icon="ion-plus" label="Create beacon" ui-sref="beacon-create"></button>
+		<button mfb-button template-url="app/shared/floatButton/floatButton.html" bg="assertive-bg" icon="ion-document-text" ng-if="$state.current.name === 'app.beacons'" label="All beacons" ui-sref="app.beacons"></button>
+		<button mfb-button template-url="app/shared/floatButton/floatButton.html" bg="assertive-bg" icon="ion-plus" label="Create beacon" ui-sref="beacon-create"></button>
 		<button mfb-button template-url="app/shared/floatButton/floatButton.html" bg="energized-bg" icon="ion-radio-waves" label="Dashboard" ui-sref="app.dashboard({puserId: puserId})"></button>
 		<button mfb-button template-url="app/shared/floatButton/floatButton.html" bg="positive-bg" icon="ion-person" label="Profile" ui-sref="app.profile"></button>
 		<button mfb-button template-url="app/shared/floatButton/floatButton.html" bg="calm-bg" icon="ion-clipboard" label="FAQ" ui-sref="app.about"></button>

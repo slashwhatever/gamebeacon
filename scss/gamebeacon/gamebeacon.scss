@@ -340,7 +340,7 @@ also be of any width and height */
 		position: absolute;
 		top: 0;
 		left: 0;
-		border-color: transparent transparent transparent $yellow ;
+		border-color: transparent transparent transparent $yellow;
 		border-style: solid;
 		border-width: 0 0 15px 15px;
 		z-index: 3;
@@ -796,12 +796,52 @@ form.ng-submitted select.ng-valid + i.icon.error {
 		margin-top: 17px;
 }
 
-.swiper-container {
-		margin-top: 10px;
-		text-align: center;
-		display: inline-block;
-		height: 80px;
-		@include fade-grad();
+.swiper-container.swiper-calendar {
+	font-size: 14px;
+	color:$dark-blue;
+	height: 35px;
+	@include fade-grad-horizontal();
+}
+.swiper-container.swiper-calendar .swiper-slide{
+	text-align: center;
+	font-size: 12px;
+	text-transform: uppercase;
+
+}
+
+.swiper-calendar.swiper-container:before {
+    content: '';
+    height: 8px;
+    width: 8px;
+    position: absolute;
+    top: 21px;
+    left: 0;
+    right: 0;
+    background-color: $pink;
+    border-radius: 100%;
+    margin: 0 auto;
+}
+
+.swiper-calendar.swiper-container .swiper-slide span:before {
+	content: '';
+	height: 10px;
+	width: 10px;
+	position: absolute;
+	top: 20px;
+	left: 0;
+	right: 0;
+	border: 2px solid $dark-blue;
+	border-radius: 100%;
+	margin: 0 auto;
+}
+
+
+.swiper-container.swiper-date, .swiper-container.swiper-time-hours, .swiper-container.swiper-time-mins {
+	margin-top: 10px;
+	text-align: center;
+	display: inline-block;
+	height: 80px;
+	@include fade-grad();
 }
 
 .swiper-slide h2 {
@@ -816,4 +856,10 @@ form.ng-submitted select.ng-valid + i.icon.error {
 .loading-spinner span {
 	display: block;
 
+}
+
+/**************** chat ****************/
+.message-form{
+	position: absolute;
+	bottom: 0;
 }

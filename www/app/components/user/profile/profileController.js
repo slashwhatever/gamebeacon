@@ -27,6 +27,10 @@ angular.module('gamebeacon.user.profile.controllers', ['gamebeacon.services'])
 		}
 
 		$scope.requestPasswordReset = function(user) {
+			UIService.showToast({
+				msg: 'requesting reset...'
+			});
+
 			AuthService.requestPasswordReset(user.email)
 				.then(function(response) {
 					if (response && response.$resolved) {
@@ -49,6 +53,10 @@ angular.module('gamebeacon.user.profile.controllers', ['gamebeacon.services'])
 		};
 
 		$scope.updateProfile = function(profile) {
+			UIService.showToast({
+				msg: 'updating profile...'
+			});
+
 			PUserService.update({
 				id: $scope.currentUser.puserId
 			}, {
