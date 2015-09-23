@@ -45,6 +45,10 @@ angular.module('gamebeacon.user.login.controllers', ['gamebeacon.services'])
 
 		$scope.login = function(form) {
 
+			UIService.showToast({
+				msg: 'checking credentials...'
+			});
+
 			AuthService.login($scope.user).then(function(response) {
 
 				var user = $ionicUser.get();
@@ -62,6 +66,8 @@ angular.module('gamebeacon.user.login.controllers', ['gamebeacon.services'])
 				$ionicUser.identify(user);
 
 				if (window.plugins) PushService.registerPush(user)
+
+				UIService.hideToast();
 
 				$state.go('app.beacons');
 

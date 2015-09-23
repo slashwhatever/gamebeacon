@@ -6,7 +6,7 @@
 
 
 var GameBeacon = angular.module('gamebeacon', [
-	'ionic', 'ionic.service.core', 'ionic.service.deploy', 'ionic.service.analytics', 'ionic.service.push', 'ngCordova',
+	'ionic','ionic.service.core','ionic.service.deploy',   'ionic.service.analytics', 'ionic.service.push', 'ngCordova',
 	'gamebeacon.user.register.controllers',
 	'gamebeacon.user.reset.controllers',
 	'gamebeacon.user.login.controllers',
@@ -114,9 +114,10 @@ var GameBeacon = angular.module('gamebeacon', [
 				UIService.hideToast();
 			});
 		}
-	});
 
-	checkForUpdates();
+		checkForUpdates();
+
+	});
 
 	// Initialize Parse
 	Parse.initialize(appConfig.parseAppKey, appConfig.parseJSKey);

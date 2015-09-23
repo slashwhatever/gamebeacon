@@ -19,11 +19,12 @@ angular.module('gamebeacon.beacon.list.calendar.directives', [])
 				dateLoop = 4, // this will be used to deal with looping swipers and how it affects getting the date value
 				swiperOpts = {
 					direction: 'horizontal',
+/*					not sure i like freeMode
 					freeMode: true,
 					freeModeSticky: true,
 					freeModeMomentum: true,
 					freeModeMomentumRatio: 0.25,
-					slidesPerView: dateLoop,
+*/					slidesPerView: dateLoop,
 					centeredSlides: true,
 					loop: false,
 					onSlideChangeEnd: broadcastDate

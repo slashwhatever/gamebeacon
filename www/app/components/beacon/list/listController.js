@@ -56,7 +56,7 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 			_fromDate = new Date(today.setDate(today.getDate())),
 			_toDate = new Date(today.setDate(today.getDate()));
 
-		_fromDate.setHours(0, 0, 0);			// midnight
+		//_fromDate.setHours(0, 0, 0);			// midnight
 		_toDate.setHours(23, 59, 59);			// midnight
 
 
@@ -88,11 +88,15 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 			$scope.skip = 0;
 			$scope.beacons = [];
 
-			var tmpDate = data.fromDate,
+			var tmpDate = data.fromDate, todaysDate = new Date(),
 				_fromDate = new Date(tmpDate.setDate(tmpDate.getDate())),
 				_toDate = new Date(tmpDate.setDate(tmpDate.getDate()));
 
-			_fromDate.setHours(0, 0, 0);			// midnight
+				// we only want to show midnight to midnight if the user has not selected "Today"
+			if(tmpDate.setHours(0,0,0,0) != todaysDate.setHours(0,0,0,0)) {
+				_fromDate.setHours(0, 0, 0);			// midnight
+			}
+
 			_toDate.setHours(23, 59, 59);			// midnight
 
 			$scope.fromDate = _fromDate.toISOString();

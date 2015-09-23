@@ -340,9 +340,11 @@ $button-gap-multiplier : 55px;
 
 	.bar.bar-subheader {
 		border-bottom-color: transparent;
+		background-image: none;
 	}
 
 	.bar-header.bar-large {
+		background-image: none;
 	   height: 70px; /*just an example*/
 	}
 
