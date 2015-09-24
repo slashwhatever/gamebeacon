@@ -10615,9 +10615,11 @@ ion-header-bar .title {
   padding: 15px 20px; }
 
 .bar.bar-subheader {
-  border-bottom-color: transparent; }
+  border-bottom-color: transparent;
+  background-image: none; }
 
 .bar-header.bar-large {
+  background-image: none;
   height: 70px;
   /*just an example*/ }
 
@@ -10757,14 +10759,22 @@ label.new-message input {
   font-size: 24px;
   margin-top: 10px; }
 
-.missions-slide {
-  border-bottom-width: 0;
+.gametypes-slide {
   height: 170px; }
+
+.platforms-slide, .regions-slide, .mic-slide {
+  height: 80px; }
+
+.create-beacon-slide.platforms-slide h2, .create-beacon-slide.regions-slide h2, .create-beacon-slide.mic-slide h2 {
+  font-size: 0.5em; }
+
+.create-beacon-slide.platforms-slide p, .create-beacon-slide.regions-slide p, .create-beacon-slide.mic-slide p {
+  font-size: 0.5em; }
 
 .create-beacon-slide .slide-wrapper {
   height: 100%; }
 
-.missions-slide, .create-beacon-slide {
+.missions-slide, .gametypes-slide, .create-beacon-slide {
   background-image: -webkit-linear-gradient(64deg, #6BB6C4 5%, #437CAA 100%);
   background-image: -o-linear-gradient(64deg, #6BB6C4 5%, #437CAA 100%);
   background-image: linear-gradient(64deg, #6BB6C4 5%, #437CAA 100%); }
@@ -11106,7 +11116,8 @@ ion-view[name=beacon-detail] .has-subheader {
 */
 /**************** meta blocks *******************/
 .beacon-meta {
-  position: relative; }
+  position: relative;
+  margin-top: 10px; }
 
 .meta-details {
   border: 2px solid #677c8f;
@@ -11114,11 +11125,11 @@ ion-view[name=beacon-detail] .has-subheader {
   display: inline-block;
   -webkit-border-radius: 20px;
   border-radius: 20px;
-  padding: 5px 8px;
+  padding: 3px 7px;
   background-color: transparent;
   vertical-align: middle;
-  margin-top: 10px;
-  font-family: "SofiaProLight", "Helvetica Neue", Roboto, sans-serif; }
+  font-family: "SofiaProLight", "Helvetica Neue", Roboto, sans-serif;
+  font-size: 14px; }
 
 .meta-details:after {
   content: '';
@@ -11126,8 +11137,8 @@ ion-view[name=beacon-detail] .has-subheader {
   width: 5px;
   height: 2px;
   position: absolute;
-  top: 26px;
-  margin-left: 10px; }
+  top: 14px;
+  margin-left: 9px; }
 
 .meta-details:last-child:after {
   border-top-color: transparent; }
@@ -11247,12 +11258,12 @@ form.ng-submitted input.ng-valid + i.icon.error, form.ng-submitted select.ng-val
   background-image: -o-linear-gradient(64deg, #6BB6C4 5%, #437CAA 100%);
   background-image: linear-gradient(64deg, #6BB6C4 5%, #437CAA 100%);
   position: relative;
-  height: 150px;
+  height: 170px;
   background-color: #2A3035;
   box-shadow: inset 0 10px 20px rgba(0, 0, 0, 0.1); }
 
 .scheduler-byline {
-  padding-top: 30px;
+  padding-top: 27px;
   text-align: center;
   margin-top: 0;
   margin-bottom: 0; }

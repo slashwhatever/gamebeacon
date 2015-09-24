@@ -168,6 +168,40 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 	}
 ])
 
+.service('GameType', [
+	'$resource',
+	'$q',
+	'$cacheFactory',
+	'appConfig',
+	'ObjectService',
+	function($resource, $q, $cacheFactory, appConfig, ObjectService) {
+
+		var cache = $cacheFactory('gametype');
+		this.gametypes = [];
+
+		return {
+			list: function(params) {
+				this.gametypes = ObjectService.list('gametypes', {
+					cache: cache,
+					params: {
+						'order': 'order',
+						'include': 'missions,missions.levels,missions.checkpoints'
+					}
+				});
+				return this.gametypes
+			},
+			get: function(objectId) {
+				var dfd = $q.defer()
+				this.gametypes.forEach(function(gametype) {
+					if (gametype.objectId === objectId) dfd.resolve(gametype)
+				})
+
+				return dfd.promise;
+			}
+		}
+	}
+])
+
 .service('Mission', [
 	'$resource',
 	'$q',
@@ -184,8 +218,8 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 				this.missions = ObjectService.list('missions', {
 					cache: cache,
 					params: {
-						'order': 'order',
-						'include': 'levels,checkpoints'
+						'order': 'order'/*,
+						'include': 'levels,checkpoints'*/
 					}
 				});
 				return this.missions
@@ -413,7 +447,7 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 				get: {
 					headers: appConfig.parseHttpsHeaders,
 					params: {
-						'include': 'platform,mission,checkpoint,region,level,creator,fireteamOnboard,mic'
+						'include': 'gametype,platform,mission,checkpoint,region,level,creator,fireteamOnboard,mic'
 					}
 				},
 				delete: {
@@ -424,7 +458,7 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 					method: 'GET',
 					headers: appConfig.parseHttpsHeaders,
 					params: {
-						'include': 'mission,checkpoint,region,platform,level,creator,mic',
+						'include': 'gametype,mission,checkpoint,region,platform,level,creator,mic',
 						'order': '-createdAt',
 						'limit': '@limit',
 						'skip': '@skip',

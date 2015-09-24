@@ -2,6 +2,7 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 
 .factory('listControllerInitialData', [
 	'$q',
+	'GameType',
 	'Mission',
 	'Level',
 	'CheckPoint',
@@ -10,7 +11,7 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 	'Mic',
 	'ObjectService',
 	'UIService',
-	function($q, Mission, Level, CheckPoint, Platform, Region, Mic, ObjectService, UIService) {
+	function($q, GameType, Mission, Level, CheckPoint, Platform, Region, Mic, ObjectService, UIService) {
 
 		return function() {
 
@@ -18,22 +19,24 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 				msg: 'loading resources...'
 			});
 
-			var missions = Mission.list(),
+			var gametypes = GameType.list(),
+				missions = Mission.list(),
 				levels = Level.list(),
 				checkpoints = CheckPoint.list(),
 				platforms = Platform.list(),
 				regions = Region.list(),
 				mics = Mic.list();
 
-			return $q.all([missions, levels, checkpoints, platforms, regions, mics]).then(function(results) {
+			return $q.all([gametypes, missions, levels, checkpoints, platforms, regions, mics]).then(function(results) {
 				UIService.hideToast();
 				return {
-					missions: results[0].results,
-					levels: results[1].results,
-					checkpoints: results[2].results,
-					platforms: results[3].results,
-					regions: results[4].results,
-					mics: results[5].results
+					gametypes: results[0].results,
+					missions: results[1].results,
+					levels: results[2].results,
+					checkpoints: results[3].results,
+					platforms: results[4].results,
+					regions: results[5].results,
+					mics: results[6].results
 				};
 			});
 		}

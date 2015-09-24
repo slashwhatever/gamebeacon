@@ -3,18 +3,28 @@
 		<ion-nav-back-button class="button-clear"><i class="icon ion-arrow-left-b"></i></ion-nav-back-button>
 	</ion-nav-bar>
 	<ion-content scroll="true">
-		<ion-slide-box delegate-handle="mission-selector" show-pager="false" on-slide-changed="updateMission($index)" ng-if="missions" does-continue="true">
+		<ion-slide-box delegate-handle="gametype-selector" show-pager="false" on-slide-changed="updateGameType($index)" ng-if="gametypes">
+			<ion-slide class="create-beacon-slide gametypes-slide" ng-repeat="gametype in gametypes">
+				<div class="slide-wrapper">
+					<div class="slide-inner">
+						<img class="icon icon-s gametype-icon" ng-src="img/{{ gametype.type }}_icon_small.png">
+						<h2 class="title gametype-title">{{ gametype.title }}</h2>
+						<p class="byline gametype-byline">{{ gametype.byline }}</p>
+					</div>
+				</div>
+			</ion-slide>
+		</ion-slide-box>
+		<ion-slide-box delegate-handle="mission-selector" show-pager="false" on-slide-changed="updateMission($index)" ng-if="missions">
 			<ion-slide class="create-beacon-slide missions-slide" ng-repeat="mission in missions">
 				<div class="slide-wrapper">
 					<div class="slide-inner">
-						<img class="icon icon-s mission-icon" ng-src="img/{{ mission.type }}_icon_small.png">
 						<h2 class="title mission-title">{{ mission.title }}</h2>
 						<p class="byline mission-byline">{{ mission.byline }}</p>
 					</div>
 				</div>
 			</ion-slide>
 		</ion-slide-box>
-		<ion-slide-box delegate-handle="checkpoint-selector" show-pager="false" on-slide-changed="updateCheckpoint($index)" ng-if="checkpoints" does-continue="true">
+		<ion-slide-box delegate-handle="checkpoint-selector" show-pager="false" on-slide-changed="updateCheckpoint($index)" ng-if="checkpoints">
 			<ion-slide class="create-beacon-slide checkpoints-slide" ng-repeat="checkpoint in checkpoints | orderBy :'order'">
 				<div class="slide-wrapper">
 					<div class="slide-inner">
@@ -24,7 +34,7 @@
 				</div>
 			</ion-slide>
 		</ion-slide-box>
-		<ion-slide-box delegate-handle="level-selector" show-pager="false" on-slide-changed="updateLevel($index)" ng-if="levels" does-continue="true">
+		<ion-slide-box delegate-handle="level-selector" show-pager="false" on-slide-changed="updateLevel($index)" ng-if="levels">
 			<ion-slide class="create-beacon-slide levels-slide" ng-repeat="level in levels | orderBy:'name'">
 				<div class="slide-wrapper">
 					<div class="slide-inner">
@@ -34,7 +44,7 @@
 				</div>
 			</ion-slide>
 		</ion-slide-box>
-		<ion-slide-box delegate-handle="fireteam-selector" show-pager="false" does-continue="false" on-slide-changed="updateFireteam($index)" ng-if="maxFireteam" does-continue="true">
+		<ion-slide-box delegate-handle="fireteam-selector" show-pager="false" does-continue="false" on-slide-changed="updateFireteam($index)" ng-if="maxFireteam">
 			<ion-slide class="create-beacon-slide fireteam-slide" ng-repeat="n in maxFireteam">
 				<div class="slide-wrapper">
 					<div class="slide-inner">
@@ -48,6 +58,7 @@
 				</div>
 			</ion-slide>
 		</ion-slide-box>
+		<beacon-scheduler ng-model="startTime"></beacon-scheduler>
 		<ion-slide-box delegate-handle="platform-selector" show-pager="false" ng-if="platforms" does-continue="true" on-slide-changed="updatePlatform($index)" active-slide="defaultPlatform">
 			<ion-slide class="create-beacon-slide platforms-slide" ng-repeat="platform in platforms">
 				<div class="slide-wrapper">
@@ -78,7 +89,6 @@
 				</div>
 			</ion-slide>
 		</ion-slide-box>
-		<beacon-scheduler ng-model="startTime"></beacon-scheduler>
 		<div class="row">
 			<div class="col col-80 col-offset-10">
 				<form ng-submit="createBeacon(startTime)">

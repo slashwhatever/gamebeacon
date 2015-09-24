@@ -24,59 +24,74 @@ angular.module('gamebeacon.beacon.create.controllers', ['gamebeacon.services'])
 
 			var hasLevel = $scope.levels ? $scope.levels.length > 0 : false,
 				hasCheckpoint = $scope.checkpoints ? $scope.checkpoints.length > 0 : false,
-				startTimeDate = new Date(new Date(startTime).getTime(),
-				pushTime = startTimeDate - 15 * 60000),
+				startTimeDate = new Date(new Date(startTime).getTime()),
+				pushTime = startTimeDate - (15 * 60000),
 				pushExpirationTime = startTimeDate;
 
+				// quick validation on date - make sure it's not in the past
+				if ( new Date(startTime).getTime() > new Date().getTime()) {
+					Beacon.save({
+						'gametype': UtilsService.getObjectAsPointer('gametypes', $scope.gametypes[$ionicSlideBoxDelegate.$getByHandle('gametype-selector').currentIndex()].objectId),
+						'mission': UtilsService.getObjectAsPointer('missions', $scope.missions[$ionicSlideBoxDelegate.$getByHandle('mission-selector').currentIndex()].objectId),
+						'checkpoint': hasCheckpoint ? UtilsService.getObjectAsPointer('checkpoints', $scope.checkpoints[$ionicSlideBoxDelegate.$getByHandle('checkpoint-selector').currentIndex()].objectId) : null,
+						'mic': UtilsService.getObjectAsPointer('mics', $scope.mics[$ionicSlideBoxDelegate.$getByHandle('mic-selector').currentIndex()].objectId),
+						'level': hasLevel ? UtilsService.getObjectAsPointer('levels', $scope.levels[$ionicSlideBoxDelegate.$getByHandle('level-selector').currentIndex()].objectId) : null,
+						'fireteamRequired': $ionicSlideBoxDelegate.$getByHandle('fireteam-selector').currentIndex() + 1,
+						'fireteamOnboard': [UtilsService.getObjectAsPointer('pusers', UtilsService.getCurrentUser().puserId)],
+						'platform': UtilsService.getObjectAsPointer('platforms', $scope.platforms[$ionicSlideBoxDelegate.$getByHandle('platform-selector').currentIndex()].objectId),
+						'region': UtilsService.getObjectAsPointer('regions', $scope.regions[$ionicSlideBoxDelegate.$getByHandle('region-selector').currentIndex()].objectId),
+						'creator': UtilsService.getObjectAsPointer('pusers', UtilsService.getCurrentUser().puserId),
+						'startDate': {
+							"__type": "Date",
+							"iso": startTime
+						},
+						'active': true
+					}).then(function(response) {
+						UIService.hideToast();
 
-			Beacon.save({
-				'mission': UtilsService.getObjectAsPointer('missions', $scope.missions[$ionicSlideBoxDelegate.$getByHandle('mission-selector').currentIndex()].objectId),
-				'checkpoint': hasCheckpoint ? UtilsService.getObjectAsPointer('checkpoints', $scope.checkpoints[$ionicSlideBoxDelegate.$getByHandle('checkpoint-selector').currentIndex()].objectId) : null,
-				'mic': UtilsService.getObjectAsPointer('mics', $scope.mics[$ionicSlideBoxDelegate.$getByHandle('mic-selector').currentIndex()].objectId),
-				'level': hasLevel ? UtilsService.getObjectAsPointer('levels', $scope.levels[$ionicSlideBoxDelegate.$getByHandle('level-selector').currentIndex()].objectId) : null,
-				'fireteamRequired': $ionicSlideBoxDelegate.$getByHandle('fireteam-selector').currentIndex() + 1,
-				'fireteamOnboard': [UtilsService.getObjectAsPointer('pusers', UtilsService.getCurrentUser().puserId)],
-				'platform': UtilsService.getObjectAsPointer('platforms', $scope.platforms[$ionicSlideBoxDelegate.$getByHandle('platform-selector').currentIndex()].objectId),
-				'region': UtilsService.getObjectAsPointer('regions', $scope.regions[$ionicSlideBoxDelegate.$getByHandle('region-selector').currentIndex()].objectId),
-				'creator': UtilsService.getObjectAsPointer('pusers', UtilsService.getCurrentUser().puserId),
-				'startDate': {
-					"__type": "Date",
-					"iso": startTime
-				},
-				'active': true
-			}).then(function(response) {
-				UIService.hideToast();
+						// subscribe the user to a channel for this beacon
+						PushService.subscribe({
+							channel: 'OWNER' + response.objectId,
+							puserId: UtilsService.getCurrentUser().puserId
+						});
 
-				// subscribe the user to a channel for this beacon
-				PushService.subscribe({
-					channel: 'OWNER' + response.objectId,
-					puserId: UtilsService.getCurrentUser().puserId
-				});
+						// if the beacon was created, create a scheduled push that will go to all subscribers of the OWNERxxx and MEMBERxxx channels
+						// by setting up the two pushes now, we can just sub and unsub people later to get the messages
+						PushService.sendPush({
+							channels: ['OWNER' + response.objectId],
+							push_time: pushTime,
+							expiration_time: pushExpirationTime,
+							alert: MsgService.msg('createBeacon')
+						});
 
-				// if the beacon was created, create a scheduled push that will go to all subscribers of the OWNERxxx and MEMBERxxx channels
-				// by setting up the two pushes now, we can just sub and unsub people later to get the messages
-				PushService.sendPush({
-					channels: ['OWNER' + response.objectId],
-					push_time: pushTime,
-					expiration_time: pushExpirationTime,
-					alert: MsgService.msg('createBeacon')
-				});
+						PushService.sendPush({
+							channels: ['MEMBER' + response.objectId],
+							push_time: pushTime,
+							expiration_time: pushExpirationTime,
+							alert: MsgService.msg('joinedBeacon')
+						});
 
-				PushService.sendPush({
-					channels: ['MEMBER' + response.objectId],
-					push_time: pushTime,
-					expiration_time: pushExpirationTime,
-					alert: MsgService.msg('joinedBeacon')
-				});
-
-				$state.go('app.beacons', null, {
-					reload: true,
-					notify: true
-				});
-			}, function() {
-				UIService.hideToast();
-			})
+						$state.go('app.beacons', null, {
+							reload: true,
+							notify: true
+						});
+					}, function() {
+						UIService.hideToast();
+					})
+				} else {
+					UIService.showAlert({
+						title: 'Oops!',
+						template: 'You can\'t create a beacon in the past.'
+					})
+				}
 		};
+
+		$scope.$watch('missions', function(newVal, oldVal) {
+			if (newVal) {
+				$ionicSlideBoxDelegate.$getByHandle('mission-selector').slide(0, 100);
+				$ionicSlideBoxDelegate.$getByHandle('mission-selector').update();
+			}
+		});
 
 		$scope.$watch('levels', function(newVal, oldVal) {
 			if (newVal) {
@@ -99,6 +114,16 @@ angular.module('gamebeacon.beacon.create.controllers', ['gamebeacon.services'])
 			}
 		});
 
+		$scope.updateGameType = function(index) {
+			var gametype = $scope.gametypes[$ionicSlideBoxDelegate.$getByHandle('gametype-selector').currentIndex()]
+
+			$scope.missions = gametype.missions || [];
+			$scope.levels = $scope.missions ? $scope.missions.levels || [] : null;
+			$scope.checkpoints = $scope.missions ? $scope.missions.checkpoints || []: null;
+
+			$scope.maxFireteam = $scope.getMaxFireTeam($scope.missions[0])
+		}
+
 		$scope.updateMission = function(index) {
 			var mission = $scope.missions[$ionicSlideBoxDelegate.$getByHandle('mission-selector').currentIndex()]
 			var levels = mission.levels;
@@ -113,12 +138,14 @@ angular.module('gamebeacon.beacon.create.controllers', ['gamebeacon.services'])
 		}
 
 		// define all the starting variables for the view
-		$scope.missions = initialData.missions;
+		$scope.gametypes = initialData.gametypes;
+		$scope.missions = $scope.gametypes[0].missions ? $scope.gametypes[0].missions : null;
+		$scope.checkpoints = $scope.missions && $scope.missions[0].checkpoints ? $scope.missions[0].checkpoints : null;
+		$scope.levels = $scope.missions && $scope.missions[0].levels ? $scope.missions[0].levels : null;
+
 		$scope.platforms = initialData.platforms;
 		$scope.regions = initialData.regions;
-		$scope.checkpoints = initialData.missions[0].checkpoints ? initialData.missions[0].checkpoints : null;
 		$scope.mics = initialData.mics;
-		$scope.levels = initialData.missions[0].levels ? initialData.missions[0].levels : null;
 		$scope.maxFireteam = $scope.getMaxFireTeam(initialData.missions[0]);
 		$scope.currentUser = UtilsService.getCurrentUser();
 		//$scope.startTime = new Date().getTime();
