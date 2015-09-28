@@ -2,6 +2,10 @@ angular.module('gamebeacon.tutorial.controllers', ['gamebeacon.services'])
 
 .controller('TutorialController', function($scope, $state, $ionicSlideBoxDelegate) {
 
+	$scope.$on('$ionicView.beforeEnter', function() {
+		$ionicSlideBoxDelegate.slide(0, 0);
+	});
+
 	// Called to navigate to the main app
 	$scope.quitTutorial = function() {
 		$state.go('app.beacons');

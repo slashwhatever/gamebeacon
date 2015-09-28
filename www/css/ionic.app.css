@@ -11331,5 +11331,4 @@ form.ng-submitted input.ng-valid + i.icon.error, form.ng-submitted select.ng-val
 
 /**************** chat ****************/
 .message-form {
-  position: absolute;
-  bottom: 0; }
+  width: 100%; }
