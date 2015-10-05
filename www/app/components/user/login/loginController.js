@@ -11,7 +11,8 @@ angular.module('gamebeacon.user.login.controllers', ['gamebeacon.services'])
 	'UIService',
 	'AuthService',
 	'PushService',
-	function($rootScope, $scope, $state, $ionicUser, $ionicDeploy, $localStorage, UtilsService, UIService, AuthService, PushService) {
+	'UpdateService',
+	function($rootScope, $scope, $state, $ionicUser, $ionicDeploy, $localStorage, UtilsService, UIService, AuthService, PushService, UpdateService) {
 
 		$scope.user = {
 			username: '',
@@ -35,6 +36,7 @@ angular.module('gamebeacon.user.login.controllers', ['gamebeacon.services'])
 					UIService.hideToast();
 					// user has valid session token - proceed
 					$state.go('app.beacons');
+					UpdateService.checkForUpdates();
 				},
 					function(error) {
 						UIService.hideToast();

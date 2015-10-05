@@ -159,6 +159,8 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 				defs.template = defs.template.replace('{{msg}}', defs.msg);
 				defs.template = defs.template.replace('{{cls}}', defs.cls);
 
+				// hide any existing message so you can just show one after the other
+				$ionicLoading.hide();
 				$ionicLoading.show(defs);
 			},
 			hideToast: function() {
@@ -833,7 +835,7 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 					}
 				}
 			}, function(response) {
-				d.reject('Could not log you in: ' + response.data.error);
+				d.reject('Could not log you in! Got connection?');
 			});
 
 			return d.promise;
@@ -911,7 +913,7 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 					}
 				}
 			}, function(response) {
-				d.reject('Could not log you in: ' + response.data.error);
+				d.reject('Could not log you in! Got connection?');
 			});
 
 			return d.promise
@@ -919,6 +921,81 @@ angular.module('gamebeacon.services', ['ngResource', 'gamebeacon.config'])
 	}
 
 }])
+
+.factory('UpdateService', [
+	'$ionicPopup',
+	'$ionicDeploy',
+	'UIService',
+	'$localStorage',
+	function($ionicPopup, $ionicDeploy, UIService, $localStorage) {
+
+		// Update app code with new release from Ionic Deploy
+		doUpdate = function() {
+			// Download the updates
+			UIService.showToast({
+				msg: 'downloading update...'
+			});
+
+			$ionicDeploy.download().then(function() {
+				// Extract the updates
+				UIService.showToast({
+					msg: 'extracting update...'
+				});
+
+				$ionicDeploy.extract().then(function() {
+					// Load the updated version
+					UIService.showToast({
+						msg: 'loading update...'
+					});
+					$ionicDeploy.load();
+				}, function(error) {
+					UIService.showAlert({
+						title: 'Oops!',
+						template: 'Error extracting update. Please try again.'
+					})
+				}, function(progress) {
+					// Do something with the zip extraction progress
+					console.log(progress);
+				});
+			}, function(error) {
+				UIService.showAlert({
+					title: 'Oops!',
+					template: 'Error downloading update. Please try again.'
+				})
+			}, function(progress) {
+				// Do something with the download progress
+				console.log(progress);
+			});
+		};
+
+		return {
+			checkForUpdates : function() {
+
+				UIService.showToast({
+					msg: 'checking for updates...'
+				});
+
+				// Check for updates
+				$ionicDeploy.check().then(function(response) {
+					UIService.hideToast();
+					// response will be true/false
+					if (response) {
+						var confirmUpdate = $ionicPopup.confirm({
+							cssClass: 'gb-popup',
+							title: 'Update available',
+							template: 'Would you like to download and install the latest version of gamebeacon?'
+						});
+						confirmUpdate.then(function(res) {
+							if (res) doUpdate();
+						})
+					}
+				}, function(error) {
+					UIService.hideToast();
+				});
+			}
+		}
+	}
+])
 
 .factory('PushService', [
 	'appConfig',

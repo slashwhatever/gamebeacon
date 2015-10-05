@@ -43,6 +43,34 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 	}
 ])
 
+.factory('beaconDetailData', [
+	'$q',
+	'$stateParams',
+	'Beacon',
+	'ChatService',
+	'UIService',
+	function($q, $stateParams, Beacon, ChatService, UIService) {
+
+		return function(beaconId) {
+
+			UIService.showToast({
+				msg: 'loading beacon...'
+			});
+
+			var beacon = Beacon.get(beaconId),
+				messages = ChatService.list(beaconId);
+
+			return $q.all([beacon, messages]).then(function(results) {
+				UIService.hideToast();
+				return {
+					beacon: results[0],
+					messages: results[1].results
+				};
+			});
+		}
+	}
+])
+
 .controller('ListController', [
 	'$scope',
 	'$rootScope',
@@ -185,7 +213,9 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 
 			Beacon.updateFireteam(beacon, 'join', $scope.puserId).then(function() {
 				UIService.hideToast();
-				$scope.myBeacons.push(beacon.objectId);
+
+				UtilsService.getCurrentUser().myBeacons.push(beacon.objectId);
+
 				$state.go('app.beacon', {
 					beaconId: beacon.objectId
 				}, {
@@ -209,7 +239,9 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 
 					Beacon.delete(beacon).then(function() {
 						UIService.hideToast();
-						$scope.myBeacons = _.without($scope.myBeacons, beacon.beaconId); // this should remove the beacon from the array
+
+						UtilsService.getCurrentUser().myBeacons = _.without(UtilsService.getCurrentUser().myBeacons, beacon.objectId);
+
 						$state.go('app.beacons', null, {
 							reload: true,
 							notify: true
@@ -226,7 +258,9 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 
 			Beacon.updateFireteam(beacon, 'leave').then(function() {
 				UIService.hideToast();
-				$scope.myBeacons = _.without($scope.myBeacons, beacon.beaconId); // this should remove the beacon from the array
+
+				UtilsService.getCurrentUser().myBeacons = _.without(UtilsService.getCurrentUser().myBeacons, beacon.objectId);
+
 				$state.go('app.beacons', null, {
 					reload: true,
 					notify: true
@@ -236,18 +270,18 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 
 		// watches
 
-		$scope.$watch('beacons', function(newVal, oldVal) {
+/*		$scope.$watch('beacons', function(newVal, oldVal) {
 			if (newVal && $scope.beacons.length > 0) {
 				$scope.myBeacons.push(UtilsService.findMyBeacon($scope.beacons).objectId);
 			}
 		});
-
+*/
 		// when myBeacons changes, update the currentUser
-		$scope.$watch('myBeacons', function(newVal, oldVal) {
+/*		$scope.$watch('myBeacons', function(newVal, oldVal) {
 			if (newVal && $scope.beacons.length > 0) {
 				UtilsService.getCurrentUser().myBeacons.push(UtilsService.findMyBeacon($scope.beacons).objectId);
 			}
 		});
-
+*/
 	}
 ])

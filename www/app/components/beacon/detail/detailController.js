@@ -8,16 +8,16 @@ angular.module('gamebeacon.beacon.detail.controllers', ['gamebeacon.services'])
 	'$ionicPopup',
 	'$interval',
 	'$ionicActionSheet',
-	'beacon',
-	'messages',
 	'ChatService',
 	'UtilsService',
-	'Beacon', function($scope, $rootScope, $state, $stateParams, $ionicPopup, $interval, $ionicActionSheet, beacon, messages, ChatService, UtilsService, Beacon) {
+	'Beacon',
+	'beaconDetails',
+	function($scope, $rootScope, $state, $stateParams, $ionicPopup, $interval, $ionicActionSheet, ChatService, UtilsService, Beacon, beaconDetails) {
 
 	var msgRefresh;
 
-	$scope.beacon = beacon;
-	$scope.messages = messages.results;
+	$scope.beacon = beaconDetails.beacon;
+	$scope.messages = beaconDetails.messages;
 	$scope.puserId = UtilsService.getCurrentUser().puserId;
 
 	var refreshMessages = function() {

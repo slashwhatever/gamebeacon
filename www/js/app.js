@@ -6,7 +6,7 @@
 
 
 var GameBeacon = angular.module('gamebeacon', [
-	'ionic','ionic.service.core','ionic.service.deploy',   'ionic.service.analytics', 'ionic.service.push', 'ngCordova',
+	'ionic', 'ionic.service.core', 'ionic.service.deploy', 'ionic.service.analytics', 'ionic.service.push', 'ngCordova',
 	'gamebeacon.user.register.controllers',
 	'gamebeacon.user.reset.controllers',
 	'gamebeacon.user.login.controllers',
@@ -38,7 +38,7 @@ var GameBeacon = angular.module('gamebeacon', [
 	'ng-mfb'
 ])
 
-.run(function($state, $ionicPlatform, $ionicAnalytics, appConfig, $ionicPopup, $ionicDeploy, UIService) {
+.run(function($state, $ionicPlatform, $ionicAnalytics, appConfig, UIService, $localStorage, AuthService) {
 	$ionicPlatform.ready(function() {
 
 		$ionicAnalytics.register();
@@ -59,63 +59,28 @@ var GameBeacon = angular.module('gamebeacon', [
 			});
 		});
 
-		// Update app code with new release from Ionic Deploy
-		var doUpdate = function() {
-			// Download the updates
-			$ionicDeploy.download().then(function() {
-				// Extract the updates
-				$ionicDeploy.extract().then(function() {
-					// Load the updated version
-					$ionicDeploy.load();
-				}, function(error) {
-					UIService.showAlert({
-						title: 'Oops!',
-						template: 'Error extracting update. Please try again.'
-					})
-				}, function(progress) {
-					// Do something with the zip extraction progress
-					console.log(progress);
+		checkSession = function() {
+
+			var sessionToken = $localStorage.get('sessionToken');
+			if (sessionToken) {
+				UIService.showToast({
+					msg: 'attempting auto login...'
 				});
-			}, function(error) {
-				UIService.showAlert({
-					title: 'Oops!',
-					template: 'Error downloading update. Please try again.'
-				})
-			}, function(progress) {
-				// Do something with the download progress
-				console.log(progress);
-			});
-		};
 
-		// Check Ionic Deploy for new code
-		var checkForUpdates = function() {
-
-			UIService.showToast({
-				msg: 'checking for updates...'
-			});
-
-			// Check for updates
-			$ionicDeploy.check().then(function(response) {
-				UIService.hideToast();
-				// response will be true/false
-				if (response) {
-					var confirmUpdate = $ionicPopup.confirm({
-						cssClass: 'gb-popup',
-						title: 'Update available',
-						template: 'Would you like to download and install the latest version of gamebeacon?'
-					});
-					confirmUpdate.then(function(res) {
-						if (res) {
-							doUpdate()
-						}
-					})
-				}
-			}, function(error) {
-				UIService.hideToast();
-			});
+				AuthService.getCurrentUser(sessionToken)
+					.then(function(response) {
+							UIService.hideToast();
+							// user has valid session token - proceed
+							$state.go('app.beacons');
+						},
+						function(error) {
+							UIService.hideToast();
+							// user needs to login
+						})
+			}
 		}
 
-		checkForUpdates();
+		checkSession();
 
 	});
 
@@ -191,11 +156,8 @@ var GameBeacon = angular.module('gamebeacon', [
 				templateUrl: 'app/components/beacon/detail/detailView.html',
 				controller: 'DetailController',
 				resolve: {
-					beacon: function($stateParams, Beacon) {
-						return Beacon.get($stateParams.beaconId)
-					},
-					messages: function($stateParams, ChatService) {
-						return ChatService.list($stateParams.beaconId)
+					beaconDetails: function($stateParams, beaconDetailData) {
+						return beaconDetailData($stateParams.beaconId)
 					}
 				}
 			}

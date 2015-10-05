@@ -334,6 +334,20 @@ also be of any width and height */
 		border-top: 1px solid lighten($dark-blue, 10%);
 }
 
+.beacon-card.ng-enter {
+    -webkit-animation: fadeInLeft 1s;
+    animation: fadeInLeft 1s;
+}
+
+.beacon-card.ng-enter-stagger {
+  -webkit-animation-delay:200ms;
+  animation-delay:200ms;
+
+  /* override to make sure it's not inherited from other styles */
+  -webkit-animation-duration:0;
+  animation-duration:0;
+}
+
 .beacon-card .item-content {
 	padding: 16px;
 }
@@ -805,7 +819,7 @@ form.ng-submitted select.ng-valid + i.icon.error {
 }
 
 .scheduler-container h2.time-separator {
-		margin-top: 17px;
+		margin-top: 27px;
 }
 
 .swiper-container.swiper-calendar {
