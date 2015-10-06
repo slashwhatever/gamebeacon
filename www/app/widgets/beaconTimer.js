@@ -1,19 +1,35 @@
-angular.module('gamebeacon.beacon.timer.directives', [])
+(function() {
+	'use strict';
 
-.directive('beaconTimer', ['$interval', 'Beacon', function($interval, Beacon) {
-	return {
-		restrict: 'E',
-		replace: true,
-		scope: {
-			beacon: '=',
-		},
-		templateUrl: 'app/components/beacon/timer/timer.html',
-		link: function(scope, elem, attrs) {
+	angular
+		.module('gamebeacon.widgets')
+		.directive('beaconTimer', beaconTimer);
+
+		beaconTimer.$inject = ['$interval', 'Beacon'];
+
+	/* @ngInject */
+	function beaconTimer($interval, Beacon) {
+		// Description:
+		//  Creates a new Spinner and sets its options
+		// Usage:
+		//  <div data-cc-spinner="vm.spinnerOptions"></div>
+		var directive = {
+			link: link,
+			restrict: 'E',
+			replace: true,
+			scope: {
+				beacon: '=',
+			},
+			templateUrl: 'app/widgets/beaconTimer.html'
+		};
+		return directive;
+
+		function link(scope, element, attrs) {
 			// timeLeft will be passed in the attrs
 			// we need to convert the timeLeft into minites and seconds
 
 			var stop,
-			startTimer = function() {
+				startTimer = function() {
 					// Don't start a new timer if we are already running
 					if (angular.isDefined(stop)) return;
 
@@ -50,7 +66,7 @@ angular.module('gamebeacon.beacon.timer.directives', [])
 						delta -= minutes * 60;
 
 						// what's left is seconds
-						var seconds = Math.floor(delta % 60);  // in theory the modulus is not required
+						var seconds = Math.floor(delta % 60); // in theory the modulus is not required
 
 						if (scope.beacon) {
 							scope.expired = null
@@ -98,4 +114,4 @@ angular.module('gamebeacon.beacon.timer.directives', [])
 		}
 	}
 
-}])
+})();

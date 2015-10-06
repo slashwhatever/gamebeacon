@@ -1,30 +1,46 @@
-angular.module('gamebeacon.beacon.list.calendar.directives', [])
+(function() {
 
-.directive('listCalendar', ['$timeout', function($timeout) {
-	return {
-		restrict: 'E',
-		templateUrl: 'app/components/beacon/listCalendar/listCalendarView.html',
-		replace: true,
-		scope: {
-			changeDate: '&'
-		},
-		link: function(scope, elem, attrs, ngModel) {
+	"use strict";
+
+	angular
+		.module('gamebeacon.widgets')
+		.directive('calendarStrip', calendarStrip)
+
+	calendarStrip.$inject = ['$timeout'];
+
+	function calendarStrip($timeout) {
+		var directive = {
+			restrict: 'E',
+			templateUrl: 'app/widgets/calendarStrip.html',
+			replace: true,
+			scope: {
+				changeDate: '&'
+			},
+			link: link
+		};
+
+		return directive;
+
+		function link(scope, elem, attrs, ngModel) {
 
 			var today = new Date(),
 				broadcastDate = function(swiper) {
-					scope.$emit('updateCalendar', {fromDate: new Date(scope.dates[swiper.activeIndex].dateValue)});
+					scope.$emit('updateCalendar', {
+						fromDate: new Date(scope.dates[swiper.activeIndex].dateValue)
+					});
 				},
 				minsToStartTime, hoursToStartTime, minsRounded, hoursRounded,
 				calendarSwiper,
 				dateLoop = 4, // this will be used to deal with looping swipers and how it affects getting the date value
 				swiperOpts = {
 					direction: 'horizontal',
-/*					not sure i like freeMode
-					freeMode: true,
-					freeModeSticky: true,
-					freeModeMomentum: true,
-					freeModeMomentumRatio: 0.25,
-*/					slidesPerView: dateLoop,
+					/*					not sure i like freeMode
+										freeMode: true,
+										freeModeSticky: true,
+										freeModeMomentum: true,
+										freeModeMomentumRatio: 0.25,
+					*/
+					slidesPerView: dateLoop,
 					centeredSlides: true,
 					loop: false,
 					onSlideChangeEnd: broadcastDate
@@ -76,4 +92,4 @@ angular.module('gamebeacon.beacon.list.calendar.directives', [])
 
 		}
 	}
-}]);
+})()

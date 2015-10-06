@@ -24,8 +24,9 @@ angular.module('gamebeacon.beacon.create.controllers', ['gamebeacon.services'])
 
 			var hasLevel = $scope.levels ? $scope.levels.length > 0 : false,
 				hasCheckpoint = $scope.checkpoints ? $scope.checkpoints.length > 0 : false,
-				startTimeDate = new Date(new Date(startTime).getTime()),
-				pushTime = startTimeDate - (15 * 60000),
+				rawStartTime = new Date(startTime).getTime(),
+				startTimeDate = new Date(rawStartTime),
+				pushTime = new Date(rawStartTime - (15*60000)),
 				pushExpirationTime = startTimeDate;
 
 				// quick validation on date - make sure it's not in the past
