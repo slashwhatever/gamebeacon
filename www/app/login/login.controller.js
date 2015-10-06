@@ -1,51 +1,48 @@
-angular.module('gamebeacon.user.login.controllers', ['gamebeacon.services'])
+(function() {
+	'use strict';
 
-.controller('LoginController', [
-	'$rootScope',
-	'$scope',
-	'$state',
-	'$ionicUser',
-	'$ionicDeploy',
-	'$localStorage',
-	'UtilsService',
-	'UIService',
-	'AuthService',
-	'PushService',
-	'UpdateService',
-	function($rootScope, $scope, $state, $ionicUser, $ionicDeploy, $localStorage, UtilsService, UIService, AuthService, PushService, UpdateService) {
+	angular
+		.module('gamebeacon.login')
+		.controller('Login', Login);
+
+	Login.$inject = ['$rootScope', '$scope', '$state', '$ionicUser', '$localStorage', 'UIService', 'AuthService', 'PushService', 'UpdateService'];
+
+	function Login($rootScope, $scope, $state, $ionicUser, $localStorage, UIService, AuthService, PushService, UpdateService) {
+
+		var me = this;
 
 		$scope.user = {
 			username: '',
 			password: ''
 		};
 
-		$scope.$on('$ionicView.beforeEnter', function () {
-			$scope.checkSession();
-		});
+		$scope.checkS
 
-		$scope.checkSession = function() {
+		$scope.$on('$ionicView.beforeEnter', checkSession);
+
+		function checkSession() {
 
 			var sessionToken = $localStorage.get('sessionToken');
-			if ( sessionToken ){
+			if (sessionToken) {
 				UIService.showToast({
 					msg: 'attempting auto login...'
 				});
 
 				AuthService.getCurrentUser(sessionToken)
-				.then(function(response) {
-					UIService.hideToast();
-					// user has valid session token - proceed
-					$state.go('app.beacons');
-					UpdateService.checkForUpdates();
-				},
-					function(error) {
-						UIService.hideToast();
-						// user needs to login
-				})
+					.then(function(response) {
+							UIService.hideToast();
+							// user has valid session token - proceed
+							$state.go('app.beacons');
+							UpdateService.checkForUpdates();
+						},
+						function(error) {
+							UIService.hideToast();
+							// user needs to login
+						})
 			}
 		}
 
-		$scope.login = function(form) {
+		function login(form) {
 
 			UIService.showToast({
 				msg: 'checking credentials...'
@@ -82,15 +79,14 @@ angular.module('gamebeacon.user.login.controllers', ['gamebeacon.services'])
 
 		}
 
-		$scope.logout = function(form) {
+		function logout(form) {
 			$rootScope.currentUser = null
 			$state.go('login');
 		}
 
-		$scope.requestPasswordReset = function(form) {
+		function requestPasswordReset(form) {
 			$rootScope.currentUser = null
 			$state.go('reset-password');
 		}
-
 	}
-])
+})();

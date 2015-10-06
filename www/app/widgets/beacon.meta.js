@@ -10,10 +10,10 @@
 			 var directive = {
 			 	restrict: 'E',
 			 	replace: true,
-			 	templateUrl: 'app/widgets/beaconMeta.html'
+			 	templateUrl: 'app/widgets/beacon.meta.html'
 			 };
 
 			 return directive;
 
 		}
-})()
+})();

@@ -35,8 +35,8 @@
 
 			.state('login', {
 			url: '/login',
-			templateUrl: 'app/components/user/login/loginView.html',
-			controller: 'LoginController',
+			templateUrl: 'app/login/login.html',
+			controller: 'Login',
 			data: {
 				requireLogin: false
 			}
@@ -85,8 +85,8 @@
 			url: '/dashboard/:puserId',
 			views: {
 				'main-view': {
-					templateUrl: 'app/components/user/dashboard/dashboardView.html',
-					controller: 'DashboardController'
+					templateUrl: 'app/dashboard/dashboard.html',
+					controller: 'Dashboard'
 				}
 			}
 		})
@@ -106,8 +106,8 @@
 			url: '/profile',
 			views: {
 				'main-view': {
-					templateUrl: 'app/components/user/profile/profileView.html',
-					controller: 'ProfileController',
+					templateUrl: 'app/profile/profile.html',
+					controller: 'UserProfile',
 					resolve: {
 						initialData: function(listControllerInitialData) {
 							return listControllerInitialData()
@@ -121,7 +121,7 @@
 			url: '/about',
 			views: {
 				'main-view': {
-					templateUrl: 'app/components/about/aboutView.html'
+					templateUrl: 'app/about/about.html'
 				}
 			}
 		})
@@ -151,8 +151,8 @@
 
 		.state('tutorial', {
 			url: '/',
-			templateUrl: 'app/components/tutorial/tutorialView.html',
-			controller: 'TutorialController'
+			templateUrl: 'app/tutorial/tutorial.html',
+			controller: 'Tutorial'
 		})
 
 		// if none of the above states are matched, use this as the fallback

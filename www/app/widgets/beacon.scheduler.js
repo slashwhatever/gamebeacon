@@ -11,7 +11,7 @@
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: 'app/widgets/beaconScheduler.html',
+				templateUrl: 'app/widgets/beacon.scheduler.html',
 				replace: true,
 				scope: {},
 				require: '?ngModel',

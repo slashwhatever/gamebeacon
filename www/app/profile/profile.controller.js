@@ -1,32 +1,35 @@
-angular.module('gamebeacon.user.profile.controllers', ['gamebeacon.services'])
+(function() {
+	'use strict';
 
-.controller('ProfileController', [
-	'$rootScope',
-	'$scope',
-	'$state',
-	'$cordovaImagePicker',
-	'initialData',
-	'UtilsService',
-	'AuthService',
-	'PUserService',
-	'UIService',
-	function($rootScope, $scope, $state, $cordovaImagePicker, initialData, UtilsService, AuthService, PUserService, UIService) {
+	angular
+		.module('gamebeacon.profile')
+		.controller('UserProfile', UserProfile);
+
+	UserProfile.$inject = ['$rootScope', '$scope', '$state', '$cordovaImagePicker', 'initialData', 'UtilsService', 'AuthService', 'PUserService', 'UIService'];
+
+	function UserProfile($rootScope, $scope, $state, $cordovaImagePicker, initialData, UtilsService, AuthService, PUserService, UIService) {
+
 
 		// these should now be available everywhere
 		$scope.platforms = initialData.platforms;
 		$scope.regions = initialData.regions;
 		$scope.mics = initialData.mics;
-		$scope.currentUser = UtilsService.getCurrentUser()
+		$scope.requestPasswordReset = requestPasswordReset;
+		$scope.updateProfile = updateProfile;
+		$scope.currentUser = UtilsService.getCurrentUser();
+
+// TODO: password reset broken - not passing in email
+
 
 		$scope.profile = {
 			'gamertag': $scope.currentUser.gamertag,
 			'platform': $scope.currentUser.platform,
 			'region': $scope.currentUser.region,
-			'picture': $scope.currentUser.picture,
+			//'picture': currentUser.picture,
 			'mic': $scope.currentUser.mic.description == 'Mic required'
 		}
 
-		$scope.requestPasswordReset = function(user) {
+		function requestPasswordReset(user) {
 			UIService.showToast({
 				msg: 'requesting reset...'
 			});
@@ -52,7 +55,7 @@ angular.module('gamebeacon.user.profile.controllers', ['gamebeacon.services'])
 				})
 		};
 
-		$scope.updateProfile = function(profile) {
+		function updateProfile(profile) {
 			UIService.showToast({
 				msg: 'updating profile...'
 			});
@@ -60,7 +63,7 @@ angular.module('gamebeacon.user.profile.controllers', ['gamebeacon.services'])
 			PUserService.update({
 				id: $scope.currentUser.puserId
 			}, {
-				picture: UtilsService.getObjectAsFile($scope.profile.picture),
+				//picture: UtilsService.getObjectAsFile($scope.profile.picture),
 				gamertag: $scope.profile.gamertag,
 				platform: UtilsService.getObjectAsPointer('platforms', $scope.profile.platform.objectId),
 				region: UtilsService.getObjectAsPointer('regions', $scope.profile.region.objectId),
@@ -90,4 +93,4 @@ angular.module('gamebeacon.user.profile.controllers', ['gamebeacon.services'])
 		};
 
 	}
-])
+})();
