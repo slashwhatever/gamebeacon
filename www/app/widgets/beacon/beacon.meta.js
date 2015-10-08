@@ -4,13 +4,13 @@
 
 	angular
 		.module('gamebeacon.widgets')
-		.directive('beaconHeader', beaconHeader)
+		.directive('beaconMeta', beaconMeta)
 
-		function beaconHeader() {
+		function beaconMeta() {
 			 var directive = {
 			 	restrict: 'E',
 			 	replace: true,
-			 	templateUrl: 'app/widgets/beacon.header.html'
+			 	templateUrl: 'app/widgets/beacon/beacon.meta.html'
 			 };
 
 			 return directive;

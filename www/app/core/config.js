@@ -1,11 +1,12 @@
 (function() {
 	'use strict';
 
-	var core = angular.module('gamebeacon.core');
+		angular
+			.module('gamebeacon')
+			.config(configure);
 
-	core.config(configure);
+		configure.$inject = ['$stateProvider', '$urlRouterProvider', '$httpProvider', '$ionicConfigProvider', '$ionicAppProvider', '$logProvider', '$compileProvider', 'appConfig']
 
-	/* @ngInject */
 	function configure($stateProvider, $urlRouterProvider, $httpProvider, $ionicConfigProvider, $ionicAppProvider, $logProvider, $compileProvider, appConfig) {
 
 		if (appConfig.productionMode) {
@@ -106,7 +107,7 @@
 			url: '/profile',
 			views: {
 				'main-view': {
-					templateUrl: 'app/profile/profile.html',
+					templateUrl: 'app/user/profile/profile.html',
 					controller: 'UserProfile',
 					resolve: {
 						initialData: function(listControllerInitialData) {
@@ -128,7 +129,7 @@
 
 		.state('signup', {
 			url: '/register',
-			templateUrl: 'app/components/user/register/registerView.html',
+			templateUrl: 'app/user/register/register.html',
 			controller: 'RegisterController',
 			resolve: {
 				platforms: function(ObjectService) {
@@ -145,8 +146,8 @@
 
 		.state('reset-password', {
 			url: '/reset-password',
-			templateUrl: 'app/components/user/reset/resetPasswordView.html',
-			controller: 'ResetController'
+			templateUrl: 'app/user/reset/resetpassword.html',
+			controller: 'Reset'
 		})
 
 		.state('tutorial', {

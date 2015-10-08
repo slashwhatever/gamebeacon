@@ -1,16 +1,13 @@
-angular.module('gamebeacon.user.register.controllers', ['gamebeacon.services'])
+(function() {
+	'use strict';
 
-.controller('RegisterController', [
-	'$rootScope',
-	'$scope',
-	'$state',
-	'platforms',
-	'regions',
-	'mics',
-	'AuthService',
-	'UIService',
-	'UtilsService',
-	function($rootScope, $scope, $state, platforms, regions, mics, AuthService, UIService, UtilsService) {
+	angular
+		.module('gamebeacon.user')
+		.controller('Register', Register);
+
+	Register.$inject = ['$rootScope', '$scope', '$state', 'platforms', 'regions', 'mics', 'AuthService', 'UIService', 'UtilsService'];
+
+	function Register($rootScope, $scope, $state, platforms, regions, mics, AuthService, UIService, UtilsService) {
 
 		$scope.platforms = platforms.results;
 		$scope.regions = regions.results;
@@ -73,4 +70,4 @@ angular.module('gamebeacon.user.register.controllers', ['gamebeacon.services'])
 		};
 
 	}
-])
+})();

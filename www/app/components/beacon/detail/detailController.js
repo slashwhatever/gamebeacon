@@ -36,7 +36,7 @@ angular.module('gamebeacon.beacon.detail.controllers', ['gamebeacon.services'])
 
 	$scope.joinBeacon = function(beacon) {
 		Beacon.updateFireteam(beacon, 'join', $scope.puserId).then(function() {
-			$scope.myBeacons.push(beacon.objectId);
+			UtilsService.getCurrentUser().myBeacons.push(beacon.objectId);
 			$state.go($state.current, {
 				beaconId: beacon.objectId
 			}, {

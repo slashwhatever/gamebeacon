@@ -20,7 +20,7 @@
 			scope: {
 				beacon: '=',
 			},
-			templateUrl: 'app/widgets/beacon.timer.html'
+			templateUrl: 'app/widgets/beacon/beacon.timer.html'
 		};
 		return directive;
 

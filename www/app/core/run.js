@@ -22,11 +22,9 @@
 				StatusBar.styleDefault();
 			}
 
-			$ionicPlatform.on('resume', function() {
-				$state.go($state.current, {}, {
-					reload: true
-				});
-			});
+			checkSession();
+
+			$ionicPlatform.on('resume', checkSession);
 
 			function checkSession() {
 
@@ -49,7 +47,6 @@
 				}
 			}
 
-			checkSession();
 			// Initialize Parse
 			Parse.initialize(appConfig.parseAppKey, appConfig.parseJSKey);
 		})

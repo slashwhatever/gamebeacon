@@ -19,17 +19,17 @@
         'gamebeacon.dashboard',
         'gamebeacon.login',
         'gamebeacon.tutorial',
-        'gamebeacon.profile',
 
+        'gamebeacon.user',
 
         /*
          * Feature areas
          */
-         'gamebeacon.user.register.controllers',
-         'gamebeacon.user.reset.controllers',
+         //'gamebeacon.user.register.controllers',
+         //'gamebeacon.user.reset.controllers',
          //'gamebeacon.user.login.controllers',
          //'gamebeacon.user.profile.controllers',
-         'gamebeacon.user.reset.controllers',
+         //'gamebeacon.user.reset.controllers',
          //'gamebeacon.user.dashboard.controllers',
          'gamebeacon.beacon.list.controllers',
          'gamebeacon.beacon.detail.controllers',
@@ -50,7 +50,7 @@
          'gamebeacon.shared.directives',
          'gamebeacon.fireteam.directives',
          //'gamebeacon.beacon.scheduler.directives',
-         'gamebeacon.beacon.register.directives',
+         //'gamebeacon.beacon.register.directives',
          'templates',
          'angularMoment',
          'ng-mfb','ngIOS9UIWebViewPatch'

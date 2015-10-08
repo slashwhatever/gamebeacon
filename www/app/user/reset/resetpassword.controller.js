@@ -1,8 +1,13 @@
-angular.module('gamebeacon.user.reset.controllers', ['gamebeacon.services'])
+(function() {
+	'use strict';
 
+	angular
+		.module('gamebeacon.user')
+		.controller('ResetPassword', ResetPassword);
 
-.controller('ResetController', ['$rootScope', '$scope', '$state', 'AuthService', 'UIService', 'UtilsService', function($rootScope, $scope, $state, AuthService, UIService, UtilsService) {
+	ResetPassword.$inject = ['$rootScope', '$scope', '$state', 'AuthService', 'UIService', 'UtilsService'];
 
+	function ResetPassword($rootScope, $scope, $state, AuthService, UIService, UtilsService) {
     $scope.user = {email: ''};
     $scope.requestPasswordReset = function(form) {
         if(form.$valid) {
@@ -15,4 +20,5 @@ angular.module('gamebeacon.user.reset.controllers', ['gamebeacon.services'])
             })
         }
     };
-}])
+  }
+})();

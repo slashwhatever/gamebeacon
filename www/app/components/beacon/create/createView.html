@@ -58,7 +58,7 @@
 				</div>
 			</ion-slide>
 		</ion-slide-box>
-		<beacon-scheduler ng-model="startTime"></beacon-scheduler>
+		<scheduler ng-model="startTime"></beacon>
 		<ion-slide-box delegate-handle="platform-selector" show-pager="false" ng-if="platforms" does-continue="true" on-slide-changed="updatePlatform($index)" active-slide="defaultPlatform">
 			<ion-slide class="create-beacon-slide platforms-slide" ng-repeat="platform in platforms">
 				<div class="slide-wrapper">

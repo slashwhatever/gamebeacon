@@ -12,7 +12,7 @@
 			 var directive = {
 			 		restrict: 'E',
 			 		replace: true,
-			 		templateUrl: 'app/widgets/beacon.actions.html',
+			 		templateUrl: 'app/widgets/beacon/beacon.actions.html',
 			 		link: link
 			 	};
 

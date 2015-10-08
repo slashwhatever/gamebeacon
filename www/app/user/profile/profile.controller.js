@@ -2,7 +2,7 @@
 	'use strict';
 
 	angular
-		.module('gamebeacon.profile')
+		.module('gamebeacon.user')
 		.controller('UserProfile', UserProfile);
 
 	UserProfile.$inject = ['$rootScope', '$scope', '$state', '$cordovaImagePicker', 'initialData', 'UtilsService', 'AuthService', 'PUserService', 'UIService'];

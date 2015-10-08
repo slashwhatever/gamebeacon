@@ -3,15 +3,15 @@
 
 	angular
 		.module('gamebeacon.widgets')
-		.directive('beaconScheduler', beaconScheduler)
+		.directive('scheduler', scheduler)
 
-		beaconScheduler.$inject = ['$timeout'];
+		scheduler.$inject = ['$timeout'];
 
-		function beaconScheduler($timeout) {
+		function scheduler($timeout) {
 
 			var directive = {
 				restrict: 'E',
-				templateUrl: 'app/widgets/beacon.scheduler.html',
+				templateUrl: 'app/widgets/scheduler.html',
 				replace: true,
 				scope: {},
 				require: '?ngModel',
