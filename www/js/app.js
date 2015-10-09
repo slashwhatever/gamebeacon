@@ -17,6 +17,8 @@
         'gamebeacon.service',
         'gamebeacon.widgets',
 
+
+				'blocks.router',
         /*
          * Feature areas
          */

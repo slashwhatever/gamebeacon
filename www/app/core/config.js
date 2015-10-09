@@ -82,15 +82,6 @@
 			}
 		})
 
-		.state('app.dashboard', {
-			url: '/dashboard/:puserId',
-			views: {
-				'main-view': {
-					templateUrl: 'app/dashboard/dashboard.html',
-					controller: 'Dashboard'
-				}
-			}
-		})
 
 		.state('beacon-create', {
 			url: '/beacon-create',
