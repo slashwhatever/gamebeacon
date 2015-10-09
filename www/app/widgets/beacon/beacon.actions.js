@@ -6,9 +6,9 @@
 		.module('gamebeacon.widgets')
 		.directive('beaconActions', beaconActions)
 
-		beaconActions.$inject = ['UtilsService'];
+		beaconActions.$inject = ['Utils'];
 
-		function beaconActions(UtilsService) {
+		function beaconActions(Utils) {
 			 var directive = {
 			 		restrict: 'E',
 			 		replace: true,
@@ -21,7 +21,7 @@
 			 function link( scope, elem, attrs ) {
 
 			 			var userIsCreator = scope.beacon.userIsCreator,
-			 			userOnboard = UtilsService.userOnboard( scope.beacon ),
+			 			userOnboard = Utils.userOnboard( scope.beacon ),
 			 			beaconActive = scope.beacon.timeLeft > 0,
 			 			hasSpaces = scope.beacon.fireteamSpaces > 0
 

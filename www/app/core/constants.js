@@ -4,38 +4,8 @@
 
 	angular
 		.module('gamebeacon.core')
-		.constant('appConfig', appCfg);
-
-	function appCfg() {
-		var headers = {
-				'X-Parse-Application-Id': 'G6y5BCESWE0d9IP0034FRuSXtBIOCUO5vdMUfhm1',
-				'X-Parse-REST-API-Key': 'nkyyCTbVlnKZnlXE03JS72iNBFUe8iuR9Cj39K0S'
-			},
-			resDefaults = {
-				get: {},
-				delete: {
-					method: 'DELETE'
-				},
-				list: {
-					method: 'GET'
-				},
-				save: {
-					method: 'POST'
-				},
-				update: {
-					method: 'PUT'
-				}
-			};
-
-		_.each(resDefaults, function(i) {
-			_.extend(i, {
-				headers: headers
-			})
-		});
-
-		return {
+		.constant('appConfig', {
 			productionMode: false,
-			resDefaults: resDefaults,
 			maxBeaconAge: 30,
 			parseAppKey: 'G6y5BCESWE0d9IP0034FRuSXtBIOCUO5vdMUfhm1',
 			parseJSKey: 'DK9nUcIYyHQRMYg1toAX784gci4j9u23aNRacZiP',
@@ -45,8 +15,5 @@
 				'X-Parse-REST-API-Key': 'nkyyCTbVlnKZnlXE03JS72iNBFUe8iuR9Cj39K0S'
 			},
 			parseRestBaseUrl: 'https://api.parse.com/1/'
-		}
-	}
-
-
+		})
 })();

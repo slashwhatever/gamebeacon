@@ -132,14 +132,14 @@
 			templateUrl: 'app/user/register/register.html',
 			controller: 'RegisterController',
 			resolve: {
-				platforms: function(ObjectService) {
-					return ObjectService.list('platforms')
+				platforms: function(Resource) {
+					return Resource.list('platforms')
 				},
-				regions: function(ObjectService) {
-					return ObjectService.list('regions')
+				regions: function(Resource) {
+					return Resource.list('regions')
 				},
-				mics: function(ObjectService) {
-					return ObjectService.list('mics')
+				mics: function(Resource) {
+					return Resource.list('mics')
 				}
 			}
 		})

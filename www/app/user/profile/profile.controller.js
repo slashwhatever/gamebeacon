@@ -5,9 +5,9 @@
 		.module('gamebeacon.user')
 		.controller('UserProfile', UserProfile);
 
-	UserProfile.$inject = ['$rootScope', '$scope', '$state', '$cordovaImagePicker', 'initialData', 'UtilsService', 'AuthService', 'PUserService', 'UIService'];
+	UserProfile.$inject = ['$rootScope', '$scope', '$state', '$cordovaImagePicker', 'initialData', 'Utils', 'Auth', 'PUser', 'UI'];
 
-	function UserProfile($rootScope, $scope, $state, $cordovaImagePicker, initialData, UtilsService, AuthService, PUserService, UIService) {
+	function UserProfile($rootScope, $scope, $state, $cordovaImagePicker, initialData, Utils, Auth, PUser, UI) {
 
 
 		// these should now be available everywhere
@@ -16,7 +16,7 @@
 		$scope.mics = initialData.mics;
 		$scope.requestPasswordReset = requestPasswordReset;
 		$scope.updateProfile = updateProfile;
-		$scope.currentUser = UtilsService.getCurrentUser();
+		$scope.currentUser = Utils.getCurrentUser();
 
 // TODO: password reset broken - not passing in email
 
@@ -30,25 +30,25 @@
 		}
 
 		function requestPasswordReset(user) {
-			UIService.showToast({
+			UI.showToast({
 				msg: 'requesting reset...'
 			});
 
-			AuthService.requestPasswordReset(user.email)
+			Auth.requestPasswordReset(user.email)
 				.then(function(response) {
 					if (response && response.$resolved) {
-						UIService.showAlert({
+						UI.showAlert({
 							title: 'Done!',
 							template: 'We have emailed you details of how to reset your password.'
 						})
 					} else {
-						UIService.showAlert({
+						UI.showAlert({
 							title: 'Oops!',
 							template: 'Something went wrong. Try again.'
 						})
 					}
 				}, function(error) {
-					UIService.showAlert({
+					UI.showAlert({
 						title: 'Oops!',
 						template: 'Something went wrong. Try again.'
 					})
@@ -56,36 +56,36 @@
 		};
 
 		function updateProfile(profile) {
-			UIService.showToast({
+			UI.showToast({
 				msg: 'updating profile...'
 			});
 
-			PUserService.update({
+			PUser.update({
 				id: $scope.currentUser.puserId
 			}, {
-				//picture: UtilsService.getObjectAsFile($scope.profile.picture),
+				//picture: Utils.getObjectAsFile($scope.profile.picture),
 				gamertag: $scope.profile.gamertag,
-				platform: UtilsService.getObjectAsPointer('platforms', $scope.profile.platform.objectId),
-				region: UtilsService.getObjectAsPointer('regions', $scope.profile.region.objectId),
-				mic: UtilsService.getObjectAsPointer('mics', _.findWhere($scope.mics, {
+				platform: Utils.getObjectAsPointer('platforms', $scope.profile.platform.objectId),
+				region: Utils.getObjectAsPointer('regions', $scope.profile.region.objectId),
+				mic: Utils.getObjectAsPointer('mics', _.findWhere($scope.mics, {
 					description: $scope.profile.mic ? 'Mic required' : 'Mic optional'
 				}).objectId)
 			}).then(function(response) {
 				if (response && response.$resolved) {
-					UIService.showAlert({
+					UI.showAlert({
 						title: 'Yesss!',
 						template: 'You updated your profile'
 					}, function() {
 						$state.go('app.beacons')
 					})
 				} else {
-					UIService.showAlert({
+					UI.showAlert({
 						title: 'Oops!',
 						template: 'Looks like there was a problem updating those details. Try again.'
 					})
 				}
 			}, function(error) {
-				UIService.showAlert({
+				UI.showAlert({
 					title: 'Oops!',
 					template: error.message
 				})

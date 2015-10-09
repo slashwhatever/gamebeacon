@@ -5,9 +5,9 @@
 		.module('gamebeacon')
 		.run(runBlock);
 
-	runBlock.$inject = ['$state', '$ionicPlatform', '$ionicAnalytics', 'appConfig', 'UIService', '$localStorage', 'AuthService'];
+	runBlock.$inject = ['$state', '$ionicPlatform', '$ionicAnalytics', 'appConfig', 'UI', '$localStorage', 'Auth'];
 
-	function runBlock($state, $ionicPlatform, $ionicAnalytics, appConfig, UIService, $localStorage, AuthService) {
+	function runBlock($state, $ionicPlatform, $ionicAnalytics, appConfig, UI, $localStorage, Auth) {
 		$ionicPlatform.ready(function() {
 
 			$ionicAnalytics.register();
@@ -30,18 +30,18 @@
 
 				var sessionToken = $localStorage.get('sessionToken');
 				if (sessionToken) {
-					UIService.showToast({
+					UI.showToast({
 						msg: 'attempting auto login...'
 					});
 
-					AuthService.getCurrentUser(sessionToken)
+					Auth.getCurrentUser(sessionToken)
 						.then(function(response) {
-								UIService.hideToast();
+								UI.hideToast();
 								// user has valid session token - proceed
 								$state.go('app.beacons');
 							},
 							function(error) {
-								UIService.hideToast();
+								UI.hideToast();
 								// user needs to login
 							})
 				}

@@ -4,16 +4,12 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-
 	<title></title>
 	<link href="lib/ng-mfb/mfb/dist/mfb.css" rel="stylesheet">
 	<link href="css/ionic.app.css" rel="stylesheet">
-
 	<link href="lib/swiper/css/swiper.css" rel="stylesheet">
-
 	<!-- other components/frameworks/utils -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-
 	<!-- ionic/angularjs js -->
 	<script src="lib/ionic/js/ionic.bundle.js"></script>
 	<script src="js/patches.js"></script>
@@ -34,7 +30,6 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/0.10.0/angular-moment.min.js"></script>
 	<script src="lib/swiper/js/swiper.js"></script>
-
 	<script src="lib/ng-mfb/src/mfb-directive.js"></script>
 	<!-- parse framework -->
 	<script src="https://www.parsecdn.com/js/parse-1.5.0.min.js"></script>
@@ -43,7 +38,6 @@
 	<!-- Cordova is bootstrapped by ionic-service-core, uncomment this if you remove ionic-service-core... -->
 	<!-- <script src="cordova.js"></script> -->
 	<!-- app js -->
-
 	<script src="js/app.js"></script>
 
 	<script src="app/core/core.module.js"></script>
@@ -51,23 +45,37 @@
 	<script src="app/core/config.js"></script>
 	<script src="app/core/run.js"></script>
 
+	<script src="app/services/service.module.js"></script>
+	<script src="app/services/auth.service.js"></script>
+	<script src="app/services/beacon.service.js"></script>
+	<script src="app/services/checkpoint.service.js"></script>
+	<script src="app/services/gametype.service.js"></script>
+	<script src="app/services/image.service.js"></script>
+	<script src="app/services/label.service.js"></script>
+	<script src="app/services/level.service.js"></script>
+	<script src="app/services/localstorage.service.js"></script>
+	<script src="app/services/log.service.js"></script>
+	<script src="app/services/mic.service.js"></script>
+	<script src="app/services/mission.service.js"></script>
+	<script src="app/services/platform.service.js"></script>
+	<script src="app/services/push.service.js"></script>
+	<script src="app/services/region.service.js"></script>
+	<script src="app/services/resource.service.js"></script>
+	<script src="app/services/ui.service.js"></script>
+	<script src="app/services/update.service.js"></script>
+	<script src="app/services/utils.service.js"></script>
 
-	<script src="js/config.js"></script>
+
 	<script src="js/mixins.js"></script>
-
-	<script src="app/shared/services.js"></script>
 	<script src="app/shared/directives.js"></script>
-
 	<!-- dummy module file for html template caching -->
-	<script src="app/shared/templates.js"></script>
+	<script src="app/layout/templates.js"></script>
 	<!-- dummy templates file for html templates to compile to -->
 	<script src="lib/compiledTemplates.js"></script>
-
 
 	<script src="app/components/beacon/list/listController.js"></script>
 	<script src="app/components/beacon/detail/detailController.js"></script>
 	<script src="app/components/beacon/create/createController.js"></script>
-
 	<script src="app/components/beacon/cardList/cardListDirective.js"></script>
 	<script src="app/components/beacon/fireteam/fireteamDirective.js"></script>
 	<script src="app/components/beacon/chat/chatDirective.js"></script>
@@ -77,6 +85,8 @@
 	<script src="app/dashboard/dashboard.controller.js"></script>
 
 	<script src="app/user/user.module.js"></script>
+	<script src="app/user/user.service.js"></script>
+	<script src="app/user/puser.service.js"></script>
 	<script src="app/user/register/register.controller.js"></script>
 	<script src="app/user/register/register.directive.js"></script>
 	<script src="app/user/profile/profile.controller.js"></script>
@@ -88,21 +98,14 @@
 	<script src="app/login/login.module.js"></script>
 	<script src="app/login/login.controller.js"></script>
 
-
 	<script src="app/widgets/gamebeacon.widgets.js"></script>
 	<script src="app/widgets/beacon/beacon.timer.js"></script>
 	<script src="app/widgets/beacon/beacon.actions.js"></script>
 	<script src="app/widgets/beacon/beacon.header.js"></script>
 	<script src="app/widgets/beacon/beacon.meta.js"></script>
-
 	<script src="app/widgets/scheduler.js"></script>
 	<script src="app/widgets/tabset.js"></script>
 	<script src="app/widgets/calendarstrip.js"></script>
-
-	<script src="app/components/user/userService.js"></script>
-	<script src="app/components/user/pUserService.js"></script>
-
-
 </head>
 
 <body ng-app="gamebeacon" animation="slide-left-right-ios7">

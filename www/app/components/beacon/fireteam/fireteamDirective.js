@@ -1,6 +1,6 @@
 angular.module('gamebeacon.fireteam.directives', [])
 
-.directive('fireteamMembers', ['UtilsService', '$ionicActionSheet', function(UtilsService, $ionicActionSheet) {
+.directive('fireteamMembers', ['Utils', '$ionicActionSheet', function(Utils, $ionicActionSheet) {
 	return {
 		restrict: 'E',
 		replace: true,
@@ -31,7 +31,7 @@ angular.module('gamebeacon.fireteam.directives', [])
 			};
 
 			var userIsCreator = scope.beacon.userIsCreator,
-			userOnboard = UtilsService.userOnboard(scope.beacon),
+			userOnboard = Utils.userOnboard(scope.beacon),
 			beaconActive = scope.beacon.timeLeft > 0,
 			hasSpaces = scope.beacon.fireteamSpaces > 0
 

@@ -5,12 +5,12 @@
         .module('gamebeacon.dashboard')
         .controller('Dashboard', Dashboard);
 
-    Dashboard.$inject = ['$scope', '$stateParams', 'UtilsService', 'Beacon'];
+    Dashboard.$inject = ['$scope', '$stateParams', 'Utils', 'Beacon'];
 
-    function Dashboard($scope, $stateParams, UtilsService, Beacon) {
+    function Dashboard($scope, $stateParams, Utils, Beacon) {
 
     	$scope.beacons = [];
-    	$scope.currentUser = UtilsService.getCurrentUser();
+    	$scope.currentUser = Utils.getCurrentUser();
     	$scope.noBeacons = null;
     	$scope.moreBeacons = false;
     	$scope.loadingBeacons = null;
@@ -21,7 +21,7 @@
     		limit = 20,
     		where = {
 	    		'active': true,
-	    		'creator': UtilsService.getObjectAsPointer('pusers', $stateParams.puserId),
+	    		'creator': Utils.getObjectAsPointer('pusers', $stateParams.puserId),
 	    		'startDate': {
 	    			'$gte': {
 	    				'__type': "Date",

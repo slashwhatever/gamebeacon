@@ -1,34 +1,34 @@
-angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'gamebeacon.config'])
+angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.service'])
 
 .factory('listControllerInitialData', [
 	'$q',
 	'GameType',
 	'Mission',
 	'Level',
-	'CheckPoint',
+	'Checkpoint',
 	'Platform',
 	'Region',
 	'Mic',
-	'ObjectService',
-	'UIService',
-	function($q, GameType, Mission, Level, CheckPoint, Platform, Region, Mic, ObjectService, UIService) {
+	'Resource',
+	'UI',
+	function($q, GameType, Mission, Level, Checkpoint, Platform, Region, Mic, Resource, UI) {
 
 		return function() {
 
-			UIService.showToast({
+			UI.showToast({
 				msg: 'loading resources...'
 			});
 
 			var gametypes = GameType.list(),
 				missions = Mission.list(),
 				levels = Level.list(),
-				checkpoints = CheckPoint.list(),
+				checkpoints = Checkpoint.list(),
 				platforms = Platform.list(),
 				regions = Region.list(),
 				mics = Mic.list();
 
 			return $q.all([gametypes, missions, levels, checkpoints, platforms, regions, mics]).then(function(results) {
-				UIService.hideToast();
+				UI.hideToast();
 				return {
 					gametypes: results[0].results,
 					missions: results[1].results,
@@ -48,12 +48,12 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 	'$stateParams',
 	'Beacon',
 	'ChatService',
-	'UIService',
-	function($q, $stateParams, Beacon, ChatService, UIService) {
+	'UI',
+	function($q, $stateParams, Beacon, ChatService, UI) {
 
 		return function(beaconId) {
 
-			UIService.showToast({
+			UI.showToast({
 				msg: 'loading beacon...'
 			});
 
@@ -61,7 +61,7 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 				messages = ChatService.list(beaconId);
 
 			return $q.all([beacon, messages]).then(function(results) {
-				UIService.hideToast();
+				UI.hideToast();
 				return {
 					beacon: results[0],
 					messages: results[1].results
@@ -76,12 +76,12 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 	'$rootScope',
 	'$state',
 	'$ionicPopup',
-	'UIService',
+	'UI',
 	'Beacon',
-	'UtilsService',
+	'Utils',
 	'appConfig',
 	'listControllerInitialData',
-	function($scope, $rootScope, $state, $ionicPopup, UIService, Beacon, UtilsService, appConfig, listControllerInitialData) {
+	function($scope, $rootScope, $state, $ionicPopup, UI, Beacon, Utils, appConfig, listControllerInitialData) {
 
 		var today = new Date(),
 			_fromDate = new Date(today.setDate(today.getDate())),
@@ -96,7 +96,7 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 		$scope.skip = 0;
 		$scope.limit = 20;
 		$scope.moreBeacons = false;
-		$scope.puserId = UtilsService.getCurrentUser().puserId;
+		$scope.puserId = Utils.getCurrentUser().puserId;
 		$scope.noBeacons = null;
 		$scope.loadingBeacons = null;
 		$scope.fromDate = _fromDate.toISOString();
@@ -160,7 +160,7 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 		// go grab 20 beacons from the server
 		$scope.getBeaconChunk = function(cb) {
 
-			UIService.showToast({
+			UI.showToast({
 				msg: 'retreiving beacons...'
 			});
 
@@ -189,7 +189,7 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 
 				$scope.$broadcast('scroll.infiniteScrollComplete');
 
-				UIService.hideToast();
+				UI.hideToast();
 				if (cb && typeof cb === 'function') cb.call();
 
 			});
@@ -207,14 +207,14 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 		}
 
 		$scope.joinBeacon = function(beacon) {
-			UIService.showToast({
+			UI.showToast({
 				msg: 'joining beacon...'
 			});
 
 			Beacon.updateFireteam(beacon, 'join', $scope.puserId).then(function() {
-				UIService.hideToast();
+				UI.hideToast();
 
-				UtilsService.getCurrentUser().myBeacons.push(beacon.objectId);
+				Utils.getCurrentUser().myBeacons.push(beacon.objectId);
 
 				$state.go('app.beacon', {
 					beaconId: beacon.objectId
@@ -233,14 +233,14 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 			});
 			confirmDel.then(function(res) {
 				if (res) {
-					UIService.showToast({
+					UI.showToast({
 						msg: 'deleting beacon...'
 					});
 
 					Beacon.delete(beacon).then(function() {
-						UIService.hideToast();
+						UI.hideToast();
 
-						UtilsService.getCurrentUser().myBeacons = _.without(UtilsService.getCurrentUser().myBeacons, beacon.objectId);
+						Utils.getCurrentUser().myBeacons = _.without(Utils.getCurrentUser().myBeacons, beacon.objectId);
 
 						$state.go('app.beacons', null, {
 							reload: true,
@@ -252,14 +252,14 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 		}
 
 		$scope.leaveBeacon = function(beacon) {
-			UIService.showToast({
+			UI.showToast({
 				msg: 'leaving beacon...'
 			});
 
 			Beacon.updateFireteam(beacon, 'leave').then(function() {
-				UIService.hideToast();
+				UI.hideToast();
 
-				UtilsService.getCurrentUser().myBeacons = _.without(UtilsService.getCurrentUser().myBeacons, beacon.objectId);
+				Utils.getCurrentUser().myBeacons = _.without(Utils.getCurrentUser().myBeacons, beacon.objectId);
 
 				$state.go('app.beacons', null, {
 					reload: true,
@@ -272,14 +272,14 @@ angular.module('gamebeacon.beacon.list.controllers', ['gamebeacon.services', 'ga
 
 /*		$scope.$watch('beacons', function(newVal, oldVal) {
 			if (newVal && $scope.beacons.length > 0) {
-				$scope.myBeacons.push(UtilsService.findMyBeacon($scope.beacons).objectId);
+				$scope.myBeacons.push(Utils.findMyBeacon($scope.beacons).objectId);
 			}
 		});
 */
 		// when myBeacons changes, update the currentUser
 /*		$scope.$watch('myBeacons', function(newVal, oldVal) {
 			if (newVal && $scope.beacons.length > 0) {
-				UtilsService.getCurrentUser().myBeacons.push(UtilsService.findMyBeacon($scope.beacons).objectId);
+				Utils.getCurrentUser().myBeacons.push(Utils.findMyBeacon($scope.beacons).objectId);
 			}
 		});
 */

@@ -5,9 +5,9 @@
 		.module('gamebeacon.login')
 		.controller('Login', Login);
 
-	Login.$inject = ['$rootScope', '$scope', '$state', '$ionicUser', '$localStorage', 'UIService', 'AuthService', 'PushService', 'UpdateService'];
+	Login.$inject = ['$rootScope', '$scope', '$state', '$ionicUser', '$localStorage', 'UI', 'Auth', 'Push', 'Update'];
 
-	function Login($rootScope, $scope, $state, $ionicUser, $localStorage, UIService, AuthService, PushService, UpdateService) {
+	function Login($rootScope, $scope, $state, $ionicUser, $localStorage, UI, Auth, Push, Update) {
 
 		var me = this;
 
@@ -16,7 +16,7 @@
 			password: ''
 		};
 
-		$scope.checkS
+		$scope.login = login;
 
 		$scope.$on('$ionicView.beforeEnter', checkSession);
 
@@ -24,19 +24,19 @@
 
 			var sessionToken = $localStorage.get('sessionToken');
 			if (sessionToken) {
-				UIService.showToast({
+				UI.showToast({
 					msg: 'attempting auto login...'
 				});
 
-				AuthService.getCurrentUser(sessionToken)
+				Auth.getCurrentUser(sessionToken)
 					.then(function(response) {
-							UIService.hideToast();
+							UI.hideToast();
 							// user has valid session token - proceed
 							$state.go('app.beacons');
-							UpdateService.checkForUpdates();
+							Update.checkForUpdates();
 						},
 						function(error) {
-							UIService.hideToast();
+							UI.hideToast();
 							// user needs to login
 						})
 			}
@@ -44,11 +44,11 @@
 
 		function login(form) {
 
-			UIService.showToast({
+			UI.showToast({
 				msg: 'checking credentials...'
 			});
 
-			AuthService.login($scope.user).then(function(response) {
+			Auth.login($scope.user).then(function(response) {
 
 				var user = $ionicUser.get();
 
@@ -64,14 +64,14 @@
 
 				$ionicUser.identify(user);
 
-				if (window.plugins) PushService.registerPush(user)
+				if (window.plugins) Push.registerPush(user)
 
-				UIService.hideToast();
+				UI.hideToast();
 
 				$state.go('app.beacons');
 
 			}, function(error) {
-				UIService.showAlert({
+				UI.showAlert({
 					title: 'Oops!',
 					template: 'We had trouble logging you in. Please try again.'
 				})

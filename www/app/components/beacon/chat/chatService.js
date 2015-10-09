@@ -1,6 +1,6 @@
-angular.module('gamebeacon.chat.services', ['ngResource', 'gamebeacon.config'])
+angular.module('gamebeacon.chat.services', ['ngResource'])
 
-.factory('ChatService', ['$rootScope', '$resource', '$q', 'appConfig', 'UtilsService', function($rootScope, $resource, $q, appConfig, UtilsService) {
+.factory('ChatService', ['$rootScope', '$resource', '$q', 'appConfig', 'Utils', function($rootScope, $resource, $q, appConfig, Utils) {
 
 	var Chat = $resource(
 		appConfig.parseRestBaseUrl + 'classes/messages/:id', {
@@ -52,8 +52,8 @@ angular.module('gamebeacon.chat.services', ['ngResource', 'gamebeacon.config'])
 			var d = $q.defer();
 			Chat.save({
 				message: message,
-				beacon: UtilsService.getObjectAsPointer('beacons', beaconId),
-				from: UtilsService.getObjectAsPointer('pusers', UtilsService.getCurrentUser().puserId)
+				beacon: Utils.getObjectAsPointer('beacons', beaconId),
+				from: Utils.getObjectAsPointer('pusers', Utils.getCurrentUser().puserId)
 			}, function(response) {
 				d.resolve(response);
 			}, function(error){

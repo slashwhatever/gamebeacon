@@ -1,4 +1,4 @@
-angular.module('gamebeacon.beacon.create.controllers', ['gamebeacon.services'])
+angular.module('gamebeacon.beacon.create.controllers', ['gamebeacon.service'])
 
 .controller('CreateController', [
 	'$scope',
@@ -6,19 +6,19 @@ angular.module('gamebeacon.beacon.create.controllers', ['gamebeacon.services'])
 	'$state',
 	'initialData',
 	'Beacon',
-	'UtilsService',
-	'PushService',
-	'MsgService',
-	'UIService',
+	'Utils',
+	'Push',
+	'Msg',
+	'UI',
 	'$ionicSlideBoxDelegate',
 	'$timeout',
 	'$ionicScrollDelegate',
-	function($scope, $rootScope, $state, initialData, Beacon, UtilsService, PushService, MsgService, UIService, $ionicSlideBoxDelegate, $timeout, $ionicScrollDelegate) {
+	function($scope, $rootScope, $state, initialData, Beacon, Utils, Push, Msg, UI, $ionicSlideBoxDelegate, $timeout, $ionicScrollDelegate) {
 
 		// Called when the form is submitted
 		$scope.createBeacon = function(startTime) {
 
-			UIService.showToast({
+			UI.showToast({
 				msg: 'saving beacon...'
 			});
 
@@ -32,44 +32,44 @@ angular.module('gamebeacon.beacon.create.controllers', ['gamebeacon.services'])
 				// quick validation on date - make sure it's not in the past
 				if ( new Date(startTime).getTime() > new Date().getTime()) {
 					Beacon.save({
-						'gametype': UtilsService.getObjectAsPointer('gametypes', $scope.gametypes[$ionicSlideBoxDelegate.$getByHandle('gametype-selector').currentIndex()].objectId),
-						'mission': UtilsService.getObjectAsPointer('missions', $scope.missions[$ionicSlideBoxDelegate.$getByHandle('mission-selector').currentIndex()].objectId),
-						'checkpoint': hasCheckpoint ? UtilsService.getObjectAsPointer('checkpoints', $scope.checkpoints[$ionicSlideBoxDelegate.$getByHandle('checkpoint-selector').currentIndex()].objectId) : null,
-						'mic': UtilsService.getObjectAsPointer('mics', $scope.mics[$ionicSlideBoxDelegate.$getByHandle('mic-selector').currentIndex()].objectId),
-						'level': hasLevel ? UtilsService.getObjectAsPointer('levels', $scope.levels[$ionicSlideBoxDelegate.$getByHandle('level-selector').currentIndex()].objectId) : null,
+						'gametype': Utils.getObjectAsPointer('gametypes', $scope.gametypes[$ionicSlideBoxDelegate.$getByHandle('gametype-selector').currentIndex()].objectId),
+						'mission': Utils.getObjectAsPointer('missions', $scope.missions[$ionicSlideBoxDelegate.$getByHandle('mission-selector').currentIndex()].objectId),
+						'checkpoint': hasCheckpoint ? Utils.getObjectAsPointer('checkpoints', $scope.checkpoints[$ionicSlideBoxDelegate.$getByHandle('checkpoint-selector').currentIndex()].objectId) : null,
+						'mic': Utils.getObjectAsPointer('mics', $scope.mics[$ionicSlideBoxDelegate.$getByHandle('mic-selector').currentIndex()].objectId),
+						'level': hasLevel ? Utils.getObjectAsPointer('levels', $scope.levels[$ionicSlideBoxDelegate.$getByHandle('level-selector').currentIndex()].objectId) : null,
 						'fireteamRequired': $ionicSlideBoxDelegate.$getByHandle('fireteam-selector').currentIndex() + 1,
-						'fireteamOnboard': [UtilsService.getObjectAsPointer('pusers', UtilsService.getCurrentUser().puserId)],
-						'platform': UtilsService.getObjectAsPointer('platforms', $scope.platforms[$ionicSlideBoxDelegate.$getByHandle('platform-selector').currentIndex()].objectId),
-						'region': UtilsService.getObjectAsPointer('regions', $scope.regions[$ionicSlideBoxDelegate.$getByHandle('region-selector').currentIndex()].objectId),
-						'creator': UtilsService.getObjectAsPointer('pusers', UtilsService.getCurrentUser().puserId),
+						'fireteamOnboard': [Utils.getObjectAsPointer('pusers', Utils.getCurrentUser().puserId)],
+						'platform': Utils.getObjectAsPointer('platforms', $scope.platforms[$ionicSlideBoxDelegate.$getByHandle('platform-selector').currentIndex()].objectId),
+						'region': Utils.getObjectAsPointer('regions', $scope.regions[$ionicSlideBoxDelegate.$getByHandle('region-selector').currentIndex()].objectId),
+						'creator': Utils.getObjectAsPointer('pusers', Utils.getCurrentUser().puserId),
 						'startDate': {
 							"__type": "Date",
 							"iso": startTime
 						},
 						'active': true
 					}).then(function(response) {
-						UIService.hideToast();
+						UI.hideToast();
 
 						// subscribe the user to a channel for this beacon
-						PushService.subscribe({
+						Push.subscribe({
 							channel: 'OWNER' + response.objectId,
-							puserId: UtilsService.getCurrentUser().puserId
+							puserId: Utils.getCurrentUser().puserId
 						});
 
 						// if the beacon was created, create a scheduled push that will go to all subscribers of the OWNERxxx and MEMBERxxx channels
 						// by setting up the two pushes now, we can just sub and unsub people later to get the messages
-						PushService.sendPush({
+						Push.sendPush({
 							channels: ['OWNER' + response.objectId],
 							push_time: pushTime,
 							expiration_time: pushExpirationTime,
-							alert: MsgService.msg('createBeacon')
+							alert: Msg.msg('createBeacon')
 						});
 
-						PushService.sendPush({
+						Push.sendPush({
 							channels: ['MEMBER' + response.objectId],
 							push_time: pushTime,
 							expiration_time: pushExpirationTime,
-							alert: MsgService.msg('joinedBeacon')
+							alert: Msg.msg('joinedBeacon')
 						});
 
 						$state.go('app.beacons', null, {
@@ -77,10 +77,10 @@ angular.module('gamebeacon.beacon.create.controllers', ['gamebeacon.services'])
 							notify: true
 						});
 					}, function() {
-						UIService.hideToast();
+						UI.hideToast();
 					})
 				} else {
-					UIService.showAlert({
+					UI.showAlert({
 						title: 'Oops!',
 						template: 'You can\'t create a beacon in the past.'
 					})
@@ -148,7 +148,7 @@ angular.module('gamebeacon.beacon.create.controllers', ['gamebeacon.services'])
 		$scope.regions = initialData.regions;
 		$scope.mics = initialData.mics;
 		$scope.maxFireteam = $scope.getMaxFireTeam(initialData.missions[0]);
-		$scope.currentUser = UtilsService.getCurrentUser();
+		$scope.currentUser = Utils.getCurrentUser();
 		//$scope.startTime = new Date().getTime();
 
 		// set the starting slides for the mic, platform and region

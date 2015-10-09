@@ -155,11 +155,11 @@ angular.module('gamebeacon.shared.directives', [])
 	'$rootScope',
 	'$ionicGesture',
 	'$ionicActionSheet',
-	'PUserService',
-	'UtilsService',
-	'UIService',
+	'PUser',
+	'Utils',
+	'UI',
 	'appConfig',
-	function($cordovaFileTransfer, $cordovaCamera, $q, $timeout, $rootScope, $ionicGesture, $ionicActionSheet, PUserService, UtilsService, UIService, appConfig) {
+	function($cordovaFileTransfer, $cordovaCamera, $q, $timeout, $rootScope, $ionicGesture, $ionicActionSheet, PUser, Utils, UI, appConfig) {
 		return {
 			require: '?ngModel',
 			restrict: 'E',
@@ -226,24 +226,24 @@ angular.module('gamebeacon.shared.directives', [])
 												try {
 													jsonResponse = JSON.parse(result.response);
  												} catch (e) {
- 													UIService.showAlert({
+ 													UI.showAlert({
  														title: 'Oops!',
  														template: e
  													})
  												}
 											}
 											// Success!
-											PUserService.update({
-												id: UtilsService.getCurrentUser().puserId
+											PUser.update({
+												id: Utils.getCurrentUser().puserId
 											}, {
-												picture: UtilsService.getObjectAsFile(jsonResponse.name)
+												picture: Utils.getObjectAsFile(jsonResponse.name)
 											}).then(function(response) {
 												// set the view value
 												ngModel.$setViewValue(jsonResponse.url);
 												ngModel.$render();
 											});
 										}, function(err) {
-											UIService.showAlert({
+											UI.showAlert({
 												title: 'Oops!',
 												template: 'There was a problem uploading your image. Is it under 10MB?'
 											})

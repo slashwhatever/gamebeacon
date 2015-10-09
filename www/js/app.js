@@ -14,46 +14,28 @@
          * but this is easier to maintain.
          */
         'gamebeacon.core',
+        'gamebeacon.service',
         'gamebeacon.widgets',
-
-        'gamebeacon.dashboard',
-        'gamebeacon.login',
-        'gamebeacon.tutorial',
-
-        'gamebeacon.user',
 
         /*
          * Feature areas
          */
-         //'gamebeacon.user.register.controllers',
-         //'gamebeacon.user.reset.controllers',
-         //'gamebeacon.user.login.controllers',
-         //'gamebeacon.user.profile.controllers',
-         //'gamebeacon.user.reset.controllers',
-         //'gamebeacon.user.dashboard.controllers',
+
+
+         'gamebeacon.dashboard',
+         'gamebeacon.login',
+         'gamebeacon.tutorial',
+         'gamebeacon.user',
+
+
          'gamebeacon.beacon.list.controllers',
          'gamebeacon.beacon.detail.controllers',
          'gamebeacon.beacon.create.controllers',
-         //'gamebeacon.beacon.list.calendar.directives',
          'gamebeacon.beacon.card.list.directives',
-         //'gamebeacon.beacon.tabset.directives',
-         //'gamebeacon.beacon.header.directives',
-         //'gamebeacon.beacon.timer.directives',
          'gamebeacon.beacon.chat.directives',
-         //'gamebeacon.beacon.meta.directives',
-         //'gamebeacon.beacon.actions.directives',
-         //'gamebeacon.tutorial.controllers',
-         'gamebeacon.services',
-         'gamebeacon.user.services',
-         'gamebeacon.puser.services',
          'gamebeacon.chat.services',
          'gamebeacon.shared.directives',
-         'gamebeacon.fireteam.directives',
-         //'gamebeacon.beacon.scheduler.directives',
-         //'gamebeacon.beacon.register.directives',
-         'templates',
-         'angularMoment',
-         'ng-mfb','ngIOS9UIWebViewPatch'
+         'gamebeacon.fireteam.directives'
     ]);
 
 })();

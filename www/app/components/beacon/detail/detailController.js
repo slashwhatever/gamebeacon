@@ -1,4 +1,4 @@
-angular.module('gamebeacon.beacon.detail.controllers', ['gamebeacon.services'])
+angular.module('gamebeacon.beacon.detail.controllers', ['gamebeacon.service'])
 
 .controller('DetailController', [
 	'$scope',
@@ -9,16 +9,16 @@ angular.module('gamebeacon.beacon.detail.controllers', ['gamebeacon.services'])
 	'$interval',
 	'$ionicActionSheet',
 	'ChatService',
-	'UtilsService',
+	'Utils',
 	'Beacon',
 	'beaconDetails',
-	function($scope, $rootScope, $state, $stateParams, $ionicPopup, $interval, $ionicActionSheet, ChatService, UtilsService, Beacon, beaconDetails) {
+	function($scope, $rootScope, $state, $stateParams, $ionicPopup, $interval, $ionicActionSheet, ChatService, Utils, Beacon, beaconDetails) {
 
 	var msgRefresh;
 
 	$scope.beacon = beaconDetails.beacon;
 	$scope.messages = beaconDetails.messages;
-	$scope.puserId = UtilsService.getCurrentUser().puserId;
+	$scope.puserId = Utils.getCurrentUser().puserId;
 
 	var refreshMessages = function() {
 		ChatService.list($scope.beacon.objectId).then(function(response) {
@@ -36,7 +36,7 @@ angular.module('gamebeacon.beacon.detail.controllers', ['gamebeacon.services'])
 
 	$scope.joinBeacon = function(beacon) {
 		Beacon.updateFireteam(beacon, 'join', $scope.puserId).then(function() {
-			UtilsService.getCurrentUser().myBeacons.push(beacon.objectId);
+			Utils.getCurrentUser().myBeacons.push(beacon.objectId);
 			$state.go($state.current, {
 				beaconId: beacon.objectId
 			}, {
