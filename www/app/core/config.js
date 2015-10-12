@@ -34,23 +34,7 @@
 		// Each state's controller can be found in controllers.js
 		$stateProvider
 
-			.state('login', {
-			url: '/login',
-			templateUrl: 'app/login/login.html',
-			controller: 'Login',
-			data: {
-				requireLogin: false
-			}
-		})
 
-		.state('app', {
-			url: '/app',
-			templateUrl: 'app/shared/mainView.html',
-			abstract: true,
-			data: {
-				requireLogin: true
-			}
-		})
 
 		.state('app.beacons', {
 			url: '/beacons',
@@ -94,58 +78,6 @@
 			}
 		})
 
-		.state('app.profile', {
-			url: '/profile',
-			views: {
-				'main-view': {
-					templateUrl: 'app/user/profile/profile.html',
-					controller: 'UserProfile',
-					resolve: {
-						initialData: function(listControllerInitialData) {
-							return listControllerInitialData()
-						}
-					}
-				}
-			}
-		})
-
-		.state('app.about', {
-			url: '/about',
-			views: {
-				'main-view': {
-					templateUrl: 'app/about/about.html'
-				}
-			}
-		})
-
-		.state('signup', {
-			url: '/register',
-			templateUrl: 'app/user/register/register.html',
-			controller: 'RegisterController',
-			resolve: {
-				platforms: function(Resource) {
-					return Resource.list('platforms')
-				},
-				regions: function(Resource) {
-					return Resource.list('regions')
-				},
-				mics: function(Resource) {
-					return Resource.list('mics')
-				}
-			}
-		})
-
-		.state('reset-password', {
-			url: '/reset-password',
-			templateUrl: 'app/user/reset/resetpassword.html',
-			controller: 'Reset'
-		})
-
-		.state('tutorial', {
-			url: '/',
-			templateUrl: 'app/tutorial/tutorial.html',
-			controller: 'Tutorial'
-		})
 
 		// if none of the above states are matched, use this as the fallback
 		$urlRouterProvider.otherwise('/login');

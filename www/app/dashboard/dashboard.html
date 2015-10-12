@@ -36,21 +36,6 @@
 
 		<beacon-card-list beacons="beacons"></beacon-card-list>
 
-		<!-- loading state -->
-		<div ng-if="loadingBeacons" class="text-center padding">
-			<ion-spinner icon="crescent" class="spinner-energized"></ion-spinner>
-		</div>
-
-		<!-- no beacons -->
-		<div ng-if="noBeacons" class="row" ng-cloak>
-			<div class="col col-80 col-offset-10">
-				<div class="beacon-list-empty padding">
-					<h1>No beacons!</h1>
-					<p ui-sref="beacon-create">There are no beacons right now - tap here to create one</p>
-				</div>
-			</div>
-		</div>
-
 		<ion-infinite-scroll ng-if="moreBeacons" on-infinite="getBeaconChunk()"></ion-infinite-scroll>
 	</ion-content>
 </ion-view>

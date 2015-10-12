@@ -13,7 +13,6 @@
 		'ionic.service.push',
 		'ngCordova',
 		'templates',
-		'angularMoment',
 		'ng-mfb',
 		'ngIOS9UIWebViewPatch'
 

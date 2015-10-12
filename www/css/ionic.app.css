@@ -10629,6 +10629,10 @@ ion-header-bar .title {
 .has-large-header {
   top: 70px; }
 
+/******************* icons ***********************/
+.icon:before {
+  padding-right: 5px; }
+
 body {
   font-family: "SofiaProLight", "Helvetica Neue", Roboto, sans-serif;
   color: #f9f9f9;

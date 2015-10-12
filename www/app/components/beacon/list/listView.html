@@ -9,15 +9,6 @@
 
 		<beacon-card-list beacons="beacons"></beacon-card-list>
 
-		<!-- no beacons -->
-		<div ng-if="noBeacons" class="row" ng-cloak>
-			<div class="col col-80 col-offset-10">
-				<div class="beacon-list-empty padding">
-					<h1>No beacons!</h1>
-					<p ui-sref="beacon-create">There are no beacons right now - tap here to create one</p>
-				</div>
-			</div>
-		</div>
 		<ion-infinite-scroll ng-if="moreBeacons" on-infinite="getBeaconChunk()"></ion-infinite-scroll>
 	</ion-content>
 	<nav mfb-menu position="br" effect="zoomin" active-icon="ion-chevron-down" resting-icon="ion-navicon-round" toggling-method="click">

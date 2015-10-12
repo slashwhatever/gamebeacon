@@ -355,3 +355,8 @@ $button-gap-multiplier : 55px;
 	.has-large-header {
 	   top: 70px;
 	}
+
+	/******************* icons ***********************/
+	.icon:before {
+		padding-right: 5px;
+	}

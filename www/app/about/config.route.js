@@ -1,8 +1,7 @@
-/* global toastr:false, moment:false */
 (function() {
 	'use strict';
 	angular
-		.module('gamebeacon.dashboard')
+		.module('gamebeacon.about')
 		.run(appRun);
 
 	/* @ngInject */
@@ -12,13 +11,12 @@
 
 	function getStates() {
 		return [{
-			state: 'app.dashboard',
+			state: 'app.about',
 			config: {
-				url: '/dashboard/:puserId',
+				url: '/about',
 				views: {
 					'main-view': {
-						templateUrl: 'app/dashboard/dashboard.html',
-						controller: 'Dashboard'
+						templateUrl: 'app/about/about.html'
 					}
 				}
 			}
