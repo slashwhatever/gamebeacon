@@ -27,62 +27,6 @@
 			dev_push: false,
 			gcm_key: "1038280762685"
 		});
-
-		// Ionic uses AngularUI Router which uses the concept of states
-		// Learn more here: https://github.com/angular-ui/ui-router
-		// Set up the various states which the app can be in.
-		// Each state's controller can be found in controllers.js
-		$stateProvider
-
-
-
-		.state('app.beacons', {
-			url: '/beacons',
-			views: {
-				'main-view': {
-					templateUrl: 'app/components/beacon/list/listView.html',
-					controller: 'ListController',
-					resolve: {
-						initialData: function(listControllerInitialData) {
-							return listControllerInitialData()
-						}
-					}
-				}
-			}
-		})
-
-		.state('app.beacon', {
-			url: '/beacons/:beaconId',
-			views: {
-				'main-view': {
-					templateUrl: 'app/components/beacon/detail/detailView.html',
-					controller: 'DetailController',
-					resolve: {
-						beaconDetails: function($stateParams, beaconDetailData) {
-							return beaconDetailData($stateParams.beaconId)
-						}
-					}
-				}
-			}
-		})
-
-
-		.state('beacon-create', {
-			url: '/beacon-create',
-			templateUrl: 'app/components/beacon/create/createView.html',
-			controller: 'CreateController',
-			resolve: {
-				initialData: function(listControllerInitialData) {
-					return listControllerInitialData()
-				}
-			}
-		})
-
-
-		// if none of the above states are matched, use this as the fallback
-		$urlRouterProvider.otherwise('/login');
-		$urlRouterProvider.when('', '/login');
-
 	}
 
 })();

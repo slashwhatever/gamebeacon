@@ -12,7 +12,7 @@
 
 			$ionicAnalytics.register();
 
-			if (window.cordova && window.cordova.plugins.Keyboard) {
+			if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
 				//Lets hide the accessory bar fo the keyboard (ios)
 				cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
 				// also, lets disable the native overflow scroll
@@ -22,7 +22,7 @@
 				StatusBar.styleDefault();
 			}
 
-			checkSession();
+			//checkSession();
 
 			$ionicPlatform.on('resume', checkSession);
 

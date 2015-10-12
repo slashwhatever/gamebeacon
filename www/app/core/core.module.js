@@ -6,6 +6,9 @@
 		 * Ionic modules
 		 */
 
+
+		'blocks.router',
+
 		'ionic',
 		'ionic.service.core',
 		'ionic.service.deploy',

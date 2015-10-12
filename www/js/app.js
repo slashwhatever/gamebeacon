@@ -16,9 +16,6 @@
         'gamebeacon.core',
         'gamebeacon.service',
         'gamebeacon.widgets',
-
-
-				'blocks.router',
         /*
          * Feature areas
          */
@@ -30,11 +27,11 @@
          'gamebeacon.user',
 
 
-         'gamebeacon.beacon.list.controllers',
          'gamebeacon.beacon.detail.controllers',
          'gamebeacon.beacon.create.controllers',
          'gamebeacon.beacon.card.list.directives',
          'gamebeacon.beacon.chat.directives',
+
          'gamebeacon.chat.services',
          'gamebeacon.shared.directives',
          'gamebeacon.fireteam.directives'

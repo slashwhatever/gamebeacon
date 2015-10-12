@@ -3,9 +3,10 @@ angular
 	.module('blocks.router')
 	.provider('routerHelper', routerHelperProvider);
 
-routerHelperProvider.$inject = ['$locationProvider', '$stateProvider', '$urlRouterProvider'];
+routerHelperProvider.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider', '$route', '$urlRouterProvider'];
 /* @ngInject */
-function routerHelperProvider($locationProvider, $stateProvider, $urlRouterProvider) {
+function routerHelperProvider($stateProvider, $urlRouterProvider, $locationProvider, $route, $urlRouterProvider) {
+
 	/* jshint validthis:true */
 	this.$get = RouterHelper;
 
@@ -14,24 +15,28 @@ function routerHelperProvider($locationProvider, $stateProvider, $urlRouterProvi
 	RouterHelper.$inject = ['$state'];
 	/* @ngInject */
 	function RouterHelper($state) {
-		var hasOtherwise = false;
-
-		var service = {
-			configureStates: configureStates,
-			getStates: getStates
-		};
+		var hasOtherwise = false,
+			_otherwisePath = '/beacons',
+			service = {
+				configureStates: configureStates,
+				getStates: getStates
+			};
 
 		return service;
 
 		///////////////
 
 		function configureStates(states, otherwisePath) {
+			var otherPath = otherwisePath || _otherwisePath;
+
 			states.forEach(function(state) {
 				$stateProvider.state(state.state, state.config);
 			});
-			if (otherwisePath && !hasOtherwise) {
+			if (otherPath && !hasOtherwise) {
 				hasOtherwise = true;
-				$urlRouterProvider.otherwise(otherwisePath);
+				$urlRouterProvider.otherwise(otherPath);
+				$urlRouterProvider.when('', otherPath);
+
 			}
 		}
 

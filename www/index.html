@@ -39,13 +39,16 @@
 	<script src="js/app.js"></script>
 
 	<script src="app/core/core.module.js"></script>
-	<script src="app/core/constants.js"></script>
-	<script src="app/core/config.js"></script>
-	<script src="app/core/run.js"></script>
-	<script src="app/core/config.route.js"></script>
 
 	<script src="app/blocks/router/router.module.js"></script>
 	<script src="app/blocks/router/routerhelper.js"></script>
+
+	<script src="app/layout/config.route.js"></script>
+
+	<script src="app/core/constants.js"></script>
+	<script src="app/core/config.js"></script>
+	<script src="app/core/run.js"></script>
+	<script src="js/mixins.js"></script>
 
 	<script src="app/services/service.module.js"></script>
 	<script src="app/services/auth.service.js"></script>
@@ -67,17 +70,26 @@
 	<script src="app/services/update.service.js"></script>
 	<script src="app/services/utils.service.js"></script>
 
-
-	<script src="js/mixins.js"></script>
 	<script src="app/shared/directives.js"></script>
 	<!-- dummy module file for html template caching -->
 	<script src="app/layout/templates.js"></script>
 	<!-- dummy templates file for html templates to compile to -->
 	<script src="lib/compiledTemplates.js"></script>
 
-	<script src="app/components/beacon/list/listController.js"></script>
-	<script src="app/components/beacon/detail/detailController.js"></script>
-	<script src="app/components/beacon/create/createController.js"></script>
+
+	<script src="app/beacon/beacon.module.js"></script>
+
+	<script src="app/beacon/list/initial.data.js"></script>
+	<script src="app/beacon/list/list.controller.js"></script>
+	<script src="app/beacon/list/config.route.js"></script>
+
+	<script src="app/beacon/create/create.controller.js"></script>
+	<script src="app/beacon/create/config.route.js"></script>
+
+	<script src="app/beacon/show/show.controller.js"></script>
+	<script src="app/beacon/show/config.route.js"></script>
+
+
 	<script src="app/components/beacon/cardList/cardListDirective.js"></script>
 	<script src="app/components/beacon/fireteam/fireteamDirective.js"></script>
 	<script src="app/components/beacon/chat/chatDirective.js"></script>
