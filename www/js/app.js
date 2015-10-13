@@ -8,6 +8,11 @@
     'use strict';
 
     angular.module('gamebeacon', [
+    	'ionic',
+    	'ionic.service.core',
+    	'ionic.service.deploy',
+    	'ionic.service.analytics',
+    	'ionic.service.push',
         /*
          * Everybody has access to these.
          * We could place these under every feature area,
@@ -27,8 +32,8 @@
          'gamebeacon.user',
 
 
-         'gamebeacon.beacon.detail.controllers',
-         'gamebeacon.beacon.create.controllers',
+         //'gamebeacon.beacon.detail.controllers',
+         //'gamebeacon.beacon.create.controllers',
          'gamebeacon.beacon.card.list.directives',
          'gamebeacon.beacon.chat.directives',
 

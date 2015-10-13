@@ -4,6 +4,8 @@
 		.module('gamebeacon.beacon')
 		.run(appRun);
 
+		appRun.$inject = ['routerHelper'];
+
 	/* @ngInject */
 	function appRun(routerHelper) {
 		routerHelper.configureStates(getStates());
@@ -17,7 +19,7 @@
 				views: {
 					'main-view': {
 						templateUrl: 'app/beacon/detail/show.html',
-						controller: 'DetailController',
+						controller: 'Show',
 						resolve: {
 							beaconDetails: function($stateParams, beaconDetailData) {
 								return beaconDetailData($stateParams.beaconId)
