@@ -7,7 +7,6 @@
 		 */
 
 
-		'blocks.exception', 'blocks.logger', 'blocks.router',
 
 
 		'ngCordova',

@@ -25,11 +25,14 @@
          * Feature areas
          */
 
+         'blocks.exception', 'blocks.logger', 'blocks.router',
 
+         'gamebeacon.beacon',
          'gamebeacon.dashboard',
          'gamebeacon.login',
          'gamebeacon.tutorial',
          'gamebeacon.user',
+         'gamebeacon.about',
 
 
          //'gamebeacon.beacon.detail.controllers',

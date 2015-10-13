@@ -11,7 +11,7 @@ var angularTemplateCache = require('gulp-angular-templatecache');
 
 var paths = {
   sass: ['./scss/**/*.scss'],
-  templates: ['./www/app/components/**/*.html']
+  templates: ['./www/app/**/*.html']
 };
 
 gulp.task('default', ['sass', 'templates']);
@@ -58,7 +58,7 @@ gulp.task('git-check', function(done) {
 gulp.task('templates', function() {
   return gulp
   	.src(paths.templates)
-    .pipe(angularTemplateCache({root: 'app/components/'}))
+    .pipe(angularTemplateCache({root: 'app/'}))
     .pipe(concat('compiledTemplates.js'))
     .pipe(gulp.dest('./www/lib/'));
 });

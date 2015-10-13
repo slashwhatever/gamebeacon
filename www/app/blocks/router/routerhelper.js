@@ -32,6 +32,7 @@
 				var otherwise = otherwisePath || '/login';
 
 				states.forEach(function(state) {
+					console.log(state)
 					$stateProvider.state(state.state, state.config);
 				});
 				if (otherwise && !hasOtherwise) {

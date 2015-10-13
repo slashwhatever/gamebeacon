@@ -21,8 +21,8 @@
 						templateUrl: 'app/user/profile/profile.html',
 						controller: 'UserProfile',
 						resolve: {
-							initialData: function(listControllerInitialData) {
-								return listControllerInitialData()
+							initialData: function(InitialData) {
+								return InitialData()
 							}
 						}
 					}

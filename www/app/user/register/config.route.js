@@ -17,7 +17,7 @@
 			config: {
 				url: '/register',
 				templateUrl: 'app/user/register/register.html',
-				controller: 'RegisterController',
+				controller: 'Register',
 				//TODO: combine these into a single promise service
 				resolve: {
 					platforms: function(Resource) {

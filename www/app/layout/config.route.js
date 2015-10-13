@@ -17,7 +17,7 @@
 			state: 'app',
 			config: {
 				url: '/app',
-				templateUrl: 'app/shared/mainView.html',
+				templateUrl: 'app/layout/main.html',
 				abstract: true,
 				data: {
 					requireLogin: true

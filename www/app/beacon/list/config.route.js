@@ -21,8 +21,8 @@
 						templateUrl: 'app/beacon/list/list.html',
 						controller: 'List',
 						resolve: {
-							initialData: function(ListInitialData) {
-								return ListInitialData()
+							initialData: function(InitialData) {
+								return InitialData()
 							}
 						}
 					}

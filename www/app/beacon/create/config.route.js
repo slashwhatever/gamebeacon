@@ -13,14 +13,14 @@
 
 	function getStates() {
 		return [{
-			state: 'app.beacon',
+			state: 'beacon-create',
 			config: {
 				url: '/beacon-create',
 				templateUrl: 'app/beacon/create/create.html',
 				controller: 'Create',
 				resolve: {
-					initialData: function(listControllerInitialData) {
-						return listControllerInitialData()
+					initialData: function(InitialData) {
+						return InitialData()
 					}
 				}
 			}

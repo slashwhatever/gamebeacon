@@ -5,9 +5,9 @@
 		.module('gamebeacon.beacon')
 		.controller('List', List);
 
-	List.$inject = ['$scope', '$rootScope', '$state', '$ionicPopup', 'UI', 'Beacon', 'Utils', 'appConfig', 'listInitialData'];
+	List.$inject = ['$scope', '$rootScope', '$state', '$ionicPopup', 'UI', 'Beacon', 'Utils', 'appConfig', 'InitialData'];
 
-	function List($scope, $rootScope, $state, $ionicPopup, UI, Beacon, Utils, appConfig, listInitialData) {
+	function List($scope, $rootScope, $state, $ionicPopup, UI, Beacon, Utils, appConfig, InitialData) {
 
 
 		var today = new Date(),
@@ -80,7 +80,7 @@
 		});
 
 		$scope.$on('$ionicView.beforeEnter', function() {
-			listControllerInitialData();
+			InitialData();
 			$scope.getBeaconChunk();
 		});
 
