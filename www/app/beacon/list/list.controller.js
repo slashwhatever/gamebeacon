@@ -80,7 +80,6 @@
 		});
 
 		$scope.$on('$ionicView.beforeEnter', function() {
-			InitialData();
 			$scope.getBeaconChunk();
 		});
 

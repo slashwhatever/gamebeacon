@@ -335,13 +335,13 @@ also be of any width and height */
 }
 
 .beacon-card.ng-enter {
-    -webkit-animation: fadeInLeft 1s;
-    animation: fadeInLeft 1s;
+    -webkit-animation: fadeInUp .4s;
+    animation: fadeInUp .4s;
 }
 
 .beacon-card.ng-enter-stagger {
-  -webkit-animation-delay:200ms;
-  animation-delay:200ms;
+  -webkit-animation-delay:.1s;
+  animation-delay:.1s;
 
   /* override to make sure it's not inherited from other styles */
   -webkit-animation-duration:0;
@@ -352,10 +352,6 @@ also be of any width and height */
 	padding: 16px;
 }
 
-.beacon-card.ng-enter {
-    -webkit-animation: fadeInLeft 1s;
-    animation: fadeInLeft 1s;
-}
 .beacon-card:first-of-type {
 		border-top-color: transparent;
 }
@@ -875,12 +871,31 @@ form.ng-submitted select.ng-valid + i.icon.error {
 
 }
 /**************** loading ****************/
+
+.loading-container .loading {
+	padding: 20px;
+	background-color: lighten($dark-blue, 10%);
+	color: #fff;
+	text-align: right;
+	text-overflow: ellipsis;
+	font-size: 15px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	border-top: 2px solid $red;
+	border-radius: 0;
+}
 .loading-spinner {
-	text-align: center;
 	color: $light-grey;
 }
+.loading-spinner .spinner{
+	position: absolute;
+	top: 15px;
+	right: 15px;
+}
 .loading-spinner span {
-	display: block;
+	margin-right: 30px;
 
 }
 

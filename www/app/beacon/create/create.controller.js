@@ -10,6 +10,36 @@
 	function Create($scope, $rootScope, $state, initialData, Beacon, Utils, Push, Msg, UI, $ionicSlideBoxDelegate, $timeout, $ionicScrollDelegate) {
 
 
+		$scope.updateGameType = updateGameType;
+		$scope.updateMission = updateMission;
+		$scope.getMaxFireTeam = getMaxFireTeam;
+
+		// define all the starting variables for the view
+		$scope.gametypes = initialData.gametypes;
+		$scope.missions = $scope.gametypes[0].missions ? $scope.gametypes[0].missions : null;
+		$scope.checkpoints = $scope.missions && $scope.missions[0].checkpoints ? $scope.missions[0].checkpoints : null;
+		$scope.levels = $scope.missions && $scope.missions[0].levels ? $scope.missions[0].levels : null;
+
+		$scope.platforms = initialData.platforms;
+		$scope.regions = initialData.regions;
+		$scope.mics = initialData.mics;
+		$scope.maxFireteam = $scope.getMaxFireTeam(initialData.missions[0]);
+		$scope.currentUser = Utils.getCurrentUser();
+		//$scope.startTime = new Date().getTime();
+
+		// set the starting slides for the mic, platform and region
+		$scope.defaultMic = _.findIndex($scope.mics, {
+			objectId: $scope.currentUser.mic.objectId
+		});
+
+		$scope.defaultPlatform = _.findIndex($scope.platforms, {
+			objectId: $scope.currentUser.platform.objectId
+		});
+
+		$scope.defaultRegion = _.findIndex($scope.regions, {
+			objectId: $scope.currentUser.region.objectId
+		});
+
 		// Called when the form is submitted
 		$scope.createBeacon = function(startTime) {
 
@@ -110,7 +140,13 @@
 			}
 		});
 
-		$scope.updateGameType = function(index) {
+		$ionicSlideBoxDelegate.update();
+
+		$timeout(function() {
+			$ionicScrollDelegate.scrollTop();
+		}, 50);
+
+		function updateGameType (index) {
 			var gametype = $scope.gametypes[$ionicSlideBoxDelegate.$getByHandle('gametype-selector').currentIndex()]
 
 			$scope.missions = gametype.missions || [];
@@ -120,7 +156,7 @@
 			$scope.maxFireteam = $scope.getMaxFireTeam($scope.missions[0])
 		}
 
-		$scope.updateMission = function(index) {
+		function updateMission(index) {
 			var mission = $scope.missions[$ionicSlideBoxDelegate.$getByHandle('mission-selector').currentIndex()]
 			var levels = mission.levels;
 			var checkpoints = mission.checkpoints;
@@ -129,41 +165,9 @@
 			$scope.maxFireteam = $scope.getMaxFireTeam(mission)
 		}
 
-		$scope.getMaxFireTeam = function(mission) {
+		function getMaxFireTeam(mission) {
 			return _.range(1, mission.maxFireteam)
 		}
-
-		// define all the starting variables for the view
-		$scope.gametypes = initialData.gametypes;
-		$scope.missions = $scope.gametypes[0].missions ? $scope.gametypes[0].missions : null;
-		$scope.checkpoints = $scope.missions && $scope.missions[0].checkpoints ? $scope.missions[0].checkpoints : null;
-		$scope.levels = $scope.missions && $scope.missions[0].levels ? $scope.missions[0].levels : null;
-
-		$scope.platforms = initialData.platforms;
-		$scope.regions = initialData.regions;
-		$scope.mics = initialData.mics;
-		$scope.maxFireteam = $scope.getMaxFireTeam(initialData.missions[0]);
-		$scope.currentUser = Utils.getCurrentUser();
-		//$scope.startTime = new Date().getTime();
-
-		// set the starting slides for the mic, platform and region
-		$scope.defaultMic = _.findIndex($scope.mics, {
-			objectId: $scope.currentUser.mic.objectId
-		});
-
-		$scope.defaultPlatform = _.findIndex($scope.platforms, {
-			objectId: $scope.currentUser.platform.objectId
-		});
-
-		$scope.defaultRegion = _.findIndex($scope.regions, {
-			objectId: $scope.currentUser.region.objectId
-		});
-
-		$ionicSlideBoxDelegate.update();
-
-		$timeout(function() {
-			$ionicScrollDelegate.scrollTop();
-		}, 50);
 
 	}
 })();

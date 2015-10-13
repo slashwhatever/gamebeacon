@@ -25,7 +25,7 @@
 			},
 			showToast: function(opts) {
 				var defs = {
-					template: '<div class="loading-spinner"><ion-spinner class="{{cls}}" icon="{{spinner}}"></ion-spinner><span>{{msg}}</span></div>',
+					template: '<div class="loading-spinner"><span>{{msg}}</span><ion-spinner class="{{cls}}" icon="{{spinner}}"></ion-spinner></div>',
 					spinner: 'crescent',
 					cls: 'spinner-energized',
 					msg: 'loading...'

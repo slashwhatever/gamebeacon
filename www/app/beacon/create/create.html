@@ -49,52 +49,48 @@
 				<div class="slide-wrapper">
 					<div class="slide-inner">
 						<p class="byline fireteam-byline">fireteam</p>
-						<h2 class="title fireteam-title">
-      <ng-pluralize count="n"
-      when="{'1': 'I need {} more guardian',
-      'other': 'I need {} more guardians'}">
-    </ng-pluralize></h2>
+						<h2 class="title fireteam-title"><ng-pluralize count="n" when="{'1': 'I need {} more guardian', 'other': 'I need {} more guardians'}"></ng-pluralize></h2>
 					</div>
 				</div>
 			</ion-slide>
 		</ion-slide-box>
-		<scheduler ng-model="startTime"></beacon>
-		<ion-slide-box delegate-handle="platform-selector" show-pager="false" ng-if="platforms" does-continue="true" on-slide-changed="updatePlatform($index)" active-slide="defaultPlatform">
-			<ion-slide class="create-beacon-slide platforms-slide" ng-repeat="platform in platforms">
-				<div class="slide-wrapper">
-					<div class="slide-inner">
-						<p class="byline platform-byline">platform</p>
-						<h2 class="title platform-title">{{ platform.name }}</h2>
+		<scheduler ng-model="startTime"></scheduler>
+			<ion-slide-box delegate-handle="platform-selector" show-pager="false" ng-if="platforms" does-continue="true" on-slide-changed="updatePlatform($index)" active-slide="defaultPlatform">
+				<ion-slide class="create-beacon-slide platforms-slide" ng-repeat="platform in platforms">
+					<div class="slide-wrapper">
+						<div class="slide-inner">
+							<p class="byline platform-byline">platform</p>
+							<h2 class="title platform-title">{{ platform.name }}</h2>
+						</div>
 					</div>
-				</div>
-			</ion-slide>
-		</ion-slide-box>
-		<ion-slide-box delegate-handle="region-selector" show-pager="false" ng-if="regions" does-continue="true" on-slide-changed="updateRegion($index)" active-slide="defaultRegion">
-			<ion-slide class="create-beacon-slide regions-slide" ng-repeat="region in regions">
-				<div class="slide-wrapper">
-					<div class="slide-inner">
-						<p class="byline checkpoint-byline">region</p>
-						<h2 class="title region-title">{{ region.name }}</h2>
+				</ion-slide>
+			</ion-slide-box>
+			<ion-slide-box delegate-handle="region-selector" show-pager="false" ng-if="regions" does-continue="true" on-slide-changed="updateRegion($index)" active-slide="defaultRegion">
+				<ion-slide class="create-beacon-slide regions-slide" ng-repeat="region in regions">
+					<div class="slide-wrapper">
+						<div class="slide-inner">
+							<p class="byline checkpoint-byline">region</p>
+							<h2 class="title region-title">{{ region.name }}</h2>
+						</div>
 					</div>
-				</div>
-			</ion-slide>
-		</ion-slide-box>
-		<ion-slide-box delegate-handle="mic-selector" show-pager="false" ng-if="mics" does-continue="true" on-slide-changed="updateMic($index)" active-slide="defaultMic">
-			<ion-slide class="create-beacon-slide mic-slide" ng-repeat="mic in mics">
-				<div class="slide-wrapper">
-					<div class="slide-inner">
-						<p class="byline mic-byline">mic options</p>
-						<h2 class="title mic-title">{{ mic.description }}</h2>
+				</ion-slide>
+			</ion-slide-box>
+			<ion-slide-box delegate-handle="mic-selector" show-pager="false" ng-if="mics" does-continue="true" on-slide-changed="updateMic($index)" active-slide="defaultMic">
+				<ion-slide class="create-beacon-slide mic-slide" ng-repeat="mic in mics">
+					<div class="slide-wrapper">
+						<div class="slide-inner">
+							<p class="byline mic-byline">mic options</p>
+							<h2 class="title mic-title">{{ mic.description }}</h2>
+						</div>
 					</div>
+				</ion-slide>
+			</ion-slide-box>
+			<div class="row">
+				<div class="col col-80 col-offset-10">
+					<form ng-submit="createBeacon(startTime)">
+						<button type="submit" class="button button-block button-energized">GO!!!</button>
 				</div>
-			</ion-slide>
-		</ion-slide-box>
-		<div class="row">
-			<div class="col col-80 col-offset-10">
-				<form ng-submit="createBeacon(startTime)">
-					<button type="submit" class="button button-block button-energized">GO!!!</button>
 			</div>
-		</div>
-		</div>
+			</div>
 	</ion-content>
 </ion-view>
