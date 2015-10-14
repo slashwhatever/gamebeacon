@@ -1,0 +1,15 @@
+<ion-list show-delete="false" show-reorder="false" can-swipe="beacons.length > 0">
+	<ion-item class="beacon-card" ui-sref="beacon-create">
+		<div class="beacon-list-empty">
+			<p class="icon ion-plus-round">Tap to create a new beacon</p>
+		</div>
+		</div>
+	</ion-item>
+	<ion-item class="beacon-card" ui-sref="app.beacon({beaconId: beacon.objectId})" ng-class="{'my-beacon' : beacon.userIsCreator }" ng-repeat="beacon in beacons track by beacon.objectId">
+		<beacon-header></beacon-header>
+		<beacon-meta></beacon-meta>
+		<!-- <beacon-actions></beacon-actions> -->
+		<beacon-timer ng-if="beacon.active" beacon="beacon"></beacon-timer>
+		<ion-option-button ng-if="beacon.userIsCreator" class="button-assertive"><i class="icon ion-android-delete"></i>Delete</ion-option-button>
+	</ion-item>
+</ion-list>
