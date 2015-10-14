@@ -1,4 +1,4 @@
 (function() {
-    'use strict';
-    angular.module('gamebeacon.widgets', []);
+	'use strict';
+	angular.module('gamebeacon.widgets', []);
 })();

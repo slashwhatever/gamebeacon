@@ -17,7 +17,7 @@
 			config: {
 				url: '/beacon-create',
 				templateUrl: 'app/beacon/create/create.html',
-				controller: 'Create',
+				controller: 'CreateController',
 				resolve: {
 					initialData: function(InitialData) {
 						return InitialData()

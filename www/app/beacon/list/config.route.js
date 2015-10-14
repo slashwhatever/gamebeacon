@@ -19,7 +19,7 @@
 				views: {
 					'main-view': {
 						templateUrl: 'app/beacon/list/list.html',
-						controller: 'List',
+						controller: 'ListController',
 						resolve: {
 							initialData: function(InitialData) {
 								return InitialData()

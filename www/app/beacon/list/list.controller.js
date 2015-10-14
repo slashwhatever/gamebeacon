@@ -3,11 +3,11 @@
 
 	angular
 		.module('gamebeacon.beacon')
-		.controller('List', List);
+		.controller('ListController', ListController);
 
-	List.$inject = ['$scope', '$rootScope', '$state', '$ionicPopup', 'UI', 'Beacon', 'Utils', 'appConfig', 'InitialData'];
+	ListController.$inject = ['$scope', '$rootScope', '$state', '$ionicPopup', 'UI', 'Beacon', 'Utils', 'appConfig', 'InitialData'];
 
-	function List($scope, $rootScope, $state, $ionicPopup, UI, Beacon, Utils, appConfig, InitialData) {
+	function ListController($scope, $rootScope, $state, $ionicPopup, UI, Beacon, Utils, appConfig, InitialData) {
 
 
 		var today = new Date(),
@@ -219,9 +219,9 @@
 					'$q',
 					'$stateParams',
 					'Beacon',
-					'ChatService',
+					'Chat',
 					'UI',
-					function($q, $stateParams, Beacon, ChatService, UI) {
+					function($q, $stateParams, Beacon, Chat, UI) {
 
 						return function(beaconId) {
 
@@ -230,7 +230,7 @@
 							});
 
 							var beacon = Beacon.get(beaconId),
-								messages = ChatService.list(beaconId);
+								messages = Chat.list(beaconId);
 
 							return $q.all([beacon, messages]).then(function(results) {
 								UI.hideToast();

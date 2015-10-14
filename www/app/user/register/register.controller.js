@@ -3,11 +3,11 @@
 
 	angular
 		.module('gamebeacon.user')
-		.controller('Register', Register);
+		.controller('RegisterController', RegisterController);
 
-	Register.$inject = ['$rootScope', '$scope', '$state', 'platforms', 'regions', 'mics', 'Auth', 'UI', 'Utils'];
+	RegisterController.$inject = ['$rootScope', '$scope', '$state', 'platforms', 'regions', 'mics', 'Auth', 'UI', 'Utils'];
 
-	function Register($rootScope, $scope, $state, platforms, regions, mics, Auth, UI, Utils) {
+	function RegisterController($rootScope, $scope, $state, platforms, regions, mics, Auth, UI, Utils) {
 
 		$scope.platforms = platforms.results;
 		$scope.regions = regions.results;

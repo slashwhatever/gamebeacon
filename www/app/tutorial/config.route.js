@@ -17,7 +17,7 @@
 			config: {
 				url: '/',
 				templateUrl: 'app/tutorial/tutorial.html',
-				controller: 'Tutorial'
+				controller: 'TutorialController'
 			}
 		}];
 	}

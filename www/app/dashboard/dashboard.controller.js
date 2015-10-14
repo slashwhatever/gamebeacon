@@ -3,11 +3,11 @@
 
     angular
         .module('gamebeacon.dashboard')
-        .controller('Dashboard', Dashboard);
+        .controller('DashboardController', DashboardController);
 
-    Dashboard.$inject = ['$scope', '$stateParams', 'Utils', 'Beacon'];
+    DashboardController.$inject = ['$scope', '$stateParams', 'Utils', 'Beacon'];
 
-    function Dashboard($scope, $stateParams, Utils, Beacon) {
+    function DashboardController($scope, $stateParams, Utils, Beacon) {
 
     	$scope.beacons = [];
     	$scope.currentUser = Utils.getCurrentUser();

@@ -5,7 +5,7 @@
 		.module('gamebeacon.widgets')
 		.directive('beaconTimer', beaconTimer);
 
-		beaconTimer.$inject = ['$interval', 'Beacon'];
+	beaconTimer.$inject = ['$interval', 'Beacon'];
 
 	/* @ngInject */
 	function beaconTimer($interval, Beacon) {

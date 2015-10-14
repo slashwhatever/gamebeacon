@@ -3,11 +3,11 @@
 
 	angular
 		.module('gamebeacon.beacon')
-		.controller('Show', Show);
+		.controller('ShowController', ShowController);
 
-	Show.$inject = ['$scope', '$rootScope', '$state', '$stateParams', '$ionicPopup', '$interval', '$ionicActionSheet', 'ChatService', 'Utils', 'Beacon', 'beaconDetails'];
+	ShowController.$inject = ['$scope', '$rootScope', '$state', '$stateParams', '$ionicPopup', '$interval', '$ionicActionSheet', 'Chat', 'Utils', 'Beacon', 'beaconDetails'];
 
-	function Show($scope, $rootScope, $state, $stateParams, $ionicPopup, $interval, $ionicActionSheet, ChatService, Utils, Beacon, beaconDetails) {
+	function ShowController($scope, $rootScope, $state, $stateParams, $ionicPopup, $interval, $ionicActionSheet, Chat, Utils, Beacon, beaconDetails) {
 
 		var msgRefresh;
 
@@ -16,7 +16,7 @@
 		$scope.puserId = Utils.getCurrentUser().puserId;
 
 		var refreshMessages = function() {
-			ChatService.list($scope.beacon.objectId).then(function(response) {
+			Chat.list($scope.beacon.objectId).then(function(response) {
 				$scope.messages = response.results;
 			})
 		};
@@ -63,7 +63,7 @@
 		$scope.sendMessage = function() {
 			var msg = this.newMessage;
 			this.newMessage = null; // clear the text entry box
-			ChatService.save(msg, $scope.beacon.objectId).then(function(response) {
+			Chat.save(msg, $scope.beacon.objectId).then(function(response) {
 
 				// add a new item to the messages list (this will get replaced with the proper version on refresh)
 				refreshMessages();

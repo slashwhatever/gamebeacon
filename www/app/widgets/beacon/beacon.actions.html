@@ -1,19 +1,19 @@
 <div class="beacon-actions button-bar">
 
-    <button ng-if="allowDelete" class="button button-block button-assertive" ng-click="deleteBeacon( beacon )">
-      <i class="icon ion-android-delete"></i> Delete
-    </button>
+	<button ng-if="allowDelete" class="button button-block button-assertive" ng-click="deleteBeacon( beacon )">
+		<i class="icon ion-android-delete"></i> Delete
+	</button>
 
-    <button ng-if="allowJoin" class="button button-block button-energized" ng-click="joinBeacon( beacon )">
-      <i class="icon ion-checkmark"></i> Join
-    </button>
+	<button ng-if="allowJoin" class="button button-block button-energized" ng-click="joinBeacon( beacon )">
+		<i class="icon ion-checkmark"></i> Join
+	</button>
 
-    <button ng-if="allowLeave" class="button button-block button-calm" ng-click="leaveBeacon( beacon )">
-      <i class="icon ion-close"></i> Leave
-    </button>
+	<button ng-if="allowLeave" class="button button-block button-calm" ng-click="leaveBeacon( beacon )">
+		<i class="icon ion-close"></i> Leave
+	</button>
 
-    <button ng-if="allowView" class="button button-block button-energized" ui-sref="app.beacon({beaconId: beacon.objectId})">
-      <i class="icon ion-eye"></i> View
-    </button>
+	<button ng-if="allowView" class="button button-block button-energized" ui-sref="app.beacon({beaconId: beacon.objectId})">
+		<i class="icon ion-eye"></i> View
+	</button>
 
 </div>

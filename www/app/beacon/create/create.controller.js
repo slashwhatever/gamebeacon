@@ -3,11 +3,11 @@
 
 	angular
 		.module('gamebeacon.beacon')
-		.controller('Create', Create);
+		.controller('CreateController', CreateController);
 
-	Create.$inject = ['$scope', '$rootScope', '$state', 'initialData', 'Beacon', 'Utils', 'Push', 'Msg', 'UI', '$ionicSlideBoxDelegate', '$timeout', '$ionicScrollDelegate'];
+	CreateController.$inject = ['$scope', '$rootScope', '$state', 'initialData', 'Beacon', 'Utils', 'Push', 'Msg', 'UI', '$ionicSlideBoxDelegate', '$timeout', '$ionicScrollDelegate'];
 
-	function Create($scope, $rootScope, $state, initialData, Beacon, Utils, Push, Msg, UI, $ionicSlideBoxDelegate, $timeout, $ionicScrollDelegate) {
+	function CreateController($scope, $rootScope, $state, initialData, Beacon, Utils, Push, Msg, UI, $ionicSlideBoxDelegate, $timeout, $ionicScrollDelegate) {
 
 
 		$scope.updateGameType = updateGameType;

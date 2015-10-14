@@ -19,7 +19,7 @@
 				views: {
 					'main-view': {
 						templateUrl: 'app/beacon/detail/show.html',
-						controller: 'Show',
+						controller: 'ShowController',
 						resolve: {
 							beaconDetails: function($stateParams, beaconDetailData) {
 								return beaconDetailData($stateParams.beaconId)

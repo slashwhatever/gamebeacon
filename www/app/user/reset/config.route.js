@@ -17,7 +17,7 @@
 			config: {
 				url: '/reset-password',
 				templateUrl: 'app/user/reset/resetpassword.html',
-				controller: 'Reset'
+				controller: 'ResetPasswordController'
 			}
 		}];
 	}

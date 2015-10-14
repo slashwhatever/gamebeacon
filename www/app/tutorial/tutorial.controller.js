@@ -3,11 +3,11 @@
 
 	angular
 		.module('gamebeacon.tutorial')
-		.controller('Tutorial', Tutorial)
+		.controller('TutorialController', TutorialController)
 
-	Tutorial.$inject = ['$scope', '$state', '$ionicSlideBoxDelegate']
+	TutorialController.$inject = ['$scope', '$state', '$ionicSlideBoxDelegate']
 
-	function Tutorial($scope, $state, $ionicSlideBoxDelegate) {
+	function TutorialController($scope, $state, $ionicSlideBoxDelegate) {
 
 		$scope.quitTutorial = quitTutorial;
 		$scope.next = next;

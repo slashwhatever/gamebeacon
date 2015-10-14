@@ -11,7 +11,7 @@
 	function calendarStrip($timeout) {
 		var directive = {
 			restrict: 'E',
-			templateUrl: 'app/widgets/calendarStrip.html',
+			templateUrl: 'app/widgets/calendarstrip.html',
 			replace: true,
 			scope: {
 				changeDate: '&'

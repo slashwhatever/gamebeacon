@@ -18,7 +18,7 @@
 			config: {
 				url: '/login',
 				templateUrl: 'app/login/login.html',
-				controller: 'Login',
+				controller: 'LoginController',
 				data: {
 					requireLogin: false
 				}

@@ -3,11 +3,11 @@
 
 	angular
 		.module('gamebeacon.user')
-		.controller('UserProfile', UserProfile);
+		.controller('ProfileController', ProfileController);
 
-	UserProfile.$inject = ['$rootScope', '$scope', '$state', '$cordovaImagePicker', 'initialData', 'Utils', 'Auth', 'PUser', 'UI'];
+	ProfileController.$inject = ['$rootScope', '$scope', '$state', '$cordovaImagePicker', 'initialData', 'Utils', 'Auth', 'PUser', 'UI'];
 
-	function UserProfile($rootScope, $scope, $state, $cordovaImagePicker, initialData, Utils, Auth, PUser, UI) {
+	function ProfileController($rootScope, $scope, $state, $cordovaImagePicker, initialData, Utils, Auth, PUser, UI) {
 
 
 		// these should now be available everywhere

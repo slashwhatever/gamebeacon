@@ -19,7 +19,7 @@
 				views: {
 					'main-view': {
 						templateUrl: 'app/dashboard/dashboard.html',
-						controller: 'Dashboard'
+						controller: 'DashboardController'
 					}
 				}
 			}

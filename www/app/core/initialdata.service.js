@@ -44,9 +44,9 @@
 	'$q',
 	'$stateParams',
 	'Beacon',
-	'ChatService',
+	'Chat',
 	'UI',
-	function($q, $stateParams, Beacon, ChatService, UI) {
+	function($q, $stateParams, Beacon, Chat, UI) {
 
 		return function(beaconId) {
 
@@ -55,7 +55,7 @@
 			});
 
 			var beacon = Beacon.get(beaconId),
-				messages = ChatService.list(beaconId);
+				messages = Chat.list(beaconId);
 
 			return $q.all([beacon, messages]).then(function(results) {
 				UI.hideToast();

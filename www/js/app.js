@@ -35,9 +35,6 @@
          'gamebeacon.about',
 
 
-         //'gamebeacon.beacon.detail.controllers',
-         //'gamebeacon.beacon.create.controllers',
-         'gamebeacon.beacon.card.list.directives',
          'gamebeacon.beacon.chat.directives',
 
          'gamebeacon.chat.services',

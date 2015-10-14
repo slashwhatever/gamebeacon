@@ -3,11 +3,11 @@
 
 	angular
 		.module('gamebeacon.login')
-		.controller('Login', Login);
+		.controller('LoginController', LoginController);
 
-	Login.$inject = ['$rootScope', '$scope', '$state', '$ionicUser', '$localStorage', 'UI', 'Auth', 'Push', 'Update'];
+	LoginController.$inject = ['$rootScope', '$scope', '$state', '$ionicUser', '$localStorage', 'UI', 'Auth', 'Push', 'Update'];
 
-	function Login($rootScope, $scope, $state, $ionicUser, $localStorage, UI, Auth, Push, Update) {
+	function LoginController($rootScope, $scope, $state, $ionicUser, $localStorage, UI, Auth, Push, Update) {
 
 		var me = this;
 
