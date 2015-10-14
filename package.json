@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "gamebeacon: An Ionic project",
   "dependencies": {
+    "angular-moment": "^0.10.3",
     "async": "^1.4.2",
     "gulp": "^3.5.6",
     "gulp-concat": "^2.2.0",
