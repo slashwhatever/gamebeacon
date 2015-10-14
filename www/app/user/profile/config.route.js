@@ -19,7 +19,7 @@
 				views: {
 					'main-view': {
 						templateUrl: 'app/user/profile/profile.html',
-						controller: 'UserProfile',
+						controller: 'ProfileController',
 						resolve: {
 							initialData: function(InitialData) {
 								return InitialData()
