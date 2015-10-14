@@ -9,6 +9,7 @@
 	beaconActions.$inject = ['Utils'];
 
 	function beaconActions(Utils) {
+
 		var directive = {
 			restrict: 'E',
 			replace: true,

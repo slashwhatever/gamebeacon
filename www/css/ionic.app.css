@@ -10949,21 +10949,22 @@ also be of any width and height */
   border-radius: 50px; }
 
 button.fireteam-button {
-  -webkit-border-radius: 50px;
-  border-radius: 50px;
+  -webkit-border-radius: 20px;
+  border-radius: 20px;
   font-size: 20px;
   z-index: 9999;
-  border-width: 0;
+  border: 2px solid #677c8f;
+  font-family: "SofiaProLight", "Helvetica Neue", Roboto, sans-serif;
   vertical-align: middle;
-  color: #3B424A;
-  background-color: #03A8BD;
+  color: #E2E7EB;
+  background-color: transparent;
   text-transform: lowercase;
-  padding: 10px;
+  padding: 5px;
   margin-bottom: 10px; }
 
 button.fireteam-leader {
-  background: #FFE11D;
-  color: #3B424A; }
+  background: #526371;
+  color: #E2E7EB; }
 
 button.join-fireteam-button {
   border: 1px dashed #f9f9f9;
@@ -11130,6 +11131,9 @@ ion-view[name=beacon-detail] .has-subheader {
   position: relative;
   margin-top: 10px; }
 
+.profile-meta {
+  text-align: center; }
+
 .meta-details {
   border: 2px solid #677c8f;
   color: #E2E7EB;
@@ -11140,7 +11144,8 @@ ion-view[name=beacon-detail] .has-subheader {
   background-color: transparent;
   vertical-align: middle;
   font-family: "SofiaProLight", "Helvetica Neue", Roboto, sans-serif;
-  font-size: 14px; }
+  font-size: 14px;
+  position: relative; }
 
 .meta-details:after {
   content: '';
@@ -11148,8 +11153,8 @@ ion-view[name=beacon-detail] .has-subheader {
   width: 5px;
   height: 2px;
   position: absolute;
-  top: 14px;
-  margin-left: 9px; }
+  top: 12px;
+  right: -6px; }
 
 .meta-details:last-child:after {
   border-top-color: transparent; }

@@ -5,41 +5,36 @@
 //
 
 (function() {
-    'use strict';
+	'use strict';
 
-    angular.module('gamebeacon', [
-    	'ionic',
-    	'ionic.service.core',
-    	'ionic.service.deploy',
-    	'ionic.service.analytics',
-    	'ionic.service.push',
-        /*
-         * Everybody has access to these.
-         * We could place these under every feature area,
-         * but this is easier to maintain.
-         */
-        'gamebeacon.core',
-        'gamebeacon.service',
-        'gamebeacon.widgets',
-        /*
-         * Feature areas
-         */
+	angular.module('gamebeacon', [
+		'ionic',
+		'ionic.service.core',
+		'ionic.service.deploy',
+		'ionic.service.analytics',
+		'ionic.service.push',
+		/*
+		 * Everybody has access to these.
+		 * We could place these under every feature area,
+		 * but this is easier to maintain.
+		 */
+		'gamebeacon.core',
+		'gamebeacon.service',
+		'gamebeacon.widgets',
 
-         'blocks.exception', 'blocks.logger', 'blocks.router',
+		'blocks.exception', 'blocks.logger', 'blocks.router',
 
-         'gamebeacon.beacon',
-         'gamebeacon.dashboard',
-         'gamebeacon.login',
-         'gamebeacon.tutorial',
-         'gamebeacon.user',
-         'gamebeacon.about',
+		/*
+		 * Feature areas
+		 */
 
+		'gamebeacon.beacon',
+		'gamebeacon.dashboard',
+		'gamebeacon.login',
+		'gamebeacon.tutorial',
+		'gamebeacon.user',
+		'gamebeacon.about'
 
-         'gamebeacon.beacon.chat.directives',
-
-         'gamebeacon.chat.services',
-         'gamebeacon.shared.directives',
-         'gamebeacon.fireteam.directives'
-    ]);
+	]);
 
 })();

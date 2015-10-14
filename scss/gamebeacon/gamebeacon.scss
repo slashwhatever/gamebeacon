@@ -424,21 +424,22 @@ also be of any width and height */
 }
 
 button.fireteam-button {
-		@include border-radius(50px);
+		@include border-radius(20px);
 		font-size: 20px;
 		z-index: 9999;
-		border-width: 0;
+		border: 2px solid lighten($dark-blue,30%);
+		font-family: $core-font-family;
 		vertical-align: middle;
-		color: $mid-grey;
-		background-color: $blue;
+		color: $grey;
+		background-color: transparent;
 		text-transform: lowercase;
-		padding: 10px;
+		padding: 5px;
 		margin-bottom: 10px;
 }
 
 button.fireteam-leader {
-		background: $yellow;
-		color: $mid-grey;
+		background: lighten($dark-blue,20%);
+		color: $grey;
 }
 
 button.join-fireteam-button {
@@ -645,6 +646,9 @@ ion-view[name=beacon-detail] .has-subheader {
     position: relative;
 	  margin-top: 10px;
 }
+.profile-meta {
+    text-align: center;
+}
 .meta-details {
 		border: 2px solid lighten($dark-blue,30%);
 		color: $grey;
@@ -655,6 +659,7 @@ ion-view[name=beacon-detail] .has-subheader {
 		vertical-align: middle;
 		font-family: $core-font-family;
 		font-size: 14px;
+		position: relative;
 }
 
 .meta-details:after {
@@ -663,8 +668,8 @@ ion-view[name=beacon-detail] .has-subheader {
     width: 5px;
     height: 2px;
     position: absolute;
-    top: 14px;
-    margin-left: 9px;
+    top: 12px;
+    right: -6px;
 }
 
 .meta-details:last-child:after {

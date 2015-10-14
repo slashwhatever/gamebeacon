@@ -9,29 +9,22 @@
 		<div class="row">
 			<div class="col col-33 col-offset-33 text-center">
 				<h2 class="username">{{ currentUser.username }}</h2>
-<!-- 				<p class="meta-detail small lower">Joined: {{ currentUser.buddySince.iso | amCalendar }}</p>
- -->
  			</div>
 		</div>
-		<div class="row">
-			<div class="col">
-				<div class="item item-icon-top l">
-					<i class="icon ion-ios-game-controller-a"></i>
-					<h3>{{ currentUser.gamertag }}</h3>
-				</div>
-			</div>
-			<div class="col">
-				<div class="item item-icon-top l">
-					<i class="icon {{currentUser.platform.icon}}"></i>
-					<h3>{{ currentUser.platform.shortName }}</h3>
-				</div>
-			</div>
-			<div class="col">
-				<div class="item item-icon-top l">
-					<i class="icon ion-ios-world"></i>
-					<h3>{{ currentUser.region.name }}</h3>
-				</div>
-			</div>
+
+		<div class="profile-meta padding">
+			<span class="meta-details">
+		    <i class="icon ion-icon ion-ios-game-controller-a"></i>
+		    <span class="meta-label">{{ currentUser.gamertag }}</span>
+			</span>
+			<span class="meta-details">
+		    <i class="icon ion-icon {{currentUser.platform.icon}}"></i>
+		    <span class="meta-label">{{ currentUser.platform.shortName }}</span>
+			</span>
+			<span class="meta-details">
+		    <i class="icon ion-icon ion-earth"></i>
+		    <span class="meta-label">{{ currentUser.region.name }}</span>
+			</span>
 		</div>
 
 		<beacon-card-list beacons="beacons"></beacon-card-list>

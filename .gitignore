@@ -7,3 +7,5 @@ plugins/
 gamebeacon.sublime-project
 gamebeacon.sublime-workspace
 npm-debug.log
+build_center/android-release-unsigned.apk
+build_center/gamebeacon.apk

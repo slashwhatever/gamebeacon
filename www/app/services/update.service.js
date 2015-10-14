@@ -25,7 +25,7 @@
 				// response will be true/false
 				if (response) {
 					var confirmUpdate = $ionicPopup.confirm({
-						cssClass: 'gb-popup',
+						cssClass: 'fade-up',
 						title: 'Update available',
 						template: 'Would you like to download and install the latest version of gamebeacon?'
 					});

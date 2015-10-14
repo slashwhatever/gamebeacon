@@ -1,4 +1,5 @@
 (function() {
+
 	"user strict";
 
 	angular

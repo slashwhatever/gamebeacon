@@ -16,7 +16,7 @@
 
 				var options = {},
 					defs = {
-						cssClass: 'gb-popup'
+						cssClass: 'fade-up'
 					};
 
 					options = _.extend(opts, defs);

@@ -15,14 +15,14 @@
 		return [{
 			state: 'app.beacon',
 			config: {
-				url: '/beacons/:beaconId',
+				url: '/beacon/:beaconId',
 				views: {
 					'main-view': {
-						templateUrl: 'app/beacon/detail/show.html',
+						templateUrl: 'app/beacon/show/show.html',
 						controller: 'ShowController',
 						resolve: {
-							beaconDetails: function($stateParams, beaconDetailData) {
-								return beaconDetailData($stateParams.beaconId)
+							beaconDetails: function($stateParams, BeaconDetail) {
+								return BeaconDetail($stateParams.beaconId)
 							}
 						}
 					}

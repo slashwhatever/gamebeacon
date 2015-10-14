@@ -43,7 +43,8 @@
 
 		$scope.deleteBeacon = function(beacon) {
 			var confirmDel = $ionicPopup.confirm({
-				cssClass: 'gb-popup',
+				animation: 'slide-down',
+				cssClass: 'fade-up',
 				title: 'Delete beacon',
 				template: 'Are you sure you want to delete your beacon?'
 			});
