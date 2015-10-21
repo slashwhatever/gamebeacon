@@ -98,24 +98,19 @@
 			list: function(params) {
 				var d = $q.defer();
 
-				if (me.dirty || me.beacons.length == 0) {
+				UI.showToast({
+					msg: 'retreiving beacons...'
+				});
 
-					UI.showToast({
-						msg: 'retreiving beacons...'
-					});
-
-					Beacon.list(params, function(response) {
-						me.beacons = response.results;
-						_.each(me.beacons, prepareBeaconData);
-						UI.hideToast();
-						d.resolve(me.beacons);
-					}, function(error) {
-						UI.hideToast();
-						d.reject(error);
-					});
-				} else {
+				Beacon.list(params, function(response) {
+					me.beacons = response.results;
+					_.each(me.beacons, prepareBeaconData);
+					UI.hideToast();
 					d.resolve(me.beacons);
-				}
+				}, function(error) {
+					UI.hideToast();
+					d.reject(error);
+				});
 
 				return d.promise
 
