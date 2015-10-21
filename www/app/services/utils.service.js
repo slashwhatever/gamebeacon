@@ -5,9 +5,9 @@
 		.module('gamebeacon.service')
 		.factory('Utils', Utils);
 
-	Utils.$inject = ['appConfig', '$rootScope'];
+	Utils.$inject = ['appConfig', 'PUser'];
 
-	function Utils(appConfig, $rootScope) {
+	function Utils(appConfig, PUser) {
 
 		var funcs = {
 			userOnboard: function(beacon) {
@@ -41,7 +41,7 @@
 				}
 			},
 			getCurrentUser: function() {
-				return $rootScope.currentUser
+				return PUser.getCurrentUser();
 			},
 			getPlatformIcon: function(platform) {
 				switch (platform.toLowerCase()) {

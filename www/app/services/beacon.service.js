@@ -5,9 +5,9 @@
 		.module('gamebeacon.service')
 		.factory('Beacon', Beacon);
 
-	Beacon.$inject = ['$resource', '$q', 'appConfig', '$rootScope', '$ionicLoading', 'Utils', 'Push', 'Msg'];
+	Beacon.$inject = ['$resource', '$q', 'appConfig', '$ionicLoading', 'Utils', 'Push', 'Msg', 'UI', 'PUser'];
 
-	function Beacon($resource, $q, appConfig, $rootScope, $ionicLoading, Utils, Push, Msg) {
+	function Beacon($resource, $q, appConfig, $ionicLoading, Utils, Push, Msg, UI, PUser) {
 		var me = this,
 			Beacon = $resource(appConfig.parseRestBaseUrl + 'classes/beacons/:objectId', {
 				objectId: '@objectId'
@@ -52,18 +52,21 @@
 				}
 			});
 
-		var addMinutes = function(date, minutes) {
+		me.dirty = false;
+		me.beacons = [];
+
+		function addMinutes(date, minutes) {
 			return new Date(date.getTime() + minutes * 60000);
 		}
 
-		var timeLeft = function(date) {
+		function timeLeft(date) {
 			var d = new Date(date).getTime();
 			var n = new Date().getTime();
 			var diff = d - n;
 			return Math.floor(diff / 1000); // we want seconds, not ms
 		}
 
-		var prepareBeaconData = function(beacon) {
+		function prepareBeaconData(beacon) {
 
 			// we're going to move the admin user to the top of the fireteamOnboard list
 			_.move(beacon.fireteamOnboard, _.findIndex(beacon.fireteamOnboard, function(i) {
@@ -73,7 +76,7 @@
 			// is the current user the beacon creator?
 			beacon['userIsCreator'] = _.findIndex(beacon.fireteamOnboard, function(i) {
 				// is the current user the same as the beacon creator user?
-				return Utils.getCurrentUser().puserId == beacon.creator.objectId
+				return PUser.getCurrentUser().puserId == beacon.creator.objectId
 			}) > -1
 
 			beacon['alreadyOnboard'] = Utils.userOnboard(beacon)
@@ -83,41 +86,75 @@
 			beacon.timeLeft = timeLeft(beacon.startDate.iso);
 		}
 
+		function pushUnsubscribe( puserId, beaconId ) {
+			Push.unsubscribe({
+				channel: 'MEMBER' + beaconId,
+				puserId: puserId
+			});
+		}
+
+
 		return {
 			list: function(params) {
 				var d = $q.defer();
 
-				var beacons = Beacon.list(params, function(response) {
-					_.each(response.results, prepareBeaconData);
+				if (me.dirty || me.beacons.length == 0) {
+
+					UI.showToast({
+						msg: 'retreiving beacons...'
+					});
+
+					Beacon.list(params, function(response) {
+						me.beacons = response.results;
+						_.each(me.beacons, prepareBeaconData);
+						UI.hideToast();
+						d.resolve(me.beacons);
+					}, function(error) {
+						UI.hideToast();
+						d.reject(error);
+					});
+				} else {
+					d.resolve(me.beacons);
+				}
+
+				return d.promise
+
+			},
+			get: function(objectId) {
+				var d = $q.defer();
+
+				UI.showToast({
+					msg: 'retreiving beacon...'
+				});
+
+				Beacon.get({
+					objectId: objectId
+				}, function(response) {
+					prepareBeaconData(response);
+					UI.hideToast();
 					d.resolve(response);
 				}, function(error) {
+					UI.hideToast();
 					d.reject(error);
 				});
 
 				return d.promise
 			},
-			get: function(objectId) {
-				var d = $q.defer(),
-					beacon,
-					beacons = Beacon.get({
-						objectId: objectId
-					}, function(response) {
-
-						beacon = response;
-						prepareBeaconData(beacon);
-						d.resolve(response);
-					}, function(error) {
-						d.reject(error);
-					});
-
-				return d.promise
-			},
 			delete: function(beacon) {
+
 				var d = $q.defer();
+
+				me.dirty = true;
 
 				var beacons = Beacon.delete({
 					objectId: beacon.objectId
 				}, function(response) {
+
+					// when we delete a beacon, we need to make sure we remove everyone from any push that was created for that beacon
+					_.each(beacon.fireteamOnboard, function(f) {
+						pushUnsubscribe(f.puserId, beacon.objectId)
+					});
+
 					d.resolve(response);
 				}, function(error) {
 					d.reject(error);
@@ -143,6 +180,12 @@
 					objectId: beacon.objectId,
 					active: false
 				}, function(response) {
+
+					// when we expire a beacon, we need to make sure we remove everyone from any push that was created for that beacon
+					_.each(beacon.fireteamOnboard, function(f) {
+						pushUnsubscribe(f.puserId, beacon.objectId)
+					});
+
 					d.resolve(response);
 				}, function(error) {
 					d.reject(error);
@@ -151,6 +194,8 @@
 				return d.promise
 			},
 			updateFireteam: function(beacon, operation, puserId) {
+
+				me.dirty = true;
 
 				var d = $q.defer(),
 					opObj = {

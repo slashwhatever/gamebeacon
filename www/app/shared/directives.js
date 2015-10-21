@@ -66,9 +66,9 @@ angular.module('gamebeacon.shared.directives', [])
 	'$ionicBackdrop',
 	'$q',
 	'$timeout',
-	'$rootScope',
 	'$document',
-	function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $document) {
+	'PUser',
+	function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $document, PUser) {
 		return {
 			require: '?ngModel',
 			restrict: 'E',
@@ -152,14 +152,13 @@ angular.module('gamebeacon.shared.directives', [])
 	'$cordovaCamera',
 	'$q',
 	'$timeout',
-	'$rootScope',
 	'$ionicGesture',
 	'$ionicActionSheet',
 	'PUser',
 	'Utils',
 	'UI',
 	'appConfig',
-	function($cordovaFileTransfer, $cordovaCamera, $q, $timeout, $rootScope, $ionicGesture, $ionicActionSheet, PUser, Utils, UI, appConfig) {
+	function($cordovaFileTransfer, $cordovaCamera, $q, $timeout, $ionicGesture, $ionicActionSheet, PUser, Utils, UI, appConfig) {
 		return {
 			require: '?ngModel',
 			restrict: 'E',
@@ -234,7 +233,7 @@ angular.module('gamebeacon.shared.directives', [])
 											}
 											// Success!
 											PUser.update({
-												id: Utils.getCurrentUser().puserId
+												id: PUser.getCurrentUser().puserId
 											}, {
 												picture: Utils.getObjectAsFile(jsonResponse.name)
 											}).then(function(response) {

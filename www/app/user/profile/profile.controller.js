@@ -5,9 +5,9 @@
 		.module('gamebeacon.user')
 		.controller('ProfileController', ProfileController);
 
-	ProfileController.$inject = ['$rootScope', '$scope', '$state', '$cordovaImagePicker', 'initialData', 'Utils', 'Auth', 'PUser', 'UI'];
+	ProfileController.$inject = ['$scope', '$state', '$cordovaImagePicker', 'initialData', 'Utils', 'Auth', 'PUser', 'UI'];
 
-	function ProfileController($rootScope, $scope, $state, $cordovaImagePicker, initialData, Utils, Auth, PUser, UI) {
+	function ProfileController($scope, $state, $cordovaImagePicker, initialData, Utils, Auth, PUser, UI) {
 
 
 		// these should now be available everywhere
@@ -16,7 +16,7 @@
 		$scope.mics = initialData.mics;
 		$scope.requestPasswordReset = requestPasswordReset;
 		$scope.updateProfile = updateProfile;
-		$scope.currentUser = Utils.getCurrentUser();
+		$scope.currentUser = PUser.getCurrentUser();
 
 // TODO: password reset broken - not passing in email
 
@@ -61,7 +61,7 @@
 			});
 
 			PUser.update({
-				id: $scope.currentUser.puserId
+				objectId: $scope.currentUser.puserId
 			}, {
 				//picture: Utils.getObjectAsFile($scope.profile.picture),
 				gamertag: $scope.profile.gamertag,

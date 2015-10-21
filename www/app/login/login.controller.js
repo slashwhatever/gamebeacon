@@ -5,9 +5,9 @@
 		.module('gamebeacon.login')
 		.controller('LoginController', LoginController);
 
-	LoginController.$inject = ['$rootScope', '$scope', '$state', '$ionicUser', '$localStorage', 'UI', 'Auth', 'Push', 'Update'];
+	LoginController.$inject = ['$scope', '$state', '$ionicUser', '$localStorage', 'UI', 'Auth', 'Push', 'Update', 'PUser'];
 
-	function LoginController($rootScope, $scope, $state, $ionicUser, $localStorage, UI, Auth, Push, Update) {
+	function LoginController($scope, $state, $ionicUser, $localStorage, UI, Auth, Push, Update, PUser) {
 
 		var me = this;
 
@@ -80,12 +80,12 @@
 		}
 
 		function logout(form) {
-			$rootScope.currentUser = null
+			PUser.setCurrentUser(null);
 			$state.go('login');
 		}
 
 		function requestPasswordReset(form) {
-			$rootScope.currentUser = null
+			PUser.setCurrentUser(null);
 			$state.go('reset-password');
 		}
 	}

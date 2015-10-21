@@ -5,9 +5,9 @@
 		.module('gamebeacon.beacon')
 		.controller('CreateController', CreateController);
 
-	CreateController.$inject = ['$scope', '$rootScope', '$state', 'initialData', 'Beacon', 'Utils', 'Push', 'Msg', 'UI', '$ionicSlideBoxDelegate', '$timeout', '$ionicScrollDelegate'];
+	CreateController.$inject = ['$scope', '$state', 'initialData', 'Beacon', 'Utils', 'Push', 'Msg', 'UI', '$ionicSlideBoxDelegate', '$timeout', '$ionicScrollDelegate', 'PUser'];
 
-	function CreateController($scope, $rootScope, $state, initialData, Beacon, Utils, Push, Msg, UI, $ionicSlideBoxDelegate, $timeout, $ionicScrollDelegate) {
+	function CreateController($scope, $state, initialData, Beacon, Utils, Push, Msg, UI, $ionicSlideBoxDelegate, $timeout, $ionicScrollDelegate, PUser) {
 
 
 		$scope.updateGameType = updateGameType;
@@ -24,7 +24,7 @@
 		$scope.regions = initialData.regions;
 		$scope.mics = initialData.mics;
 		$scope.maxFireteam = $scope.getMaxFireTeam(initialData.missions[0]);
-		$scope.currentUser = Utils.getCurrentUser();
+		$scope.currentUser = PUser.getCurrentUser();
 		//$scope.startTime = new Date().getTime();
 
 		// set the starting slides for the mic, platform and region
@@ -63,10 +63,10 @@
 					'mic': Utils.getObjectAsPointer('mics', $scope.mics[$ionicSlideBoxDelegate.$getByHandle('mic-selector').currentIndex()].objectId),
 					'level': hasLevel ? Utils.getObjectAsPointer('levels', $scope.levels[$ionicSlideBoxDelegate.$getByHandle('level-selector').currentIndex()].objectId) : null,
 					'fireteamRequired': $ionicSlideBoxDelegate.$getByHandle('fireteam-selector').currentIndex() + 1,
-					'fireteamOnboard': [Utils.getObjectAsPointer('pusers', Utils.getCurrentUser().puserId)],
+					'fireteamOnboard': [Utils.getObjectAsPointer('pusers', PUser.getCurrentUser().puserId)],
 					'platform': Utils.getObjectAsPointer('platforms', $scope.platforms[$ionicSlideBoxDelegate.$getByHandle('platform-selector').currentIndex()].objectId),
 					'region': Utils.getObjectAsPointer('regions', $scope.regions[$ionicSlideBoxDelegate.$getByHandle('region-selector').currentIndex()].objectId),
-					'creator': Utils.getObjectAsPointer('pusers', Utils.getCurrentUser().puserId),
+					'creator': Utils.getObjectAsPointer('pusers', PUser.getCurrentUser().puserId),
 					'startDate': {
 						"__type": "Date",
 						"iso": startTime
@@ -78,7 +78,7 @@
 					// subscribe the user to a channel for this beacon
 					Push.subscribe({
 						channel: 'OWNER' + response.objectId,
-						puserId: Utils.getCurrentUser().puserId
+						puserId: PUser.getCurrentUser().puserId
 					});
 
 					// if the beacon was created, create a scheduled push that will go to all subscribers of the OWNERxxx and MEMBERxxx channels

@@ -10,15 +10,16 @@
 	function BeaconDetail($q, $stateParams, Beacon, Chat, UI) {
 		return function(beaconId) {
 
-			UI.showToast({
+/*			UI.showToast({
 				msg: 'loading beacon...'
 			});
-
+*/
 			var beacon = Beacon.get(beaconId),
 				messages = Chat.list(beaconId);
 
 			return $q.all([beacon, messages]).then(function(results) {
-				UI.hideToast();
+/*				UI.hideToast();
+*/
 				return {
 					beacon: results[0],
 					messages: results[1].results

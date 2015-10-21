@@ -5,9 +5,9 @@
 		.module('gamebeacon.service')
 		.factory('Chat', Chat);
 
-	Chat.$inject = ['$rootScope', '$resource', '$q', 'appConfig', 'Utils'];
+	Chat.$inject = ['$resource', '$q', 'appConfig', 'Utils', 'PUser'];
 
-	function Chat($rootScope, $resource, $q, appConfig, Utils) {
+	function Chat($resource, $q, appConfig, Utils, PUser) {
 
 		var Chat = $resource(
 			appConfig.parseRestBaseUrl + 'classes/messages/:id', {
@@ -64,7 +64,7 @@
 				Chat.save({
 					message: message,
 					beacon: Utils.getObjectAsPointer('beacons', beaconId),
-					from: Utils.getObjectAsPointer('pusers', Utils.getCurrentUser().puserId)
+					from: Utils.getObjectAsPointer('pusers', PUser.getCurrentUser().puserId)
 				}, function(response) {
 					d.resolve(response);
 				}, function(error) {

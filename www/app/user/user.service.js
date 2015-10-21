@@ -5,9 +5,9 @@
 		.module('gamebeacon.user')
 		.factory('User', User);
 
-	User.$inject = ['$resource', '$rootScope', 'appConfig'];
+	User.$inject = ['$resource', 'appConfig', 'PUser'];
 
-	function User($resource, $rootScope, appConfig) {
+	function User($resource, appConfig, PUser) {
 
 		var User = function(id) {
 			return $resource(appConfig.parseRestBaseUrl + 'users/:id', {
@@ -15,25 +15,25 @@
 			}, {
 				get: {
 					headers: _.extend({}, {
-						'X-Parse-Session-Token': $rootScope.currentUser.sessionToken
+						'X-Parse-Session-Token': PUser.getCurrentUser().sessionToken
 					}, appConfig.parseHttpsHeaders)
 				},
 				list: {
 					method: 'GET',
 					headers: _.extend({}, {
-						'X-Parse-Session-Token': $rootScope.currentUser.sessionToken
+						'X-Parse-Session-Token': PUser.getCurrentUser().sessionToken
 					}, appConfig.parseHttpsHeaders)
 				},
 				save: {
 					method: 'POST',
 					headers: _.extend({}, {
-						'X-Parse-Session-Token': $rootScope.currentUser.sessionToken
+						'X-Parse-Session-Token': PUser.getCurrentUser().sessionToken
 					}, appConfig.parseHttpsHeaders)
 				},
 				update: {
 					method: 'PUT',
 					headers: _.extend({}, {
-						'X-Parse-Session-Token': $rootScope.currentUser.sessionToken
+						'X-Parse-Session-Token': PUser.getCurrentUser().sessionToken
 					}, appConfig.parseHttpsHeaders)
 				}
 			});

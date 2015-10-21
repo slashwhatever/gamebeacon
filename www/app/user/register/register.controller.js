@@ -5,9 +5,9 @@
 		.module('gamebeacon.user')
 		.controller('RegisterController', RegisterController);
 
-	RegisterController.$inject = ['$rootScope', '$scope', '$state', 'platforms', 'regions', 'mics', 'Auth', 'UI', 'Utils'];
+	RegisterController.$inject = ['$scope', '$state', 'platforms', 'regions', 'mics', 'Auth', 'UI', 'Utils'];
 
-	function RegisterController($rootScope, $scope, $state, platforms, regions, mics, Auth, UI, Utils) {
+	function RegisterController($scope, $state, platforms, regions, mics, Auth, UI, Utils) {
 
 		$scope.platforms = platforms.results;
 		$scope.regions = regions.results;

@@ -5,9 +5,9 @@
 		.module('gamebeacon.user')
 		.controller('ResetPasswordController', ResetPasswordController);
 
-	ResetPasswordController.$inject = ['$rootScope', '$scope', '$state', 'Auth', 'UI', 'Utils'];
+	ResetPasswordController.$inject = ['$scope', '$state', 'Auth', 'UI', 'Utils'];
 
-	function ResetPasswordController($rootScope, $scope, $state, Auth, UI, Utils) {
+	function ResetPasswordController($scope, $state, Auth, UI, Utils) {
     $scope.user = {email: ''};
     $scope.requestPasswordReset = function(form) {
         if(form.$valid) {

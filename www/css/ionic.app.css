@@ -10331,6 +10331,9 @@ a.button {
   font-weight: normal;
   font-style: normal; }
 
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important; }
+
 /******************** fonts ********************/
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   line-height: 1.3; }
@@ -10340,9 +10343,6 @@ h1, .h1 {
 
 .backdrop {
   background-color: rgba(39, 47, 54, 0.6); }
-
-.popup-container .popup {
-  background-color: #3c4954; }
 
 /******************** grids ********************/
 .col-right {
@@ -10588,7 +10588,10 @@ button {
   background-color: #323c45; }
 
 .item-complex .item-content {
-  background-color: #323c45; }
+  background-color: #323c45;
+  background-image: -webkit-linear-gradient(64deg, #323c45 5%, #4B5A66 100%);
+  background-image: -o-linear-gradient(64deg, #323c45 5%, #4B5A66 100%);
+  background-image: linear-gradient(64deg, #323c45 5%, #4B5A66 100%); }
 
 .list {
   padding-top: 0px; }
@@ -10599,6 +10602,10 @@ ion-header-bar .title {
 
 .backdrop {
   background-color: rgba(39, 47, 54, 0.8); }
+
+/*********************** popups **************************/
+.popup-container .popup {
+  background-color: #3c4954; }
 
 .popup-container .popup {
   width: 100%; }
@@ -10613,6 +10620,26 @@ ion-header-bar .title {
 
 .popup-buttons {
   padding: 15px 20px; }
+
+.popup-container.popup-hidden .popup {
+  -webkit-animation-name: scaleOut;
+  animation-name: scaleOut;
+  -webkit-animation-duration: 0.1s;
+  animation-duration: 0.1s;
+  -webkit-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both; }
+
+.popup-container.active .popup {
+  -webkit-animation-name: superScaleIn;
+  animation-name: superScaleIn;
+  -webkit-animation-duration: 0.2s;
+  animation-duration: 0.2s;
+  -webkit-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both; }
 
 .bar.bar-subheader {
   border-bottom-color: transparent;
@@ -10639,6 +10666,9 @@ body {
   background-image: -webkit-linear-gradient(137deg, #8FDCDC 0%, #2961C3 50%, #15132A 91%);
   background-image: -o-linear-gradient(137deg, #8FDCDC 0%, #2961C3 50%, #15132A 91%);
   background-image: linear-gradient(137deg, #8FDCDC 0%, #2961C3 50%, #15132A 91%); }
+
+.pull-right {
+  float: right; }
 
 h1, h2, h3 {
   text-transform: none; }
@@ -10741,7 +10771,6 @@ label.new-message input {
   font-family: "SofiaProLight", "Helvetica Neue", Roboto, sans-serif;
   font-weight: 300;
   background-color: #2A3035;
-  box-shadow: inset 0 10px 20px rgba(0, 0, 0, 0.1);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   padding: 10px 0; }
 
@@ -10779,9 +10808,9 @@ label.new-message input {
   height: 100%; }
 
 .missions-slide, .gametypes-slide, .create-beacon-slide {
-  background-image: -webkit-linear-gradient(64deg, #6BB6C4 5%, #437CAA 100%);
-  background-image: -o-linear-gradient(64deg, #6BB6C4 5%, #437CAA 100%);
-  background-image: linear-gradient(64deg, #6BB6C4 5%, #437CAA 100%); }
+  background-image: -webkit-linear-gradient(64deg, #323c45 5%, #4B5A66 100%);
+  background-image: -o-linear-gradient(64deg, #323c45 5%, #4B5A66 100%);
+  background-image: linear-gradient(64deg, #323c45 5%, #4B5A66 100%); }
 
 li.mission-level {
   display: inline;
@@ -10803,6 +10832,18 @@ also be of any width and height */
 
 .mission-time {
   color: #5DCB48; }
+
+/*************** buttons *******************/
+.fireteam-actions {
+  display: flex;
+  flex-direction: row-reverse; }
+
+.fireteam-actions button {
+  margin-left: 5px; }
+
+.fireteam-actions button.button-block {
+  margin-top: 0;
+  margin-bottom: 0; }
 
 /*************** icons *******************/
 .icon-s {
@@ -10947,6 +10988,10 @@ also be of any width and height */
   height: 100%;
   -webkit-border-radius: 50px;
   border-radius: 50px; }
+
+/************** fireteam *****************/
+.fireteam-member-name {
+  vertical-align: middle; }
 
 button.fireteam-button {
   -webkit-border-radius: 20px;
@@ -11154,7 +11199,7 @@ ion-view[name=beacon-detail] .has-subheader {
   height: 2px;
   position: absolute;
   top: 12px;
-  right: -6px; }
+  right: -7px; }
 
 .meta-details:last-child:after {
   border-top-color: transparent; }
@@ -11270,9 +11315,9 @@ form.ng-submitted input.ng-valid + i.icon.error, form.ng-submitted select.ng-val
 
 /* scheduler */
 .scheduler-container {
-  background-image: -webkit-linear-gradient(64deg, #6BB6C4 5%, #437CAA 100%);
-  background-image: -o-linear-gradient(64deg, #6BB6C4 5%, #437CAA 100%);
-  background-image: linear-gradient(64deg, #6BB6C4 5%, #437CAA 100%);
+  background-image: -webkit-linear-gradient(64deg, #323c45 5%, #4B5A66 100%);
+  background-image: -o-linear-gradient(64deg, #323c45 5%, #4B5A66 100%);
+  background-image: linear-gradient(64deg, #323c45 5%, #4B5A66 100%);
   position: relative;
   height: 170px;
   background-color: #2A3035;

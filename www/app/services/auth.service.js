@@ -5,9 +5,9 @@
 		.module('gamebeacon.service')
 		.factory('Auth', Auth);
 
-	Auth.$inject = ['$resource', '$rootScope', '$ionicLoading', '$localStorage', '$q', 'appConfig', 'PUser', 'UI', 'Utils'];
+	Auth.$inject = ['$resource', '$ionicLoading', '$localStorage', '$q', 'appConfig', 'PUser', 'UI'];
 
-	function Auth($resource, $rootScope, $ionicLoading, $localStorage, $q, appConfig, PUser, UI, Utils) {
+	function Auth($resource, $ionicLoading, $localStorage, $q, appConfig, PUser, UI) {
 
 		var User = function(customHeaders) {
 			return $resource(appConfig.parseRestBaseUrl + 'login/', {
@@ -27,7 +27,7 @@
 					url: appConfig.parseRestBaseUrl + 'classes/pusers/:puserId',
 					method: 'GET',
 					params: {
-						'include': 'platform,region,mic'
+						'include': 'platform,region,mic,friends'
 					},
 					headers: _.extend({}, customHeaders, appConfig.parseHttpsHeaders)
 				},
@@ -89,6 +89,7 @@
 									fullUser.userId = userRes.objectId;
 									fullUser.puserId = pUserRes.objectId;
 									fullUser.username = userRes.username;
+									fullUser.friends = pUserRes.friends;
 									fullUser.gamertag = pUserRes.gamertag;
 									fullUser.buddySince = userRes.createdAt;
 									fullUser.platform = pUserRes.platform;
@@ -99,7 +100,7 @@
 
 									$localStorage.set('sessionToken', userRes.sessionToken)
 
-									$rootScope.currentUser = fullUser
+									PUser.setCurrentUser(fullUser);
 
 									d.resolve(fullUser);
 								}
@@ -126,31 +127,6 @@
 				return d.promise;
 
 			},
-			getFullUser: function() {
-				var d = $q.defer();
-
-				$ionicLoading.show({
-					template: 'Loading...'
-				});
-
-				User().getFullUser({
-					objectId: $rootScope.currentUser.puserId
-				}, function(response) {
-					if (response) {
-						$rootScope.currentUser = response;
-						$ionicLoading.hide();
-						d.resolve(response);
-					}
-				}, function(response) {
-					$ionicLoading.hide();
-					UI.showAlert({
-						title: 'Oops!',
-						template: response.data.error
-					})
-				});
-
-				return d.promise
-			},
 			getCurrentUser: function(sessionToken) {
 				var d = $q.defer();
 
@@ -168,6 +144,7 @@
 									fullUser.userId = userRes.objectId;
 									fullUser.puserId = pUserRes.objectId;
 									fullUser.username = userRes.username;
+									fullUser.friends = pUserRes.friends;
 									fullUser.gamertag = pUserRes.gamertag;
 									fullUser.buddySince = userRes.createdAt;
 									fullUser.platform = pUserRes.platform;
@@ -175,9 +152,10 @@
 									fullUser.region = pUserRes.region;
 									fullUser.mic = pUserRes.mic;
 									fullUser.sessionToken = userRes.sessionToken;
+
 									$localStorage.set('sessionToken', userRes.sessionToken)
 
-									$rootScope.currentUser = fullUser;
+									PUser.setCurrentUser(fullUser);
 
 									d.resolve(fullUser);
 								}

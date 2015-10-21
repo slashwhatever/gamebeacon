@@ -5,12 +5,12 @@
         .module('gamebeacon.dashboard')
         .controller('DashboardController', DashboardController);
 
-    DashboardController.$inject = ['$scope', '$stateParams', 'Utils', 'Beacon'];
+    DashboardController.$inject = ['$scope', '$stateParams', 'Utils', 'Beacon', 'PUser'];
 
-    function DashboardController($scope, $stateParams, Utils, Beacon) {
+    function DashboardController($scope, $stateParams, Utils, Beacon, PUser) {
 
     	$scope.beacons = [];
-    	$scope.currentUser = Utils.getCurrentUser();
+    	$scope.currentUser = PUser.getCurrentUser();
     	$scope.noBeacons = null;
     	$scope.moreBeacons = false;
     	$scope.loadingBeacons = null;
@@ -44,14 +44,14 @@
     			$scope.loadingBeacons = false;
 
     			// if we have results, there may be more...
-    			$scope.moreBeacons = (response.results.length > limit)
+    			$scope.moreBeacons = (response.length > limit)
 
     			// increment the skip counter
-    			skip += Math.min(response.results.length, limit);
+    			skip += Math.min(response.length, limit);
 
     			// add the results to the scope
-    			if (response.results.length > 0) {
-    				$scope.beacons = $scope.beacons.concat(response.results);
+    			if (response.length > 0) {
+    				$scope.beacons = $scope.beacons.concat(response);
     				$scope.noBeacons = false;
     			} else {
     				$scope.noBeacons = true;

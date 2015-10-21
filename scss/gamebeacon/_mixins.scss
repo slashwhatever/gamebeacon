@@ -33,7 +33,7 @@
 }
 
 @mixin blue-grad () {
-  @include linear-gradient(64deg, $green-blue 5%, #437CAA 100%);
+  @include linear-gradient(64deg, #323c45 5%, #4B5A66 100%);
 }
 
 @mixin purple-grad () {

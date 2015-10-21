@@ -5,9 +5,9 @@
 		.module('gamebeacon.service')
 		.factory('UI', UI);
 
-	UI.$inject = ['appConfig', '$ionicPopup', '$rootScope', '$ionicLoading'];
+	UI.$inject = ['appConfig', '$ionicPopup', '$ionicLoading'];
 
-	function UI(appConfig, $ionicPopup, $rootScope, $ionicLoading) {
+	function UI(appConfig, $ionicPopup, $ionicLoading) {
 		return {
 			showAlert: function(opts, cb) {
 

@@ -5,9 +5,9 @@
 		.module('gamebeacon.beacon')
 		.controller('ListController', ListController);
 
-	ListController.$inject = ['$scope', '$rootScope', '$state', '$ionicPopup', 'UI', 'Beacon', 'Utils', 'appConfig', 'InitialData'];
+	ListController.$inject = ['$scope', '$state', '$ionicPopup', 'UI', 'Beacon', 'Utils', 'appConfig', 'InitialData', 'PUser'];
 
-	function ListController($scope, $rootScope, $state, $ionicPopup, UI, Beacon, Utils, appConfig, InitialData) {
+	function ListController($scope, $state, $ionicPopup, UI, Beacon, Utils, appConfig, InitialData, PUser) {
 
 
 		var today = new Date(),
@@ -23,7 +23,7 @@
 		$scope.skip = 0;
 		$scope.limit = 20;
 		$scope.moreBeacons = false;
-		$scope.puserId = Utils.getCurrentUser().puserId;
+		$scope.puserId = PUser.getCurrentUser().puserId;
 		$scope.noBeacons = null;
 		$scope.loadingBeacons = null;
 		$scope.fromDate = _fromDate.toISOString();
@@ -88,11 +88,11 @@
 
 		// go grab 20 beacons from the server
 		$scope.getBeaconChunk = function(cb) {
-
+/*
 			UI.showToast({
 				msg: 'retreiving beacons...'
 			});
-
+*/
 			$scope.loadingBeacons = true;
 			Beacon.list({
 				limit: $scope.limit,
@@ -101,15 +101,15 @@
 			}).then(function(response) {
 				$scope.loadingBeacons = false;
 
-				// if we have results, there may be more...
-				$scope.moreBeacons = (response.results.length > $scope.limit)
+				// if we have a response, there may be more...
+				$scope.moreBeacons = (response.length > $scope.limit)
 
 				// increment the skip counter
-				$scope.skip += Math.min(response.results.length, $scope.limit);
+				$scope.skip += Math.min(response.length, $scope.limit);
 
-				// add the results to the scope
-				if (response.results.length > 0) {
-					$scope.beacons = $scope.beacons.concat(response.results);
+				// add the response to the scope
+				if (response.length > 0) {
+					$scope.beacons = $scope.beacons.concat(response);
 					$scope.noBeacons = false;
 				} else {
 					$scope.noBeacons = true;
@@ -118,7 +118,7 @@
 
 				$scope.$broadcast('scroll.infiniteScrollComplete');
 
-				UI.hideToast();
+				/*UI.hideToast();*/
 				if (cb && typeof cb === 'function') cb.call();
 
 			});
@@ -143,7 +143,7 @@
 			Beacon.updateFireteam(beacon, 'join', $scope.puserId).then(function() {
 				UI.hideToast();
 
-				Utils.getCurrentUser().myBeacons.push(beacon.objectId);
+				//Utils.getCurrentUser().myBeacons.push(beacon.objectId);
 
 				$state.go('app.beacon', {
 					beaconId: beacon.objectId
@@ -169,7 +169,7 @@
 					Beacon.delete(beacon).then(function() {
 						UI.hideToast();
 
-						Utils.getCurrentUser().myBeacons = _.without(Utils.getCurrentUser().myBeacons, beacon.objectId);
+						//Utils.getCurrentUser().myBeacons = _.without(Utils.getCurrentUser().myBeacons, beacon.objectId);
 
 						$state.go('app.beacons', null, {
 							reload: true,
@@ -188,7 +188,7 @@
 			Beacon.updateFireteam(beacon, 'leave').then(function() {
 				UI.hideToast();
 
-				Utils.getCurrentUser().myBeacons = _.without(Utils.getCurrentUser().myBeacons, beacon.objectId);
+				//Utils.getCurrentUser().myBeacons = _.without(Utils.getCurrentUser().myBeacons, beacon.objectId);
 
 				$state.go('app.beacons', null, {
 					reload: true,

@@ -1,0 +1,10 @@
+<div>
+	<div ng-repeat="friend in currentUser.friends track by friend.objectId" class="row row-center beacon-fireteam fireteam-member">
+		<div class="col fireteam-member-name-wrapper">
+			<span class="fireteam-member-name">{{ ::friend.gamertag | limitTo : 20}}</span>
+		</div>
+		<div class="col col-50 fireteam-actions">
+			<button ng-class="getFollowBtnCls(friend.objectId)" class="button button-block button-small pull-right" ng-click="toggleFollow({objectId: friend.objectId})">{{ getBtnLbl(friend.objectId) }}</button>
+		</div>
+	</div>
+</div>

@@ -6,9 +6,9 @@
 		.module('gamebeacon.widgets')
 		.directive('beaconChat', beaconChat)
 
-	beaconChat.$inject = ['Utils'];
+	beaconChat.$inject = ['PUser'];
 
-	function beaconChat(Utils) {
+	function beaconChat(PUser) {
 
 		var directive = {
 			restrict: 'AE',
@@ -21,7 +21,7 @@
 		return directive;
 
 		function link(scope, elem, attr, tabsetCtrl) {
-			scope.currentUser = Utils.getCurrentUser();
+			scope.currentUser = PUser.getCurrentUser();
 		}
 
 	}

@@ -6,6 +6,9 @@ body {
 		background-image: linear-gradient(137deg, #8FDCDC 0%, #2961C3 50%, #15132A 91%);
 }
 
+.pull-right {
+	float: right;
+}
 h1,
 h2,
 h3 {
@@ -155,7 +158,7 @@ label.new-message input {
 		font-family: $core-font-family;
 		font-weight: 300;
 		background-color: #2A3035;
-		box-shadow: inset 0 10px 20px rgba(0, 0, 0, 0.1);
+		//box-shadow: inset 0 10px 20px rgba(0, 0, 0, 0.1);
 		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 		padding: 10px 0;
 }
@@ -235,6 +238,20 @@ also be of any width and height */
 		color: $green;
 }
 
+/*************** buttons *******************/
+
+.fireteam-actions {
+	display: flex;
+	flex-direction: row-reverse;
+}
+
+.fireteam-actions button {
+	margin-left: 5px;
+}
+.fireteam-actions button.button-block {
+	margin-top: 0;
+	margin-bottom: 0;
+}
 
 /*************** icons *******************/
 
@@ -423,6 +440,12 @@ also be of any width and height */
 		@include border-radius(50px);
 }
 
+
+
+/************** fireteam *****************/
+.fireteam-member-name {
+	vertical-align: middle;
+}
 button.fireteam-button {
 		@include border-radius(20px);
 		font-size: 20px;
@@ -669,7 +692,7 @@ ion-view[name=beacon-detail] .has-subheader {
     height: 2px;
     position: absolute;
     top: 12px;
-    right: -6px;
+    right: -7px;
 }
 
 .meta-details:last-child:after {
