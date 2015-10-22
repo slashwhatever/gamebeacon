@@ -9,7 +9,6 @@
 
 	function CreateController($scope, $state, initialData, Beacon, Utils, Push, Msg, UI, $ionicSlideBoxDelegate, $timeout, $ionicScrollDelegate, PUser) {
 
-
 		$scope.updateGameType = updateGameType;
 		$scope.updateMission = updateMission;
 		$scope.getMaxFireTeam = getMaxFireTeam;

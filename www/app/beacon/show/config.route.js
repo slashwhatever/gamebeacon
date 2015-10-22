@@ -20,7 +20,7 @@
 					'main-view': {
 						templateUrl: 'app/beacon/show/show.html',
 						controller: 'ShowController',
-						resolve: {
+						resolve: { /* @ngInject */
 							beaconDetails: function($stateParams, BeaconDetail) {
 								return BeaconDetail($stateParams.beaconId)
 							}

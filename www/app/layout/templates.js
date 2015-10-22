@@ -1,1 +1,5 @@
-angular.module('templates', [])
+(function() {
+	'use strict';
+
+	angular.module('templates', []);
+})();

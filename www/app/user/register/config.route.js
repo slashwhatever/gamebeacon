@@ -19,7 +19,7 @@
 				templateUrl: 'app/user/register/register.html',
 				controller: 'RegisterController',
 				//TODO: combine these into a single promise service
-				resolve: {
+				resolve: { /* @ngInject */
 					platforms: function(Resource) {
 						return Resource.list('platforms')
 					},

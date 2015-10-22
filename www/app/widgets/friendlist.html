@@ -4,6 +4,7 @@
 			<span class="fireteam-member-name">{{ ::friend.gamertag | limitTo : 20}}</span>
 		</div>
 		<div class="col col-50 fireteam-actions">
+			<button class="button button-block button-small button-energized ion-eye pull-right" ui-sref="app.profile({objectId: friend.objectId})"></button>
 			<button ng-class="getFollowBtnCls(friend.objectId)" class="button button-block button-small pull-right" ng-click="toggleFollow({objectId: friend.objectId})">{{ getBtnLbl(friend.objectId) }}</button>
 		</div>
 	</div>

@@ -18,7 +18,7 @@
 				url: '/beacon-create',
 				templateUrl: 'app/beacon/create/create.html',
 				controller: 'CreateController',
-				resolve: {
+				resolve: { /* @ngInject */
 					initialData: function(InitialData) {
 						return InitialData()
 					}

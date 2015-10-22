@@ -5,10 +5,9 @@
 		.module('gamebeacon.user')
 		.controller('ProfileController', ProfileController);
 
-	ProfileController.$inject = ['$scope', '$state', '$cordovaImagePicker', 'initialData', 'Utils', 'Auth', 'PUser', 'UI'];
+	ProfileController.$inject = ['$scope', '$state', '$cordovaImagePicker', 'initialData', 'Utils', 'Auth', 'PUser', 'UI', 'profile'];
 
-	function ProfileController($scope, $state, $cordovaImagePicker, initialData, Utils, Auth, PUser, UI) {
-
+	function ProfileController($scope, $state, $cordovaImagePicker, initialData, Utils, Auth, PUser, UI, profile) {
 
 		// these should now be available everywhere
 		$scope.platforms = initialData.platforms;

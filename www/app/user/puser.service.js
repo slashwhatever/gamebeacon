@@ -52,7 +52,7 @@
 		return {
 			get: function(objectId) {
 				var d = $q.defer();
-				PUser(objectId).get(function(response) {
+				PUser().get({objectId: objectId}, function(response) {
 					d.resolve(response);
 				}, function(error) {
 					d.reject(error)

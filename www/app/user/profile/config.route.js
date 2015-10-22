@@ -15,12 +15,15 @@
 		return [{
 			state: 'app.profile',
 			config: {
-				url: '/profile',
+				url: '/profile/:objectId',
 				views: {
 					'main-view': {
 						templateUrl: 'app/user/profile/profile.html',
 						controller: 'ProfileController',
-						resolve: {
+						resolve: { /* @ngInject */
+							profile: function($stateParams, PUser) {
+								return PUser.get($stateParams.objectId);
+							},
 							initialData: function(InitialData) {
 								return InitialData()
 							}

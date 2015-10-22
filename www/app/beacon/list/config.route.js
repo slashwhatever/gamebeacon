@@ -20,7 +20,7 @@
 					'main-view': {
 						templateUrl: 'app/beacon/list/list.html',
 						controller: 'ListController',
-						resolve: {
+						resolve: { /* @ngInject */
 							initialData: function(InitialData) {
 								return InitialData()
 							}

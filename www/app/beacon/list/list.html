@@ -15,7 +15,7 @@
 		<button mfb-button template-url="app/shared/floatButton/floatButton.html" bg="assertive-bg" icon="ion-document-text" ng-if="$state.current.name === 'app.beacons'" label="All beacons" ui-sref="app.beacons"></button>
 		<button mfb-button template-url="app/shared/floatButton/floatButton.html" bg="assertive-bg" icon="ion-plus" label="Create beacon" ui-sref="beacon-create"></button>
 		<button mfb-button template-url="app/shared/floatButton/floatButton.html" bg="energized-bg" icon="ion-radio-waves" label="Dashboard" ui-sref="app.dashboard({puserId: puserId})"></button>
-		<button mfb-button template-url="app/shared/floatButton/floatButton.html" bg="positive-bg" icon="ion-person" label="Profile" ui-sref="app.profile"></button>
+		<button mfb-button template-url="app/shared/floatButton/floatButton.html" bg="positive-bg" icon="ion-person" label="Profile" ui-sref="app.profile({objectId: puserId})"></button>
 		<button mfb-button template-url="app/shared/floatButton/floatButton.html" bg="calm-bg" icon="ion-clipboard" label="FAQ" ui-sref="app.about"></button>
 		<button mfb-button template-url="app/shared/floatButton/floatButton.html" bg="balanced-bg" icon="ion-help" label="Tutorial" ui-sref="tutorial"></button>
 	</nav>
