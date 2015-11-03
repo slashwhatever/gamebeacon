@@ -6,7 +6,6 @@
 		.factory('Mic', Mic);
 
 	Mic.$inject = ['$resource', '$q', '$cacheFactory', 'appConfig', 'Resource'];
-
 	function Mic($resource, $q, $cacheFactory, appConfig, Resource) {
 
 		var cache = $cacheFactory('mic');

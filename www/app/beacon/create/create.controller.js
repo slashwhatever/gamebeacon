@@ -74,7 +74,7 @@
 				}).then(function(response) {
 					UI.hideToast();
 
-					// subscribe the user to a channel for this beacon
+					// subscribe the user to a channel for this beacon - subscribe as OWNER
 					Push.subscribe({
 						channel: 'OWNER' + response.objectId,
 						puserId: PUser.getCurrentUser().puserId
@@ -89,6 +89,7 @@
 						alert: Msg.msg('createBeacon')
 					});
 
+					// note that the owner will not be subscribed to the MEMBER channel. Doing it this way just means we have a placeholder push ready for later fireteam members to join
 					Push.sendPush({
 						channels: ['MEMBER' + response.objectId],
 						push_time: pushTime,

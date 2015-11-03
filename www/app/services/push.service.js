@@ -9,6 +9,7 @@
 
 	function Push(appConfig, $http, $resource, Log, Utils) {
 
+
 		var Push = $resource(appConfig.parseRestBaseUrl + 'push/', {}, {
 			updateSubscription: {
 				url: appConfig.parseRestBaseUrl + 'functions/updateSubscription/',

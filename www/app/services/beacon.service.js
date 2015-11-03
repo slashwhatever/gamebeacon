@@ -86,11 +86,22 @@
 			beacon.timeLeft = timeLeft(beacon.startDate.iso);
 		}
 
-		function pushUnsubscribe( puserId, beaconId ) {
+		function pushUnsubscribeAll( beacon ) {
+			// when we delete a beacon, we need to make sure we remove everyone from any push that was created for that beacon
+
 			Push.unsubscribe({
-				channel: 'MEMBER' + beaconId,
-				puserId: puserId
+				channel: 'OWNER' + beacon.objectId,
+				puserId: PUser.getCurrentUser().puserId
 			});
+
+
+			_.each(beacon.fireteamOnboard, function(f) {
+				Push.unsubscribe({
+					channel: 'MEMBER' + beaconId,
+					puserId: f.objectId
+				});
+			});
+
 		}
 
 
@@ -145,10 +156,8 @@
 					objectId: beacon.objectId
 				}, function(response) {
 
-					// when we delete a beacon, we need to make sure we remove everyone from any push that was created for that beacon
-					_.each(beacon.fireteamOnboard, function(f) {
-						pushUnsubscribe(f.puserId, beacon.objectId)
-					});
+					// unsubscribe the owner and all members from the push notification
+					pushUnsubscribeAll(beacon)
 
 					d.resolve(response);
 				}, function(error) {
@@ -176,10 +185,7 @@
 					active: false
 				}, function(response) {
 
-					// when we expire a beacon, we need to make sure we remove everyone from any push that was created for that beacon
-					_.each(beacon.fireteamOnboard, function(f) {
-						pushUnsubscribe(f.puserId, beacon.objectId)
-					});
+					pushUnsubscribeAll(beacon)
 
 					d.resolve(response);
 				}, function(error) {

@@ -1,8 +1,8 @@
 {
-    "alwaysRun": true,
+    "alwaysRun": false,
     "recursiveFolderSearch": true,
     "foldersToProcess": [
-    		"app",
+        "app",
         "js",
         "css",
         "img"
