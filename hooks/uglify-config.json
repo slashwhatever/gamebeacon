@@ -2,7 +2,6 @@
     "alwaysRun": false,
     "recursiveFolderSearch": true,
     "foldersToProcess": [
-        "app",
         "js",
         "css",
         "img"

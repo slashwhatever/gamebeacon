@@ -352,8 +352,8 @@ also be of any width and height */
 }
 
 .beacon-card.ng-enter {
-    -webkit-animation: fadeInUp .4s;
-    animation: fadeInUp .4s;
+    -webkit-animation: fadeInUp .2s;
+    animation: fadeInUp .2s;
 }
 
 .beacon-card.ng-enter-stagger {
@@ -446,6 +446,7 @@ also be of any width and height */
 .fireteam-member-name {
 	vertical-align: middle;
 }
+
 button.fireteam-button {
 		@include border-radius(20px);
 		font-size: 20px;

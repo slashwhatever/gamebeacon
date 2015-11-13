@@ -22,10 +22,10 @@
 				resolve: { /* @ngInject */
 					platforms: function(Resource) {
 						return Resource.list('platforms')
-					},
+					}, /* @ngInject */
 					regions: function(Resource) {
 						return Resource.list('regions')
-					},
+					}, /* @ngInject */
 					mics: function(Resource) {
 						return Resource.list('mics')
 					}

@@ -23,7 +23,7 @@
 						resolve: { /* @ngInject */
 							profile: function($stateParams, PUser) {
 								return PUser.get($stateParams.objectId);
-							},
+							}, /* @ngInject */
 							initialData: function(InitialData) {
 								return InitialData()
 							}

@@ -58,12 +58,13 @@
 			UI.showToast({
 				msg: 'checking credentials...'
 			});
-			Auth.login($scope.user).then(afterLogin, function(error) {
-				UI.showAlert({
-					title: 'Oops!',
-					template: 'We had trouble logging you in. Please try again.'
+			Auth.login($scope.user)
+				.then(afterLogin, function(error) {
+					UI.showAlert({
+						title: 'Oops!',
+						template: 'We had trouble logging you in. Please try again.'
+					})
 				})
-			})
 		}
 
 		function logout(form) {

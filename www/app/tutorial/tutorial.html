@@ -1,19 +1,16 @@
+<ion-nav-bar class="bar">
+	<ion-nav-buttons side="left">
+		<button class="button button-clear no-animation" ng-click="quitTutorial()">
+			<i class="icon ion-close"></i>
+		</button>
+	</ion-nav-buttons>
+	<ion-nav-buttons side="right">
+		<button class="button button-clear no-animation" ng-click="next()" ng-if="slideIndex != 3">
+			<i class="icon ion-arrow-right-b"></i>
+		</button>
+	</ion-nav-buttons>
+</ion-nav-bar>
 <ion-view>
-	<ion-nav-bar class="bar">
-		<ion-nav-buttons side="left">
-			<button class="button button-clear no-animation" ng-click="previous()" ng-if="slideIndex > 0">
-				<i class="icon ion-arrow-left-b"></i>
-			</button>
-		</ion-nav-buttons>
-		<ion-nav-buttons side="right">
-			<button class="button button-clear no-animation" ng-click="next()" ng-if="slideIndex != 3">
-				<i class="icon ion-arrow-right-b"></i>
-			</button>
-			<button class="button button-clear no-animation" ng-click="quitTutorial()" ng-if="slideIndex == 3">
-				<i class="icon ion-close"></i>
-			</button>
-		</ion-nav-buttons>
-	</ion-nav-bar>
 	<ion-slide-box class="has-header help-slider" on-slide-changed="slideChanged(index)">
 		<ion-slide>
 			<div class="padding">

@@ -5,9 +5,9 @@
 		.module('gamebeacon.service')
 		.factory('Push', Push);
 
-	Push.$inject = ['appConfig', '$http', '$resource', 'Log', 'Utils'];
+	Push.$inject = ['appConfig', '$http', '$resource', '$state', 'Log', 'Utils'];
 
-	function Push(appConfig, $http, $resource, Log, Utils) {
+	function Push(appConfig, $http, $resource, $state, Log, Utils) {
 
 
 		var Push = $resource(appConfig.parseRestBaseUrl + 'push/', {}, {
@@ -114,8 +114,13 @@
 						Log.log('iOS Message: ' + event.alert);
 					});
 					// does the notification have a payload?
-					if (data.additionalData) {
-						console.log('has payload')
+					if (data.additionalData && data.additionalData.beaconId) {
+						$state.go('app.beacon', {
+							beaconId: data.additionalData.beaconId
+						}, {
+							reload: true,
+							notify: true
+						});
 					}
 				});
 

@@ -86,7 +86,8 @@
 						channels: ['OWNER' + response.objectId],
 						push_time: pushTime,
 						expiration_time: pushExpirationTime,
-						alert: Msg.msg('createBeacon')
+						alert: Msg.msg('createBeacon'),
+						beaconId: response.objectId
 					});
 
 					// note that the owner will not be subscribed to the MEMBER channel. Doing it this way just means we have a placeholder push ready for later fireteam members to join
@@ -94,7 +95,8 @@
 						channels: ['MEMBER' + response.objectId],
 						push_time: pushTime,
 						expiration_time: pushExpirationTime,
-						alert: Msg.msg('joinedBeacon')
+						alert: Msg.msg('joinedBeacon'),
+						beaconId: response.objectId
 					});
 
 					$state.go('app.beacons', null, {

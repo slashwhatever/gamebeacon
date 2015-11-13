@@ -97,7 +97,7 @@
 
 			_.each(beacon.fireteamOnboard, function(f) {
 				Push.unsubscribe({
-					channel: 'MEMBER' + beaconId,
+					channel: 'MEMBER' + beacon.objectId,
 					puserId: f.objectId
 				});
 			});
