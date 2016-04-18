@@ -1,10 +1,11 @@
 {
-    "alwaysRun": false,
+    "alwaysRun": true,
     "recursiveFolderSearch": true,
     "foldersToProcess": [
         "js",
         "css",
-        "img"
+        "img",
+        "app"
     ],
     "uglifyJsOptions": {
         "compress": {

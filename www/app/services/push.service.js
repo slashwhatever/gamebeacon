@@ -100,8 +100,16 @@
 							'Content-Type': 'application/json'
 						}
 					}).success(function(data, status, headers, config) {
+						UI.showAlert({
+							title: 'gamebeacon',
+							template: 'registered ok'
+						});
 
 					}).error(function(data, status, headers, config) {
+						UI.showAlert({
+							title: 'gamebeacon',
+							template: 'register problem'
+						});
 
 					});
 				});
