@@ -29,10 +29,11 @@
     "cordova-plugin-push",
     "com.ionic.keyboard",
     "ionic-plugin-deploy",
-    "org.apache.cordova.camera",
+    "cordova-plugin-camera",
     "phonegap-plugin-push"
   ],
   "cordovaPlatforms": [
-    "android"
+    "android",
+    "ios"
   ]
 }
